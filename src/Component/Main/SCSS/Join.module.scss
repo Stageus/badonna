@@ -1,0 +1,71 @@
+#join{
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: flex-start;
+    flex-direction: column;
+    flex-wrap: wrap;
+
+    #inputBox{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: 70%;
+        margin-top: 10%;
+        div{
+            width: 47%;
+            height: 33%;
+            h2{
+                height: fit-content;
+                font-weight: normal;
+                font-size: 22px;
+                margin-bottom: 8px;
+            }
+            p{
+                width: 100%;
+                height: fit-content;
+                font-size: 12px;
+                margin-top: 4px;
+                color: red;
+            }
+            input{
+                width: 80%;
+                height: 16px;
+            }
+        }
+
+        #id{
+            align-items: center;
+            input{
+                width: 60%;
+                margin-right: 10%;
+            }
+            button{
+                width: 25%;
+            }
+        }
+        #tel{
+            #telText{
+                display: inline-block;
+                width: fit-content;
+                font-size: 16px;
+                margin-left: 12px;
+                margin-right: 12px;
+            }
+            input{
+                width: 18%;
+                margin-left: 4px;
+                margin-right: 4px;
+            }
+            button{
+                margin-left: 4%;
+                width: 24%;
+            }
+        }
+    }
+}
+
+#joinButton{
+    width: 50%;
+    height: 30px;
+}
