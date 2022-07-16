@@ -7,6 +7,7 @@ const logFuntion=require("../module/logging")
 const moment=require("../module/moment")
 
 const secretKey=process.env.TOKEN_SCREAT_KEY
+
 router.post("/login",(req,res)=>{
 
    const idValue=req.body.id
@@ -64,7 +65,7 @@ router.post("/login",(req,res)=>{
 
     // })
 
-    console.log(api_call_time)
+    console.log( "api time", api_call_time)
 
     res.send(result)
    

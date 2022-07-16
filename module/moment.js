@@ -1,13 +1,13 @@
 
 const getCurrentDate=()=>{
-    var date = new Date();
-    var year = date.getFullYear();
-    var month = date.getMonth();
-    var today = date.getDate();
-    var hours = date.getHours();
-    var minutes = date.getMinutes();
-    var seconds = date.getSeconds();
-    return new Date(Date.UTC(year, month, today, hours, minutes, seconds));
+    
+    var cur_date = new Date();
+    var utc = cur_date.getTime() + (cur_date.getTimezoneOffset() * 60 * 1000);
+    var time_diff = 9 * 60 * 60 * 1000;
+    var cur_date_korea = new Date(utc + (time_diff));
+    
+    return cur_date_korea
+
 }
 
 module.exports=getCurrentDate
