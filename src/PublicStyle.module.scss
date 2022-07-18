@@ -1,15 +1,23 @@
 @import "./Variable.module.scss";
 
+// @font-face {
+//     //src: url("./Font/Leferi_TTF/TTF/LeferiBaseRegular.ttf");
+//     //font-family: "LeferiBaseRegular";
+//     src: url("./Font/EARLYFONT_DIARY/EF_Diary.ttf");
+//     font-family: "EARLYFONT";
+// }
 @font-face {
-    src: url("./Font/Leferi_TTF/TTF/LeferiBaseRegular.ttf");
-    font-family: "LeferiBaseRegular";
+    font-family: 'Hahmlet-Light';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2110@1.0/Hahmlet-Light.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
 }
 
 html, body{
     margin: 0;
     height: 100%;
     overflow: hidden;
-    font-family: "LeferiBaseRegular";
+    font-family: "Hahmlet-Light";
 }
 
 main{
@@ -49,7 +57,7 @@ button{
     height: fit-content;
     padding-top: 2px;
     padding-bottom: 2px;
-    font-family: "LeferiBaseRegular";
+    font-family: "Hahmlet-Light";
     color: white;
     background-color: $main-color;
     border: 1px solid transparent;

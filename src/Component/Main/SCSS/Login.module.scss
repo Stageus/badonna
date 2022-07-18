@@ -6,6 +6,7 @@
     #login{
         display: flex;
         width: 50%;
+        max-width: 800px;
         height: 360px;
         justify-content: center;
         div{
@@ -35,7 +36,7 @@
 
             button{
                 background-color: $main-color;
-                width: 100%;
+                width: 101%;
                 font-size: 22px;
                 margin-bottom: 12px;
             }

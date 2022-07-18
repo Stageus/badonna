@@ -3,10 +3,10 @@ import style from "./SCSS/Main.module.scss"
 import { useSelector, useDispatch } from "react-redux"
 import { changeScroll } from "../../Redux/Action/action"
 import Scroll from "./Scroll"
-import Login from "./Login"
-import Join from "./Join"
-import Board from "./Board"
-import Profile from "./Profile"
+import LoginPage from "./LoginPage"
+import JoinPage from "./JoinPage"
+import BoardPage from "./BoardPage"
+import ProfilePage from "./ProfilePage"
 import Img from "../Common/Img"
 import H1 from "../Common/H1"
 import throttle from "lodash"
@@ -36,21 +36,21 @@ const Main = () => {
     if(currentConState){
         if(loginState){
             return(
-                <Login/>
+                <LoginPage/>
             )
         }else if(joinState){
             return(
-                <Join/>
+                <JoinPage/>
             )
         }else if(boardState){
             return(
-                <Board/>
+                <BoardPage/>
             )
         }else if(boardWriteState){
 
         }else if(profileState){
             return(
-                <Profile/>
+                <ProfilePage/>
             )
         }
     }
@@ -59,7 +59,7 @@ const Main = () => {
             return(
                 <main id = {style.main1} onWheel = {throttleScroll}>
                     <Img src = "./img/question.svg"/>
-                    <div>
+                    <div id = {style.home}>
                         <H1 text = "음식 배달비가 너무 "/>
                         <article>비싸</article>
                         <br/>
@@ -73,7 +73,7 @@ const Main = () => {
             return(
                 <main id = {style.main2} onWheel = {throttleScroll}>
                     <Img src = "./img/communication.svg"/>
-                    <div>
+                    <div id = {style.home}>
                         <article>같이</article>
                         <H1 text = " 시켜서"/>
                         <br/>
@@ -86,7 +86,7 @@ const Main = () => {
         }else if(scrollState == 2){
             return(
                 <main id = {style.main3} onWheel = {throttleScroll}>
-                    <div>
+                    <div id = {style.home}>
                         <H1 text = "지역을 "/>
                         <article>등록</article>
                         <H1 text = "해"/>
@@ -101,7 +101,7 @@ const Main = () => {
         }else{
             return(
                 <main id = {style.main4} onWheel = {throttleScroll}>
-                    <div>
+                    <div id = {style.home}>
                         <article>게시글</article>
                         <H1 text = "을 등록해서"/>
                         <br/>

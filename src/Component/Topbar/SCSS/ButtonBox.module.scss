@@ -1,11 +1,11 @@
 #buttonBox{
-    width: 50%;
+    width: 33%;
     height: 100%;
     display: flex;
     justify-content: space-around;
     align-items: center;
     button{    
         height: fit-content;
-        font-size: 24px;
+        font-size: 18px;
     }
 }

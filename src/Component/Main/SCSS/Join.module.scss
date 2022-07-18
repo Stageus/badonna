@@ -1,5 +1,6 @@
 #join{
     width: 80%;
+    max-width: 1460px;
     margin-left: auto;
     margin-right: auto;
     justify-content: flex-start;
@@ -16,6 +17,7 @@
             width: 47%;
             height: 33%;
             h2{
+                width: 100%;
                 height: fit-content;
                 font-weight: normal;
                 font-size: 22px;
@@ -29,7 +31,7 @@
                 color: red;
             }
             input{
-                width: 80%;
+                width: 65%;
                 height: 16px;
             }
         }
@@ -37,8 +39,7 @@
         #id{
             align-items: center;
             input{
-                width: 60%;
-                margin-right: 10%;
+                margin-right: 5%;
             }
             button{
                 width: 25%;
@@ -67,5 +68,6 @@
 
 #joinButton{
     width: 50%;
+    max-width: 400px;
     height: 30px;
 }

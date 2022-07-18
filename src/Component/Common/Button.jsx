@@ -13,7 +13,6 @@ const Button = (props) => {
                 dispatch(login())
                 break
             case "join":
-                console.log(props.name)
                 dispatch(join())
                 break
             case "address":
