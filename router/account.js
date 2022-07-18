@@ -6,6 +6,7 @@ require("dotenv").config()
 const logFuntion=require("../module/logging")
 const moment=require("../module/moment")
 const tokenVerify=require("../module/verify")
+const jwt=require("jsonwebtoken")
 
 const secretKey=process.env.TOKEN_SCREAT_KEY
 
@@ -20,8 +21,8 @@ router.post("/login",(req,res)=>{
 
     const result={
         "success":false,
-        "message":"",
-        "token":""
+        "message":null,
+        "token":null,
     }
     
     //db 연결
@@ -34,37 +35,37 @@ router.post("/login",(req,res)=>{
     const sql="SELECT * FROM  badonnaproject.account WHERE id=$1 and pw=$2"
     const values=[idValue,pwValue]
 
-    // db.qeury(sql,values,(err,data)=>{
-    //     if(!err){
+    db.qeury(sql,values,(err,data)=>{
+        if(!err){
 
-    //         //token
-    //         const row=data.rows;
-    //         if(row.length == 0){
-    //         }else{
-    //             // const jwtToken=jwt.sign(
-    //             //     {
-    //             //         "id":idValue,
-    //             //         "pw":pwValue
-    //             //     },
-    //             //     secretKey,
-    //             //     {
-    //             //         "issuer": "kelly",// 발급자 메모용
-    //             //         "expiresIn":"1m" //토큰 완료 시간
-    //             //     }
-    //             // )
+            //token
+            // const row=data.rows;
+            // if(row.length == 0){
+            // }else{
+            //     const jwtToken=jwt.sign(
+            //         {
+            //             "id":idValue,
+            //             "pw":pwValue
+            //         },
+            //         secretKey,
+            //         {
+            //             "issuer": "kelly",// 발급자 메모용
+            //             "expiresIn":"1m" //토큰 완료 시간
+            //         }
+            //     )
                 
-    //             // result.token=jwtToken
-    //             result.success=true
+            //     result.token=jwtToken
+            //     result.success=true
                 
-    //         }
+            // }
 
-    //         //loggin 
-    //         logFuntion(idValue, api_name,req_host,api_call_time)
-    //     }
-    //     res.send(result)
-    //     db.end()
+            //loggin 
+            logFuntion(idValue, api_name,req_host,api_call_time)
+        }
+        res.send(result)
+        db.end()
 
-    // })
+    })
    
 })
 
@@ -77,7 +78,7 @@ router.post("/account/logout",(req,res)=>{
 
     const result={
         "success":false,
-        "message":""
+        "message":null
     }
     //token 인증 
     if(tokenVerify(token_public)){//token 인증이 성공 한 경우
@@ -105,7 +106,7 @@ router.post("/",(req,res)=>{
 
     const result={
         "success":false,
-        "message":""
+        "message":null
     }
 
     const db=new Client(pgInit)
@@ -164,6 +165,8 @@ router.get("/",(req,res)=>{
             res.send(result)
             db.end()
         })
+    }else{
+        result.message="잘못된 token!"
     }
     
 
