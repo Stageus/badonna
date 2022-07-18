@@ -1,7 +1,7 @@
 import React from "react"
 import Img from "./Img"
 import { useDispatch } from "react-redux"
-import { login, join, adress, profile, home } from "../../Redux/Action/action"
+import { login, join, profile, home, board } from "../../Redux/Action/action"
 
 const Button = (props) => {
 
@@ -16,8 +16,7 @@ const Button = (props) => {
                 console.log(props.name)
                 dispatch(join())
                 break
-            case "adress":
-                dispatch(address())
+            case "address":
                 break
             case "board":
                 dispatch(board())
