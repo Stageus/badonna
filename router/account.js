@@ -69,27 +69,6 @@ router.post("/login",(req,res)=>{
    
 })
 
-//로그 아웃
-
-router.post("/account/logout",(req,res)=>{
-
-    const token_public=req.headers.token
-    const idValue=req.body.id
-
-    const result={
-        "success":false,
-        "message":null
-    }
-    //token 인증 
-    if(tokenVerify(token_public)){//token 인증이 성공 한 경우
-        //발급 해준 public_key를 삭제?
-
-    }
-  
-
-
-})
-
 //회원 가입
 
 router.post("/",(req,res)=>{
