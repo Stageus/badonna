@@ -1,0 +1,10 @@
+@import "../../../Variable.module.scss";
+
+nav{
+    position: fixed;
+    width: 100%;
+    height: $top-bar-height;
+    display: flex;
+    background-color: $main-color;
+    justify-content: space-between;
+}

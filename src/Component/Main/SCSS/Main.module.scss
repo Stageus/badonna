@@ -1,0 +1,64 @@
+@import "../../../Variable.module.scss";
+
+main{
+    overflow-y: hidden;
+    img{
+        max-width: 1025px;
+        width: 50%;
+    }
+    
+    div{
+        display: block;
+        width: fit-content;
+        height: fit-content;
+        #home{
+            width: 33%;
+        }
+        h1{
+            display: inline-block;
+            height: fit-content;
+            font-weight: normal;
+            font-size: 28px;
+        }
+        article{
+            display: inline;
+            height: fit-content;
+            color: $main-color;
+            font-size: 28px;
+            font-weight: normal;
+        }
+    }
+
+    transition: all 1s;
+}
+
+#main1{
+    img{
+        margin-top: auto;
+    }
+}
+
+#main2{
+    div{
+        margin-left: 5%;
+    }
+}
+
+#main3{
+    img{
+        width: 50%;
+        margin-left: 10%;
+    }
+    div{
+        margin-left: auto;
+    }
+}
+
+#main4{
+    img{
+        margin-left: 5%;
+    }
+    div{
+        margin-left: 8%;
+    }
+}

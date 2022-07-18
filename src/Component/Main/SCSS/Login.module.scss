@@ -1,0 +1,51 @@
+@import "../../../Variable.module.scss";
+
+#main{
+    flex-direction: column;
+
+    #login{
+        display: flex;
+        width: 50%;
+        max-width: 800px;
+        height: 360px;
+        justify-content: center;
+        div{
+            width: 70%;
+            h1{
+                font-size: 20px;
+            }
+            p{
+                visibility: hidden;
+                width: 100%;
+                height: fit-content;
+                font-size: 12px;
+                color: red
+            }
+        }
+        input{
+            height: 24px;
+            font-size: 20px;
+            width: 100%;
+            margin-top: 12px;
+            margin-bottom: 4px;
+        }
+
+        #buttonBox{
+            width: 72%;
+            text-align: right;
+
+            button{
+                background-color: $main-color;
+                width: 101%;
+                font-size: 22px;
+                margin-bottom: 12px;
+            }
+            #join{
+                background-color: transparent;
+                width: fit-content;
+                font-size: 16px;
+                color: #a6a6a6;
+            }
+        }
+    }
+}
