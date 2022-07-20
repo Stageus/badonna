@@ -9,7 +9,7 @@ const token_verify=(pulbic_key)=>{
     const success =false
 
     try{
-        jwt.verify(tokenValue,secretKey)//서버가 가지고 있는 secretKey로 검증한다.
+        jwt.verify(pulbic_key,secretKey)//서버가 가지고 있는 secretKey로 검증한다.
         success=true
     }catch(e){
         success=false

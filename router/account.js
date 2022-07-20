@@ -44,7 +44,7 @@ router.post("/login",(req,res)=>{
             // }else{
             //     const jwtToken=jwt.sign(
             //         {
-            //             "id":idValue,
+            //             "id":idValue,//로그인 한 사람의 아이디
             //             "pw":pwValue
             //         },
             //         secretKey,
