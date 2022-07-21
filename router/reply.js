@@ -6,7 +6,7 @@ require("dotenv").config()
 const logFuntion=require("../module/logging")
 const moment=require("../module/moment")
 const tokenVerify=require("../module/verify")
-const jwt=require("jsonwebtoken")
+
 
 
 router.post("/",(req,res)=>{
