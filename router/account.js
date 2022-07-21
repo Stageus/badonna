@@ -34,33 +34,32 @@ router.post("/login",(req,res)=>{
    
     const sql="SELECT * FROM  badonnaproject.account WHERE id=$1 and pw=$2"
     const values=[idValue,pwValue]
-
-    db.qeury(sql,values,(err,data)=>{
+   // console.log(values)
+    db.query(sql,values,(err,data)=>{
         if(!err){
 
-            //token
-            // const row=data.rows;
-            // if(row.length == 0){
-            // }else{
-            //     const jwtToken=jwt.sign(
-            //         {
-            //             "id":idValue,//로그인 한 사람의 아이디
-            //             "pw":pwValue
-            //         },
-            //         secretKey,
-            //         {
-            //             "issuer": "kelly",// 발급자 메모용
-            //             "expiresIn":"1m" //토큰 완료 시간
-            //         }
-            //     )
+            const row=data.rows;
+            if(row.length == 0){
+            }else{
+                const jwtToken=jwt.sign(
+                    {
+                        "id":idValue,//로그인 한 사람의 아이디
+                        "pw":pwValue
+                    },
+                    secretKey,
+                    {
+                        "issuer": "kelly",// 발급자 메모용
+                        "expiresIn":"1h" //토큰 완료 시간
+                    }
+                )
+                console.log("token",jwtToken)
+                result.token=jwtToken
+                result.success=true
                 
-            //     result.token=jwtToken
-            //     result.success=true
-                
-            // }
+            }
 
             //loggin 
-            logFuntion(idValue, api_name,req_host,api_call_time)
+            //logFuntion(idValue, api_name,req_host,api_call_time)
         }
         res.send(result)
         db.end()
@@ -76,9 +75,9 @@ router.post("/",(req,res)=>{
     const idValue=req.body.id
     const pwValue=req.body.pw
     const user_name=req.body.name
-    const user_birth=req.body.birth 
-    const join_date=req.body.data
-
+    const user_phone=req.body.phone_num
+    const join_date=req.body.date
+ 
     const api_name=req.url
     const req_host=req.headers.req_host
     const api_call_time=moment()
@@ -87,28 +86,34 @@ router.post("/",(req,res)=>{
         "success":false,
         "message":null
     }
+    
+    if(idValue.length!=0 && pwValue.length !=0 && user_name.length !=0 && user_phone.length !=0 && join_date.length !=0) {
+       
+        const db=new Client(pgInit)
+        db.connect((err)=>{
+            if(err)
+                console.log("db connect",err)
+        })
+    
+        const sql="INSERT INTO badonnaproject.account(id,pw,name, phonenum,date) VALUES($1,$2,$3,$4,$5)"
+        const values=[idValue,pwValue,user_name,user_phone,join_date]
+        db.query(sql,values,(err,rows)=>{
+            if(!err){
+                result.success=true
+            }else{
+                console.log(err)
+            }
 
-    const db=new Client(pgInit)
-    db.connect((err)=>{
-        if(err)
-            console.log("db connect",err)
-    })
- 
-    const sql="INSERT INTO badonnaproject.account(id,pw,name, phonenum, date) VALUES($1,$2,$3,$4,$5)"
-    const values=[idValue,pwValue,user_name,user_birth,join_date]
-    db.query(sql,values,(err,rows)=>{
-        if(!err){
-            result.success=true
-        }else{
-            console.log(err)
-        }
-
-        //logging 
-        logFuntion(idValue, api_name,req_host,api_call_time)
-         
+            //logging 
+           //logFuntion(idValue, api_name,req_host,api_call_time)
+            
+            res.send(result)
+            db.end()
+        })
+    }else{
+        result.message="회원가입 실패"
         res.send(result)
-        db.end()
-    })
+    }
 
 })
 
@@ -122,7 +127,7 @@ router.get("/",(req,res)=>{
         "success":false,
 		"data":null
     }
-//token verify 
+    //token verify 
     if(tokenVerify(token_public)){
 
         const db=new Client(pgInit)
@@ -131,12 +136,12 @@ router.get("/",(req,res)=>{
                 console.log(err)
         })
 
-        const sql="SELECT * FROM  badonnaproject.account WHERE userid=$1"
+        const sql="SELECT * FROM  badonnaproject.account WHERE id=$1"
         const values=[idValue]
         db.query(sql,values,(err,row)=>{
             if(!err){
                 result.success=true
-                result.data=row
+                result.data=row.rows[0]
             }else{
                 console.log(err)
             }
@@ -146,13 +151,14 @@ router.get("/",(req,res)=>{
         })
     }else{
         result.message="잘못된 token!"
+        res.send(result)
     }
     
 
 })
 
 //중복 아이디 체크 
-router.post("/account/duplicate/id",(req,res)=>{
+router.post("/duplicate/id",(req,res)=>{
     const idValue=req.body.id
 
    const api_name=req.url
@@ -173,9 +179,10 @@ router.post("/account/duplicate/id",(req,res)=>{
     const sql="SELECT * FROM  badonnaproject.account WHERE id=$1"
     const values=[idValue]
 
-    db.qeury(sql,values,(err,data)=>{
+    db.query(sql,values,(err,data)=>{
         if(!err){
-            const row=data.rows
+            const row=data.rows[0].id
+            console.log(row)
             if(row == idValue)
                 result.success=true
             else

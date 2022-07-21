@@ -6,7 +6,7 @@ require("dotenv").config()
 const logFuntion=require("../module/logging")
 const moment=require("../module/moment")
 const tokenVerify=require("../module/verify")
-const jwt=require("jsonwebtoken")
+
 
 
 router.post("/",(req,res)=>{
@@ -151,7 +151,7 @@ router.delete("/",(req,res)=>{
 })
 
 
-router.update("/",(req,res)=>{
+router.put("/",(req,res)=>{
 
     const token_public=req.headers.token
     const api_name=req.url

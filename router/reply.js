@@ -93,7 +93,7 @@ router.get("/",(req,res)=>{
 })
 
 
-router.update("/",(req,res)=>{
+router.put("/",(req,res)=>{
     const token_public=req.headers.token 
     const api_name=req.url
     const req_host=req.headers.req_host
@@ -172,3 +172,5 @@ router.delete("/",(req,res)=>{
     }
 
 })
+
+module.exports=router
