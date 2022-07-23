@@ -36,7 +36,7 @@ router.post("/permission",(req,res)=>{//승인 버튼을 누를 때 마다 조�
             console.log(err)
         })
 
-        const sql="INSERT INTO badonnaproject.member() VALUES($1,$2)"
+        const sql="INSERT INTO badonnaproject.member(board_num,member_list) VALUES($1,$2)"
         const values=[]
         
         db.query(sql,values,(err,row)=>{

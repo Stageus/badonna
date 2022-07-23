@@ -17,31 +17,41 @@ router.post("/",(req,res)=>{
     const user_id=req.body.id 
     const user_place=req.body.place
     const result={
-        "success":false
+        "success":false,
+        "message":null
     }
 
-    if(tokenVerify(token_public)){
+    if(user_place.length !=0){
 
-        const db = new Client(pgInit)
-        db.connect((err)=>{
-            console.log(err)
-        })
-        const sql="INSERT INTO badonnaproject.place(id,place) VALUES($1,$2)"
-        const values=[user_id,user_place]
-        
-        db.query(sql,values,(err,row)=>{
-            if(!err){
-                result.success=true
-            }else{
-                console.log(err)
-            }
+        if(tokenVerify(token_public)){
 
-            //로깅 남기기
-            //logFuntion(user_id, api_name,req_host,api_call_time)
+            const db = new Client(pgInit)
+            db.connect((err)=>{
+                if(err) {
+                    console.log(err)
+                }
+            })
+            const sql="INSERT INTO badonnaproject.place(id,place) VALUES($1,$2)"
+            const values=[user_id,user_place]
+            
+            db.query(sql,values,(err,row)=>{
+                if(!err){
+                    result.success=true
+                    result.message="성공"
+                }else{
+                    console.log(err)
+                }
 
-            res.send(result)
-            db.end()
-        })
+                //로깅 남기기
+                //logFuntion(user_id, api_name,req_host,api_call_time)
+
+                res.send(result)
+                db.end()
+            })
+        }
+    }else{
+        result.message="장소 입력 실패"
+        res.send(result)
     }
 })
 
@@ -61,7 +71,9 @@ router.get("/",(req,res)=>{
 
         const db = new Client(pgInit)
         db.connect((err)=>{
-            console.log(err)
+            if(err) {
+                console.log(err)
+            }
         })
         const sql="SELECT * FROM  badonnaproject.place WHERE id=$1"
         const values=[user_id]
@@ -69,7 +81,7 @@ router.get("/",(req,res)=>{
         db.query(sql,values,(err,row)=>{
             if(!err){
                 result.success=true
-                result.data=row
+                result.data=row.rows
             }else{
                 console.log(err)
             }
@@ -100,11 +112,13 @@ router.delete("/",(req,res)=>{
 
         const db = new Client(pgInit)
         db.connect((err)=>{
-            console.log(err)
+            if(err) {
+                console.log(err)
+            }
         })
 
-        const sql="DELETE FROM badonnaproject.place WHERE place_num=$1;"
-        const values=[reply_number]
+        const sql="DELETE FROM badonnaproject.place WHERE place_num=$1"
+        const values=[place_number]
         
         db.query(sql,values,(err,row)=>{
 

@@ -27,9 +27,11 @@ router.post("/",(req,res)=>{
 
         const db = new Client(pgInit)
         db.connect((err)=>{
-            console.log(err)
+            if(err) {
+                console.log(err)
+            }
         })
-        const sql="INSERT INTO badonnaproject.reply(reply_num,contents) VALUES($1,$2)"
+        const sql="INSERT INTO badonnaproject.reply(coment_num,contents) VALUES($1,$2)"
         const values=[coment_number,reply_contents]
         
         db.query(sql,values,(err,row)=>{
@@ -68,15 +70,17 @@ router.get("/",(req,res)=>{
 
         const db = new Client(pgInit)
         db.connect((err)=>{
-            console.log(err)
+            if(err) {
+                console.log(err)
+            }
         })
-        const sql="SELECT * FROM  badonnaproject.reply WHERE reply_num=$1"
+        const sql="SELECT contents FROM  badonnaproject.reply WHERE reply_num=$1"
         const values=[reply_number]
         
         db.query(sql,values,(err,row)=>{
             if(!err){
                 result.success=true
-                result.data=row
+                result.data=row.rows[0]
             }else{
                 console.log(err)
             }
@@ -110,9 +114,11 @@ router.put("/",(req,res)=>{
 
         const db = new Client(pgInit)
         db.connect((err)=>{
-            console.log(err)
+            if(err) {
+                console.log(err)
+            }
         })
-        const sql="UPDATE badonnaproject.coment SET contents=3$ WHERE coment_num=1$ and reply_num=2$"
+        const sql="UPDATE badonnaproject.reply SET contents=$3 WHERE coment_num=$1 AND reply_num=$2"
         const values=[coment_number,reply_number,reply_contents]
         
         db.query(sql,values,(err,row)=>{
@@ -148,7 +154,9 @@ router.delete("/",(req,res)=>{
 
         const db = new Client(pgInit)
         db.connect((err)=>{
-            console.log(err)
+            if(err) {
+                console.log(err)
+            }
         })
 
         const sql="DELETE FROM badonnaproject.reply WHERE reply_num=$1;"

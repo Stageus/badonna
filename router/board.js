@@ -89,7 +89,9 @@ router.get("/",(req,res)=>{
 
         const db=new Client(pgInit)
         db.connect((err)=>{
-            console.log(err)
+            if(err) {
+                console.log(err)
+            }
         })
 
         const sql="SELECT *FROM badonnaproject.board ORDER BY date DESC LIMIT $1 OFFSET $2"
@@ -135,7 +137,9 @@ router.delete("/",(req,res)=>{
 
         const db=new Client(pgInit)
         db.connect((err)=>{
-            console.log(err)
+            if(err) {
+                console.log(err)
+            }
         })
 
         const sql="DELETE FROM badonnaproject.board WHERE board_num=$1;"
@@ -183,7 +187,9 @@ router.put("/",(req,res)=>{
 
         const db=new Client(pgInit)
         db.connect((err)=>{
-            console.log(err)    
+            if(err) {
+                console.log(err)
+            }  
         })
 
         const sql="UPDATE badonnaproject.board SET title=$2,contents=$3,address=$4,date=$5 WHERE board_num=$1 "

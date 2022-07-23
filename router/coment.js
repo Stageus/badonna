@@ -17,7 +17,7 @@ router.post("/",(req,res)=>{
 
     const board_member=req.body.board_num 
     const coment_contents=req.body.contents 
-
+    
     const result={
         "success":false
     }
@@ -26,7 +26,9 @@ router.post("/",(req,res)=>{
 
         const db = new Client(pgInit)
         db.connect((err)=>{
-            console.log(err)
+            if(err) {
+                console.log(err)
+            }
         })
 
         const sql="INSERT INTO badonnaproject.coment(board_num,contents) VALUES($1,$2)"
@@ -77,17 +79,18 @@ router.get("/",(req,res)=>{
 
             const db=new Client(pgInit)
             db.connect((err)=>{
-                console.log(err)
+                if(err) {
+                    console.log(err)
+                }
             })
 
-            const sql="SELECT contents FROM badonnaproject.coment WHERE coment_num=$1"
+            const sql="SELECT contents FROM badonnaproject.coment WHERE board_num=$1"
             const values=[coment_number]
 
             db.query(sql,values,(err,row)=>{
                 if(!err){
-                    result.data=row// row가 어떤 것이 반환이 되는 지 확인 하기 
+                    result.data=row.rows// row가 어떤 것이 반환이 되는 지 확인 하기 
                     result.success=true
-                    result.data=row.rows
                 }else{
                     console.log(err)
                 }
@@ -128,10 +131,12 @@ router.put("/",(req,res)=>{
 
         const db=new Client(pgInit)
         db.connect((err)=>{
-            console.log(err)    
+            if(err) {
+                console.log(err)
+            }
         })
 
-        const sql="UPDATE badonnaproject.coment SET contents=2$ WHERE coment_num=1$ "
+        const sql="UPDATE badonnaproject.coment SET contents=$2 WHERE coment_num=$1 "
         const values=[coment_member,coment_contents]
         
         db.query(sql,values,(err,row)=>{
@@ -166,7 +171,9 @@ router.delete("/",(req,res)=>{
 
         const db = new Client(pgInit)
         db.connect((err)=>{
-            console.log(err)
+            if(err) {
+                console.log(err)
+            }
         })
 
         const sql="DELETE FROM badonnaproject.coment WHERE coment_num=$1;"

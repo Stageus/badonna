@@ -28,8 +28,9 @@ router.post("/login",(req,res)=>{
     //db 연결
     const db=new Client(pgInit)
     db.connect((err)=>{
-        if(err)
+        if(err) {
             console.log(err)
+        }
     })
    
     const sql="SELECT * FROM  badonnaproject.account WHERE id=$1 and pw=$2"
@@ -132,8 +133,9 @@ router.get("/",(req,res)=>{
 
         const db=new Client(pgInit)
         db.connect((err)=>{
-            if(err)
+            if(err) {
                 console.log(err)
+            }
         })
 
         const sql="SELECT * FROM  badonnaproject.account WHERE id=$1"
@@ -172,8 +174,9 @@ router.post("/duplicate/id",(req,res)=>{
     //db 연결
     const db=new Client(pgInit)
     db.connect((err)=>{
-        if(err)
+        if(err) {
             console.log(err)
+        }
     })
    
     const sql="SELECT * FROM  badonnaproject.account WHERE id=$1"
