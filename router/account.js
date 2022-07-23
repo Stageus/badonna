@@ -49,7 +49,7 @@ router.post("/login",(req,res)=>{
                     secretKey,
                     {
                         "issuer": "kelly",// 발급자 메모용
-                        "expiresIn":"1h" //토큰 완료 시간
+                        "expiresIn":"24h" //토큰 완료 시간
                     }
                 )
                 console.log("token",jwtToken)
