@@ -1,6 +1,6 @@
 const router=require("express").Router() 
 const path=require("path")
-const pgInit=require("../database/psql")
+const pgInit=require("../module/psql")
 const {Client}=require("pg")
 require("dotenv").config()
 const logFuntion=require("../module/logging")

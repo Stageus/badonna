@@ -1,6 +1,6 @@
 const router=require("express").Router() 
 const path=require("path")
-const pgInit=require("../database/psql")
+const pgInit=require("../module/psql")
 const {Client}=require("pg")
 require("dotenv").config()
 const logFuntion=require("../module/logging")
@@ -12,7 +12,7 @@ const tokenVerify=require("../module/verify")
 router.post("/",(req,res)=>{
 
     const token_public=req.headers.token 
-    const api_name=req.url
+    const api_name=req.urls
     const req_host=req.headers.req_host
     const api_call_time=moment()
 
