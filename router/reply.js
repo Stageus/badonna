@@ -12,12 +12,13 @@ const tokenVerify=require("../module/verify")
 router.post("/",(req,res)=>{
 
     const token_public=req.headers.token 
-    const api_name=req.urls
-    const req_host=req.headers.req_host
-    const api_call_time=moment()
-
     const coment_number=req.body.coment_num 
     const reply_contents=req.body.contents
+
+    const api_name="reply" + req.url
+    const req_host=req.headers.req_host
+    const req_data=[coment_number,reply_contents]
+    const api_call_time=moment()
 
     const result={
         "success":false
@@ -42,7 +43,7 @@ router.post("/",(req,res)=>{
             }
 
             //로깅 남기기
-            //logFuntion(user_id, api_name,req_host,api_call_time)
+            logFuntion(api_name,req_host, req_data, row.rows[0],api_call_time)
 
             res.send(result)
             db.end()
@@ -57,11 +58,13 @@ router.post("/",(req,res)=>{
 router.get("/",(req,res)=>{
 
     const token_public=req.headers.token 
-    const api_name=req.url
+    const reply_number=req.query.reply_num 
+
+    const api_name="reply" + req.url
     const req_host=req.headers.req_host
+    const req_data=[reply_number]
     const api_call_time=moment()
 
-    const reply_number=req.query.reply_num 
     const result={
         "success":false,
         "data":null
@@ -86,7 +89,7 @@ router.get("/",(req,res)=>{
             }
 
             //로깅 남기기
-            //logFuntion(user_id, api_name,req_host,api_call_time)
+            logFuntion(api_name,req_host, req_data, row.rows[0],api_call_time)
 
             res.send(result)
             db.end()
@@ -99,13 +102,14 @@ router.get("/",(req,res)=>{
 
 router.put("/",(req,res)=>{
     const token_public=req.headers.token 
-    const api_name=req.url
-    const req_host=req.headers.req_host
-    const api_call_time=moment()
-
     const coment_number=req.body.coment_num 
     const reply_number=req.body.reply_num 
     const reply_contents=req.body.contents
+
+    const api_name="reply" + req.url
+    const req_host=req.headers.req_host
+    const req_data=[coment_number,reply_number,reply_contents]
+    const api_call_time=moment()
 
     const result={
         "success":false,
@@ -129,7 +133,7 @@ router.put("/",(req,res)=>{
             }
 
             //로깅 남기기
-            //logFuntion(user_id, api_name,req_host,api_call_time)
+            logFuntion(api_name,req_host, req_data, row.rows[0],api_call_time)
 
             res.send(result)
             db.end()
@@ -141,11 +145,14 @@ router.put("/",(req,res)=>{
 
 router.delete("/",(req,res)=>{
     const token_public=req.headers.token 
-    const api_name=req.url
-    const req_host=req.headers.req_host
-    const api_call_time=moment()
-
     const reply_number=req.body.reply_num 
+
+    const api_name="reply" + req.url
+    const req_host=req.headers.req_host
+    const req_data=[reply_number]
+    const api_call_time=moment()
+    const res_data=" "
+
     const result={
         "success":false
     }
@@ -170,7 +177,7 @@ router.delete("/",(req,res)=>{
                 console.log(err)
             }
             //로깅 남기기
-            //logFuntion(user_id, api_name,req_host,api_call_time)
+            logFuntion(api_name,req_host, req_data, row.rows[0],api_call_time)
 
             res.send(result)
             db.end()

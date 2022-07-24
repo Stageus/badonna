@@ -11,12 +11,13 @@ const tokenId=require("../module/token_id_info")
 router.post("/",(req,res)=>{
 
     const token_public=req.headers.token 
-    const api_name=req.url
-    const req_host=req.headers.req_host
-    const api_call_time=moment()
-
     const board_member=req.body.board_num 
-    const coment_contents=req.body.contents 
+    const coment_contents=req.body.contents
+    
+    const api_name="coment" + req.url
+    const req_host=req.headers.req_host
+    const req_data=[board_member,coment_contents]
+    const api_call_time=moment()
     
     const result={
         "success":false
@@ -42,8 +43,7 @@ router.post("/",(req,res)=>{
                 console.log(err)
             }
             //로깅 남기기
-            //logFuntion(user_id, api_name,req_host,api_call_time)
-            // id ip, input output api_name 5개는 필수 이다. 
+            logFuntion(api_name,req_host, req_data, row.rows[0],api_call_time)
 
             res.send(result)
             db.end()
@@ -59,12 +59,13 @@ router.get("/",(req,res)=>{
 
     //token id로 검증 해서 token id와  게시글 쓴 사람의 id 가 같은 경우 보내 주기 
     const token_public=req.headers.token 
-    const api_name=req.url
-    const req_host=req.headers.req_host
-    const api_call_time=moment()
-
     const coment_number=req.query.board_num
     const idValue=req.query.id
+
+    const api_name="coment" + req.url
+    const req_host=req.headers.req_host
+    const req_data=[coment_number,idValue]
+    const api_call_time=moment()
 
     const result={
         "success":false,
@@ -96,7 +97,8 @@ router.get("/",(req,res)=>{
                 }
 
                 //로깅 남기기
-                //logFuntion(user_id, api_name,req_host,api_call_time)
+                logFuntion(api_name,req_host, req_data, row.rows[0],api_call_time)
+
                 res.send(result)
                 db.end()
                 
@@ -116,12 +118,13 @@ router.get("/",(req,res)=>{
 router.put("/",(req,res)=>{
 
     const token_public=req.headers.token 
-    const api_name=req.url
-    const req_host=req.headers.req_host
-    const api_call_time=moment()
-
     const coment_member=req.body.coment_num 
     const coment_contents=req.body.contents 
+
+    const api_name="coment" + req.url
+    const req_host=req.headers.req_host
+    const req_data=[coment_member,coment_contents]
+    const api_call_time=moment()
 
     const result={
         "success":false
@@ -146,9 +149,9 @@ router.put("/",(req,res)=>{
                 console.log(err)
             }
 
-            //로깅 남기기
-            //logFuntion(user_id, api_name,req_host,api_call_time)
-            //로깅 남길 때 user_id 가 꼭 필오 할까? 
+            ///로깅 남기기
+            logFuntion(api_name,req_host, req_data, row.rows[0],api_call_time)
+
             res.send(result)
             db.end()
         })
@@ -158,11 +161,14 @@ router.put("/",(req,res)=>{
 
 router.delete("/",(req,res)=>{
     const token_public=req.headers.token 
-    const api_name=req.url
-    const req_host=req.headers.req_host
-    const api_call_time=moment()
-
     const coment_member=req.body.coment_num 
+
+    const api_name="coment" + req.url
+    const req_host=req.headers.req_host
+    const req_data=[coment_member]
+    const api_call_time=moment()
+    const res_data=" "
+
     const result={
         "success":false
     }
@@ -187,8 +193,8 @@ router.delete("/",(req,res)=>{
                 console.log(err)
             }
             //로깅 남기기
-            //logFuntion(user_id, api_name,req_host,api_call_time)
-
+            logFuntion(api_name,req_host, req_data, res_data,api_call_time)
+            
             res.send(result)
             db.end()
             

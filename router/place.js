@@ -10,12 +10,14 @@ const tokenVerify=require("../module/verify")
 router.post("/",(req,res)=>{
 
     const token_public=req.headers.token 
-    const api_name=req.url
-    const req_host=req.headers.req_host
-    const api_call_time=moment()
-
     const user_id=req.body.id 
     const user_place=req.body.place
+
+    const api_name="place" + req.url
+    const req_host=req.headers.req_host
+    const req_data=[user_id,user_place]
+    const api_call_time=moment()
+
     const result={
         "success":false,
         "message":null
@@ -43,7 +45,7 @@ router.post("/",(req,res)=>{
                 }
 
                 //로깅 남기기
-                //logFuntion(user_id, api_name,req_host,api_call_time)
+                logFuntion(api_name,req_host, req_data, row.rows[0],api_call_time)
 
                 res.send(result)
                 db.end()
@@ -58,11 +60,13 @@ router.post("/",(req,res)=>{
 
 router.get("/",(req,res)=>{
     const token_public=req.headers.token 
-    const api_name=req.url
+    const user_id=req.body.id 
+
+    const api_name="place" + req.url
     const req_host=req.headers.req_host
+    const req_data=[user_id]
     const api_call_time=moment()
 
-    const user_id=req.body.id 
     const result={
         "success":false,
         "data":null
@@ -87,7 +91,7 @@ router.get("/",(req,res)=>{
             }
 
             //로깅 남기기
-            //logFuntion(user_id, api_name,req_host,api_call_time)
+            logFuntion(api_name,req_host, req_data, row.rows[0],api_call_time)
 
             res.send(result)
             db.end()
@@ -99,11 +103,14 @@ router.get("/",(req,res)=>{
 
 router.delete("/",(req,res)=>{
     const token_public=req.headers.token 
-    const api_name=req.url
-    const req_host=req.headers.req_host
-    const api_call_time=moment()
-
     const place_number=req.body.place_num
+
+    const api_name="coment" + req.url
+    const req_host=req.headers.req_host
+    const req_data=[place_number]
+    const api_call_time=moment()
+    const res_data=" "
+
     const result={
         "success":false
     }
@@ -127,9 +134,10 @@ router.delete("/",(req,res)=>{
             }else{
                 console.log(err)
             }
-            //로깅 남기기
-            //logFuntion(user_id, api_name,req_host,api_call_time)
 
+            //로깅 남기기
+            logFuntion(api_name,req_host, req_data, res_data,api_call_time)
+            
             res.send(result)
             db.end()
             

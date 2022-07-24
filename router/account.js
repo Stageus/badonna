@@ -15,8 +15,9 @@ router.post("/login",(req,res)=>{
    const idValue=req.body.id
    const pwValue=req.body.pw
 
-   const api_name=req.url
+   const api_name="account" + req.url
    const req_host=req.headers.req_host
+   const req_data=[idValue,pwValue]
    const api_call_time=moment()
 
     const result={
@@ -60,7 +61,7 @@ router.post("/login",(req,res)=>{
             }
 
             //loggin 
-            //logFuntion(idValue, api_name,req_host,api_call_time)
+            logFuntion(api_name,req_host, req_data, data.rows[0],api_call_time)
         }
         res.send(result)
         db.end()
@@ -79,8 +80,9 @@ router.post("/",(req,res)=>{
     const user_phone=req.body.phone_num
     const join_date=req.body.date
  
-    const api_name=req.url
+    const api_name="account" + req.url
     const req_host=req.headers.req_host
+    const req_data=[idValue,pwValue,user_name,user_phone,join_date]
     const api_call_time=moment()
 
     const result={
@@ -98,7 +100,7 @@ router.post("/",(req,res)=>{
     
         const sql="INSERT INTO badonnaproject.account(id,pw,name, phonenum,date) VALUES($1,$2,$3,$4,$5)"
         const values=[idValue,pwValue,user_name,user_phone,join_date]
-        db.query(sql,values,(err,rows)=>{
+        db.query(sql,values,(err,data)=>{
             if(!err){
                 result.success=true
             }else{
@@ -106,7 +108,7 @@ router.post("/",(req,res)=>{
             }
 
             //logging 
-           //logFuntion(idValue, api_name,req_host,api_call_time)
+            logFuntion(api_name,req_host, req_data, data.rows[0],api_call_time)
             
             res.send(result)
             db.end()
@@ -124,38 +126,51 @@ router.get("/",(req,res)=>{
     const idValue=req.query.id 
     const token_public=req.headers.token
      
+    const api_name="account" + req.url
+    const req_host=req.headers.req_host
+    const req_data=[idValue]
+    const api_call_time=moment()
+
     const result={
         "success":false,
 		"data":null
     }
-    //token verify 
-    if(tokenVerify(token_public)){
 
-        const db=new Client(pgInit)
-        db.connect((err)=>{
-            if(err) {
-                console.log(err)
-            }
-        })
+    if(idValue.length !=0){
+        //token verify 
+        if(tokenVerify(token_public)){
 
-        const sql="SELECT * FROM  badonnaproject.account WHERE id=$1"
-        const values=[idValue]
-        db.query(sql,values,(err,row)=>{
-            if(!err){
-                result.success=true
-                result.data=row.rows[0]
-            }else{
-                console.log(err)
-            }
-            
+            const db=new Client(pgInit)
+            db.connect((err)=>{
+                if(err) {
+                    console.log(err)
+                }
+            })
+
+            const sql="SELECT * FROM  badonnaproject.account WHERE id=$1"
+            const values=[idValue]
+            db.query(sql,values,(err,row)=>{
+                if(!err){
+                    result.success=true
+                    result.data=row.rows[0]
+                }else{
+                    console.log(err)
+                }
+                
+                //logging
+                logFuntion(api_name,req_host, req_data, row.rows[0],api_call_time)
+
+                res.send(result)
+                db.end()
+            })
+        }else{
+            result.message="잘못된 token!"
             res.send(result)
-            db.end()
-        })
+        }
     }else{
-        result.message="잘못된 token!"
+        result.message="실패"
         res.send(result)
-    }
-    
+    }    
 
 })
 
@@ -163,9 +178,10 @@ router.get("/",(req,res)=>{
 router.post("/duplicate/id",(req,res)=>{
     const idValue=req.body.id
 
-   const api_name=req.url
-   const req_host=req.headers.req_host
-   const api_call_time=moment()
+    const api_name="account" + req.url
+    const req_host=req.headers.req_host
+    const req_data=[idValue]
+    const api_call_time=moment()
 
     const result={
         "success":false
@@ -191,6 +207,9 @@ router.post("/duplicate/id",(req,res)=>{
             else
                 result.success=false
         }
+
+        //loggin 
+        logFuntion(api_name,req_host, req_data, data.rows[0],api_call_time)
 
         res.send(result)
         db.end()

@@ -18,8 +18,10 @@ router.post("/",(req,res)=>{
     const board_date=req.body.date 
 
     const token_public=req.headers.token
-    const api_name=req.url
+
+    const api_name="board" + req.url
     const req_host=req.headers.req_host
+    const req_data=[board_title,board_contents,board_place,user_id,board_date]
     const api_call_time=moment()
 
     const result={
@@ -47,7 +49,8 @@ router.post("/",(req,res)=>{
                     console.log(err)
                 }
                 //로깅 남기기
-                //logFuntion(user_id, api_name,req_host,api_call_time)
+                logFuntion(api_name,req_host, req_data, row.rows[0],api_call_time)
+
 
                 res.send(result)
                 db.end()
@@ -70,16 +73,19 @@ router.post("/",(req,res)=>{
 router.get("/",(req,res)=>{
 
     const token_public=req.headers.token
-    const api_name=req.url
-    const req_host=req.headers.req_host
-    const api_call_time=moment()
-
-   // const board_number=req.query.board_num //처음 일 경우  없어도 되지 않을까?  page 수만 주면 된다. 정렬 해서 보내기
+    // const board_number=req.query.board_num //처음 일 경우  없어도 되지 않을까?  page 수만 주면 된다. 정렬 해서 보내기
     const user_id=req.query.id //로깅을 위한 데이터 
     let temp=req.query.offset
     let temp_num=parseInt(temp)
     let offset_num=temp_num*10//offset 지정 해주기 위한 변수 
    
+
+    const api_name="board" + req.url
+    const req_host=req.headers.req_host
+    const req_data=[user_id,temp]
+    const api_call_time=moment()
+
+
     const result={
         "success":false,
         "data":null
@@ -107,7 +113,7 @@ router.get("/",(req,res)=>{
             }
 
             //로깅 남기기
-            //logFuntion(user_id, api_name,req_host,api_call_time)
+            logFuntion(api_name,req_host, req_data, row.rows,api_call_time)
 
             res.send(result)
             db.end()
@@ -124,11 +130,14 @@ router.get("/",(req,res)=>{
 router.delete("/",(req,res)=>{
 
     const token_public=req.headers.token
-    const api_name=req.url
-    const req_host=req.headers.req_host
-    const api_call_time=moment()
-
     const board_mumber=req.body.board_num 
+
+    const api_name="board" + req.url
+    const req_host=req.headers.req_host
+    const req_data=[board_mumber]
+    const api_call_time=moment()
+    const res_data=" "
+
     const result={
         "success":false
     }
@@ -153,7 +162,7 @@ router.delete("/",(req,res)=>{
             }
 
             //로깅 남기기
-            //logFuntion(user_id, api_name,req_host,api_call_time)
+            logFuntion(api_name,req_host, req_data, res_data,api_call_time)
 
             res.send(result)
             db.end()
@@ -169,15 +178,17 @@ router.delete("/",(req,res)=>{
 router.put("/",(req,res)=>{
 
     const token_public=req.headers.token
-    const api_name=req.url
-    const req_host=req.headers.req_host
-    const api_call_time=moment()
 
     const board_number=req.body.board_num 
     const board_title=req.body.title
     const board_contents=req.body.contents
     const board_place=req.body.place
     const board_date=req.body.date
+
+    const api_name="board" + req.url
+    const req_host=req.headers.req_host
+    const req_data=[board_number,board_title,board_contents,board_place,board_date]
+    const api_call_time=moment()
 
     const result={
         "success":false
@@ -203,7 +214,7 @@ router.put("/",(req,res)=>{
             }
 
             //로깅 남기기
-            //logFuntion(user_id, api_name,req_host,api_call_time)
+            logFuntion(api_name,req_host, req_data, row.rows,api_call_time)
 
             res.send(result)
             db.end()
