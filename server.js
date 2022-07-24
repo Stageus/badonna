@@ -20,6 +20,9 @@ app.use("/place",placeAPI)
 const replyAPI=require("./router/reply")
 app.use("/reply",replyAPI)
 
+const memberAPI=require("./router/member")
+app.use("/member",memberAPI)
+
 app.listen(port,()=>{
     console.log(port + "번 포트에서 http통신을 시작 할 것이다.")
 })

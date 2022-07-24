@@ -24,25 +24,83 @@ router.post("/permission",(req,res)=>{//승인 버튼을 누를 때 마다 조�
 
     const board_member=req.body.board_num 
     const member_id=req.body.id
+    // const member_arr=[]
+    // member_arr.push(member_id)
 
     const result={
-        "success":false
+        "success":false,
+        "message":null
+    }
+
+    if(board_member.length !=0 && member_id.length !=0){
+
+        if(tokenVerify(token_public)){
+
+            const db = new Client(pgInit)
+            db.connect((err)=>{
+                if(err){
+                    console.log(err)
+                }
+            })
+
+            const sql="INSERT INTO badonnaproject.member(board_num,member_list) VALUES($1,$2)"
+            const values=[board_member,member_id]
+            
+            db.query(sql,values,(err,row)=>{
+
+                if(!err){
+                    result.success=true
+                    result.message="성공"
+                }else{
+                    console.log(err)
+                }
+                //로깅 남기기
+                //logFuntion(user_id, api_name,req_host,api_call_time)
+
+                res.send(result)
+                db.end()
+                
+            })
+
+        }
+    }else{
+        result.message="실패"
+    }
+
+})
+
+
+router.get("/count",(req,res)=>{
+    const token_public=req.headers.token 
+    const api_name=req.url
+    const req_host=req.headers.req_host
+    const api_call_time=moment()
+
+    const board_member=req.query.board_num 
+
+    const result={
+        "success":false,
+        "count":null
     }
 
     if(tokenVerify(token_public)){
 
         const db = new Client(pgInit)
         db.connect((err)=>{
-            console.log(err)
+            if(err){
+                console.log(err)
+            }
         })
 
-        const sql="INSERT INTO badonnaproject.member(board_num,member_list) VALUES($1,$2)"
-        const values=[]
+        const sql="SELECT member_list FROM badonnaproject.member WHERE board_num=$1"
+        const values=[board_member]
         
         db.query(sql,values,(err,row)=>{
 
             if(!err){
                 result.success=true
+                result.count=row.rows[0].member_list.length
+              
             }else{
                 console.log(err)
             }
@@ -54,7 +112,7 @@ router.post("/permission",(req,res)=>{//승인 버튼을 누를 때 마다 조�
             
         })
 
-    }
+    } 
 
 })
 
@@ -69,24 +127,26 @@ router.get("/",(req,res)=>{
 
     const result={
         "success":false,
-        "data":null
+        "data":null,
     }
 
     if(tokenVerify(token_public)){
 
         const db = new Client(pgInit)
         db.connect((err)=>{
-            console.log(err)
+            if(err){
+                console.log(err)
+            }
         })
 
-        const sql="SELECT member_list FROM badonnaproject.member board_num=1$"
+        const sql="SELECT member_list FROM badonnaproject.member WHERE board_num=$1"
         const values=[board_member]
         
         db.query(sql,values,(err,row)=>{
 
             if(!err){
                 result.success=true
-                result.data=row.rows
+                result.data=row.rows[0]
             }else{
                 console.log(err)
             }
