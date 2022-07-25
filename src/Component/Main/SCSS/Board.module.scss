@@ -5,6 +5,7 @@
     justify-content: flex-start;
     overflow-y: auto;
 }
+
 #boardNav{
     width: 40%;
     max-width: 600px;
@@ -42,13 +43,11 @@
         display: flex;
         width: 90%;
 
-        #name{
-            font-weight: bold;   
-            margin-right: 4%;
+        #name{   
+            margin-right: 6%;
         }
         h2{
             font-size: 20px;
-            font-weight: normal;
         }
         p{  
             width: 100%;
@@ -69,10 +68,11 @@
 
     .boardComment{
         width: 90%;
+        margin-top: 20px;
 
         h2{
             width: 100%;
-            font-size: 18px;
+            font-size: 16px;
         }
         .commentBox{
             width: 100%;
@@ -80,7 +80,7 @@
             #more{
                 width: fit-content;
                 height: fit-content;
-                font-size: 12px;
+                font-size: 10px;
                 font-weight: bold;
             }
             .commentText{
@@ -91,7 +91,7 @@
                 #name{
                     width: 20%;
                     height: fit-content;
-                    font-size: 16px;
+                    font-size: 14px;
                     margin-right: 4%;
                     text-align: center;
                 }

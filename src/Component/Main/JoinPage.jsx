@@ -33,7 +33,7 @@ const Join = () => {
                     <Text/>
                     <H2 id = {style.telText} text = "-"/>
                     <Text/>
-                    <Button text = "중복 체크"/>
+                    <Button text = "전화번호 인증"/>
                     <P text = "전화번호를 입력 해주세요."/>
                 </div>
                 <div id = {style.name}>

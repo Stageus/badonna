@@ -1,0 +1,113 @@
+
+#background{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+
+    #addressBox{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 360px;
+        height: 500px;
+        background-color: white;
+        z-index: 2;
+        border-radius: 10px;
+        div{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            height: fit-content;
+            h1, h2{
+                font-size: 16px;
+            }
+        }
+        input{
+            margin-top: 40px;
+            margin-bottom: 40px;
+            width: 70%;
+        }
+
+        #addressInput{
+            h1{
+                margin-top: 60px;
+            }
+            button{
+                margin-top: 40px;
+                margin-bottom: 40px;
+                width: 70%;
+                background-color: transparent;
+                color: #e2e2e2;
+                text-align: left;
+                border: solid 1px #e2e2e2;
+            }
+            h2{
+                margin-bottom: 20px;
+            }
+        }
+        #address{
+            overflow-y: auto;
+            flex-wrap: nowrap;
+            height: 200px;
+            margin-bottom: 16px;
+            p{
+                margin-bottom: 8px;
+            }
+        }
+        button{
+            width: 120px;
+            margin-bottom: 20px;
+        }
+
+
+        #addressSearch, #addressDetail{
+            flex-wrap: nowrap;
+            flex-direction: row;
+            margin-top: 60px;
+            button{
+                display: inline-block;
+                width: 40px;
+                height: 40px;
+                background-color: transparent;
+                color: black;
+                font-size: 32px;
+                margin: 0;
+            }
+            h1{
+                width: 80%;
+                text-align: center;
+                display: inline-block;
+                margin: 0;
+            }
+        }
+        #addressSearchResult{
+            width: 80%;
+            button{
+                background-color: transparent;
+                color: black;
+                width: fit-content;
+                margin: 0;
+            }
+        }
+
+        #addressDetailInput{
+            p{
+                margin-top: 60px;
+            }
+            button{
+                margin-top: 90px;
+            }
+        }
+    }
+}
+
+#overlay{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background-color: rgba(0, 0, 0, 0.6);
+}

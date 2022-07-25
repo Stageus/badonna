@@ -1,23 +1,21 @@
 @import "./Variable.module.scss";
 
-// @font-face {
-//     //src: url("./Font/Leferi_TTF/TTF/LeferiBaseRegular.ttf");
-//     //font-family: "LeferiBaseRegular";
-//     src: url("./Font/EARLYFONT_DIARY/EF_Diary.ttf");
-//     font-family: "EARLYFONT";
-// }
 @font-face {
-    font-family: 'Hahmlet-Light';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2110@1.0/Hahmlet-Light.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
+    src: url("./Font/Leferi_TTF/TTF/LeferiPointWhite.ttf");
+    font-family: "Badonna";
 }
+// @font-face {
+//     font-family: 'Hahmlet-Light';
+//     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2110@1.0/Hahmlet-Light.woff2') format('woff2');
+//     font-weight: normal;
+//     font-style: normal;
+// }
 
 html, body{
     margin: 0;
     height: 100%;
     overflow: hidden;
-    font-family: "Hahmlet-Light";
+    font-family: "Badonna";
 }
 
 main{
@@ -27,18 +25,31 @@ main{
     margin-top: $top-bar-height;
     justify-content: center;
     align-items: center;
+
+    &::-webkit-scrollbar{
+        width: 10px;
+    }
+    &::-webkit-scrollbar-thumb{
+        background-color: #e2e2e2;
+        border-radius: 10px;
+    }
 }
 
 h1,h2,p{
     display: inline-block;
+    height: fit-content;
     margin-block: 0;
     padding: 0;
     margin-inline: 0;
+    cursor: default;
 }
 
 input{
     padding: 4px;
     border: 1px solid #e2e2e2;
+    &::placeholder{
+        color: #e2e2e2;
+    }
 }
 
 img{
@@ -50,6 +61,14 @@ div{
     width: 100%;
     height: 100%;
     flex-wrap: wrap;
+
+    &::-webkit-scrollbar{
+        width: 10px;
+    }
+    &::-webkit-scrollbar-thumb{
+        background-color: #e2e2e2;
+        border-radius: 10px;
+    }
 }
 
 button{
@@ -57,7 +76,7 @@ button{
     height: fit-content;
     padding-top: 2px;
     padding-bottom: 2px;
-    font-family: "Hahmlet-Light";
+    font-family: "Badonna";
     color: white;
     background-color: $main-color;
     border: 1px solid transparent;

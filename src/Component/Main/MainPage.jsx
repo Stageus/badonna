@@ -7,6 +7,7 @@ import LoginPage from "./LoginPage"
 import JoinPage from "./JoinPage"
 import BoardPage from "./BoardPage"
 import ProfilePage from "./ProfilePage"
+import CommentPage from "./CommentPage"
 import Img from "../Common/Img"
 import H1 from "../Common/H1"
 import throttle from "lodash"
@@ -21,9 +22,10 @@ const Main = () => {
     const boardState = useSelector(state => state.board)
     const boardWriteState = useSelector(state => state.boardWrite)
     const profileState = useSelector(state => state.profile)
+    const commentState = useSelector(state => state.comment)
     const dispatch = useDispatch()
 
-    const scrollEvent = (event, id) => {
+    const scrollEvent = (event) => {
         if(event.deltaY < 0){
             dispatch(changeScroll(scrollState - 1))
         }else{
@@ -51,6 +53,10 @@ const Main = () => {
         }else if(profileState){
             return(
                 <ProfilePage/>
+            )
+        }else if(commentState){
+            return(
+                <CommentPage/>
             )
         }
     }

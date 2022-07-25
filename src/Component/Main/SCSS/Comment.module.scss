@@ -1,0 +1,77 @@
+@import "../../../Variable.module.scss";
+
+#main{
+    flex-direction: column;
+    justify-content: flex-start;
+    overflow-y: auto;
+}
+
+#commentNav{
+    width: 40%;
+    max-width: 600px;
+    margin-top: 100px;
+    margin-bottom: 50px;
+
+    h1{
+        width: 80%;
+    }
+}
+
+#commentMain{
+    display: flex;
+    width: 40%;
+
+    #commentBox{
+        width: 100%;
+        #comment, #reComment{
+            display: flex;
+            width: 100%;
+            align-items: center;
+            margin-bottom: 10px;
+            h2{
+                flex-grow: 1;
+                font-size: 18px;
+            }
+            p{
+                flex-grow: 5;
+                font-size: 14px;
+            }
+            button{
+                background-color: transparent;
+                font-size: 12px;
+                color: black;
+            }
+            transition: all 1s;
+        }
+        #reComment{
+            width: calc(100% - 30px);
+            margin-left: 30px;
+        }
+    }
+    #reCommentInputBox{
+        display: flex;
+        margin-top: 4px;
+        width: 100%;
+        transition: all 1s;
+        input{
+            flex-grow: 8;
+        }
+        button{
+            width: fit-content ;
+        }
+    }
+    
+    #commentInputBox{
+        display: flex;
+        width: 100%;
+        margin-top: 120px;
+        margin-bottom: 80px;
+        input{
+            margin-right: 6%;
+            flex-grow: 4;
+        }
+        button{
+            flex-grow: 1;
+        }
+    }
+}
