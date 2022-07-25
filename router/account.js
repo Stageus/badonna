@@ -25,50 +25,72 @@ router.post("/login",(req,res)=>{
         "message":null,
         "token":null,
     }
+    //여기에 예외처리를 하고 res.send()를 바로 해주면 된다. 
+    //여기 서 부터 try가 시작 하고 그외  undifined || null  datatype and length check  원하는 데이터 형식 인지 해주기 
+    // 서버가 터질 일이 없다.
+    //예외 처리 상황에 대하여 Front -end 에게 정확하게 메세지 보내주기  "한글로 보내기"
     
     //db 연결
-    const db=new Client(pgInit)
-    db.connect((err)=>{
-        if(err) {
-            console.log(err)
-        }
-    })
-   
-    const sql="SELECT * FROM  badonnaproject.account WHERE id=$1 and pw=$2"
-    const values=[idValue,pwValue]
-   // console.log(values)
-    db.query(sql,values,(err,data)=>{
-        if(!err){
+    try{
 
-            const row=data.rows;
-            if(row.length == 0){
+        if(idValue !=null && idValue.length !=0 && pwValue!=null && pwValue.length !=0) {
+            if(idValue.length >12 && pwValue.length >16){
+                throw (err)
             }else{
-                const jwtToken=jwt.sign(
-                    {
-                        "id":idValue,//로그인 한 사람의 아이디
-                        "pw":pwValue
-                    },
-                    secretKey,
-                    {
-                        "issuer": "kelly",// 발급자 메모용
-                        "expiresIn":"24h" //토큰 완료 시간
+
+                const db=new Client(pgInit)
+                db.connect((err)=>{
+                    if(err) {
+                        console.log(err)
                     }
-                )
-                console.log("token",jwtToken)
-                result.token=jwtToken
-                result.success=true
-                
+                })
+        
+                const sql="SELECT * FROM  badonnaproject.account WHERE id=$1 and pw=$2"
+                const values=[idValue,pwValue]
+                // console.log(values)
+                db.query(sql,values,(err,data)=>{
+                    if(!err){
+            
+                        const row=data.rows;
+                        if(row.length == 0){
+                        }else{
+                            const jwtToken=jwt.sign(
+                                {
+                                    "id":idValue,//로그인 한 사람의 아이디
+                                    "pw":pwValue
+                                },
+                                secretKey,
+                                {
+                                    "issuer": "kelly",// 발급자 메모용
+                                    "expiresIn":"24h" //토큰 완료 시간
+                                }
+                            )
+                            console.log("token",jwtToken)
+                            result.token=jwtToken
+                            result.success=true
+                            
+                        }
+            
+                        //loggin 
+                        logFuntion(api_name,req_host, req_data, data.rows[0],api_call_time)
+                    }
+                    res.send(result)
+                    db.end()
+            
+                })
+
             }
-
-            //loggin 
-            logFuntion(api_name,req_host, req_data, data.rows[0],api_call_time)
-        }
+        }else{
+            throw (err)
+        }    
+            
+    }catch(err){
+        result.message="아이디 비밀번호를 확인해주세요"
         res.send(result)
-        db.end()
+    }
 
-    })
-   
 })
+    
 
 //회원 가입
 
@@ -89,32 +111,43 @@ router.post("/",(req,res)=>{
         "success":false,
         "message":null
     }
-    
-    if(idValue.length!=0 && pwValue.length !=0 && user_name.length !=0 && user_phone.length !=0 && join_date.length !=0) {
-       
-        const db=new Client(pgInit)
-        db.connect((err)=>{
-            if(err)
-                console.log("db connect",err)
-        })
-    
-        const sql="INSERT INTO badonnaproject.account(id,pw,name, phonenum,date) VALUES($1,$2,$3,$4,$5)"
-        const values=[idValue,pwValue,user_name,user_phone,join_date]
-        db.query(sql,values,(err,data)=>{
-            if(!err){
-                result.success=true
-            }else{
-                console.log(err)
-            }
 
-            //logging 
-            logFuntion(api_name,req_host, req_data, data.rows[0],api_call_time)
-            
-            res.send(result)
-            db.end()
-        })
-    }else{
-        result.message="회원가입 실패"
+    try{
+        if(idValue.length ==0 && idValue == null && idValue.length >=12 ){
+            result.message="옳바르지 않은 아이디 입력 입니다."
+        }else if(pwValue.length ==0 && pwValue == null && pwValue.length >=16){
+            result.message="옳바르지 않은 비밀번호 입력 입니다."
+        }else if(user_name == null && user_name.length > 4 && user_name.length <2){
+            result.message="옳바르지 않은 이름 입력 입니다."
+        }else if(user_phone.length == 0 && user_phone == null && user_phone.length != 11 ){
+            result.message="옳바르지 않은 전화번호 입력 입니다."
+        }else if(join_date.length != 8 && join_date == null){
+            result.message="옳바르지 않은 날짜 입력 입니다."
+        }else{ 
+            const db=new Client(pgInit)
+            db.connect((err)=>{
+                if(err)
+                    console.log("db connect",err)
+            })
+
+            const sql="INSERT INTO badonnaproject.account(id,pw,name, phonenum,date) VALUES($1,$2,$3,$4,$5)"
+            const values=[idValue,pwValue,user_name,user_phone,join_date]
+            db.query(sql,values,(err,data)=>{
+                if(!err){
+                    result.success=true
+                }else{
+                    console.log(err)
+                }
+
+                //logging 
+                logFuntion(api_name,req_host, req_data, data.rows[0],api_call_time)
+                
+                res.send(result)
+                db.end()
+            })
+        }
+    }catch(e){
+        result.message="잘못된 입력 입니다."
         res.send(result)
     }
 
@@ -133,44 +166,52 @@ router.get("/",(req,res)=>{
 
     const result={
         "success":false,
-		"data":null
+		"data":null,
+        "message":null
     }
 
-    if(idValue.length !=0){
-        //token verify 
-        if(tokenVerify(token_public)){
+    try{
 
-            const db=new Client(pgInit)
-            db.connect((err)=>{
-                if(err) {
-                    console.log(err)
-                }
-            })
-
-            const sql="SELECT * FROM  badonnaproject.account WHERE id=$1"
-            const values=[idValue]
-            db.query(sql,values,(err,row)=>{
-                if(!err){
-                    result.success=true
-                    result.data=row.rows[0]
-                }else{
-                    console.log(err)
-                }
-                
-                //logging
-                logFuntion(api_name,req_host, req_data, row.rows[0],api_call_time)
-
-                res.send(result)
-                db.end()
-            })
+        if(idValue.length !=0 && idValue == null && idValue.length >=12){
+            result.message="아이디 입력이 잘 못 되었습니다."
         }else{
-            result.message="잘못된 token!"
-            res.send(result)
+        
+            //token verify 
+            if(tokenVerify(token_public)){
+
+                const db=new Client(pgInit)
+                db.connect((err)=>{
+                    if(err) {
+                        console.log(err)
+                    }
+                })
+
+                const sql="SELECT * FROM  badonnaproject.account WHERE id=$1"
+                const values=[idValue]
+                db.query(sql,values,(err,row)=>{
+                    if(!err){
+                        result.success=true
+                        result.data=row.rows[0]
+                    }else{
+                        console.log(err)
+                    }
+                    
+                    //logging
+                    logFuntion(api_name,req_host, req_data, row.rows[0],api_call_time)
+
+                    res.send(result)
+                    db.end()
+                })
+            }else{
+                result.message="잘못된 token!"
+                res.send(result)
+            }
         }
-    }else{
-        result.message="실패"
+    }catch(e){
+        result.message="잘못된 입력 입니다."
         res.send(result)
-    }    
+    }
+
 
 })
 
@@ -184,36 +225,48 @@ router.post("/duplicate/id",(req,res)=>{
     const api_call_time=moment()
 
     const result={
-        "success":false
+        "success":false,
+        "message":null
     }
     
-    //db 연결
-    const db=new Client(pgInit)
-    db.connect((err)=>{
-        if(err) {
-            console.log(err)
+    try{
+        
+        if(idValue.length !=0 && idValue == null && idValue.length >=12){
+            result.message="아이디 입력이 잘 못 되었습니다."
+        }else{
+            //db 연결
+            const db=new Client(pgInit)
+            db.connect((err)=>{
+                if(err) {
+                    console.log(err)
+                }
+            })
+        
+            const sql="SELECT * FROM  badonnaproject.account WHERE id=$1"
+            const values=[idValue]
+
+            db.query(sql,values,(err,data)=>{
+                if(!err){
+                    const row=data.rows[0].id
+                    console.log(row)
+                    if(row == idValue)
+                        result.success=true
+                    else
+                        result.success=false
+                }
+
+                //loggin 
+                logFuntion(api_name,req_host, req_data, data.rows[0],api_call_time)
+
+                res.send(result)
+                db.end()
+            })
         }
-    })
-   
-    const sql="SELECT * FROM  badonnaproject.account WHERE id=$1"
-    const values=[idValue]
 
-    db.query(sql,values,(err,data)=>{
-        if(!err){
-            const row=data.rows[0].id
-            console.log(row)
-            if(row == idValue)
-                result.success=true
-            else
-                result.success=false
-        }
-
-        //loggin 
-        logFuntion(api_name,req_host, req_data, data.rows[0],api_call_time)
-
+    }catch(e){
+        result.message="아이디 입력이 잘 못 되었습니다."
         res.send(result)
-        db.end()
-    })
+    }
 
 })
 
