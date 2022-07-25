@@ -28,40 +28,53 @@ router.post("/",(req,res)=>{
         "success":false,
         "message":null
     } 
+    try{
 
-    if(board_title.length !=0 && board_contents.length !=0 && board_place.length !=0 && user_id.length !=0&& board_date.length !=0 ){
-
-        if(tokenVerify(token_public)){//인증 완료 되면 
-
-            const db=new Client(pgInit)
-            db.connect((err)=>{
-                if(err)
-                    console.log(err)    
-            })
-
-            const sql="INSERT INTO badonnaproject.board(id,title,contents,address,date) VALUES($1,$2,$3,$4,$5)"
-            const values=[user_id, board_title,board_contents,board_place,board_date]
-            db.query(sql,values,(err,row)=>{
-                if(!err){
-                    result.success=true
-                    result.message="성공"
-                }else{
-                    console.log(err)
-                }
-                //로깅 남기기
-                logFuntion(api_name,req_host, req_data, row.rows[0],api_call_time)
-
-
-                res.send(result)
-                db.end()
-            })
-
+        if(board_title.length ==0 && board_title == null ){
+            result.message="옳바르지 않은 제목 입력 입니다."
+        }else if(board_contents.length == 0 && board_contents == null && board_contents.length >=200){
+            result.message="옳바르지 않은 내용 입력 입니다."
+        }else if(board_place.length == 0 && board_place == null){
+            result.message="옳바르지 않은 주소 입력 입니다."
+        }else if(board_date.length != 8 && board_date == null){
+            result.message="옳바르지 않은 날짜 입력 입니다."
+        }else if(user_id.length == 0 && user_id == null && user_id >=12){
+            result.message="옳바르지 않은 아이디 입력 입니다."
         }else{
-            result.message="잘못된 token!"
-            res.send(result)
+
+            if(tokenVerify(token_public)){//인증 완료 되면 
+
+                const db=new Client(pgInit)
+                db.connect((err)=>{
+                    if(err)
+                        console.log(err)    
+                })
+
+                const sql="INSERT INTO badonnaproject.board(id,title,contents,address,date) VALUES($1,$2,$3,$4,$5)"
+                const values=[user_id, board_title,board_contents,board_place,board_date]
+                db.query(sql,values,(err,row)=>{
+                    if(!err){
+                        result.success=true
+                        result.message="성공"
+                    }else{
+                        console.log(err)
+                    }
+                    //로깅 남기기
+                    logFuntion(api_name,req_host, req_data, row.rows[0],api_call_time)
+
+
+                    res.send(result)
+                    db.end()
+                })
+
+            }else{
+                result.message="잘못된 token!"
+                res.send(result)
+            }
+
         }
-    }else{
-        result.message="게시글 쓰기 실패"
+    }catch(e){
+        result.message="잘못된 입력 입니다."
         res.send(result)
     }
 
@@ -91,36 +104,49 @@ router.get("/",(req,res)=>{
         "data":null
     }
 
-    if(tokenVerify(token_public)){
+    try{
+        if(user_id.length == 0 && user_id == null && user_id.length >=12){
+            result.message="옳바르지 않은 아이디 입력 입니다."
+        }else if(temp_num.length == 0 && temp_num == null && Number.isInteger(temp_num)){
+            result.message="옳바르지 않은 페이지 입력 입니다."
+        }else{
 
-        const db=new Client(pgInit)
-        db.connect((err)=>{
-            if(err) {
-                console.log(err)
-            }
-        })
+            if(tokenVerify(token_public)){
 
-        const sql="SELECT *FROM badonnaproject.board ORDER BY date DESC LIMIT $1 OFFSET $2"
-        const values=[10,offset_num]
-    
-        db.query(sql,values,(err,row)=>{
-            if(!err){
-                result.data=row.rows// row가 어떤 것이 반환이 되는 지 확인 하기 
-                result.success=true
-                result.message="성공"
-            }else{
-                console.log(err)
-            }
+                const db=new Client(pgInit)
+                db.connect((err)=>{
+                    if(err) {
+                        console.log(err)
+                    }
+                })
 
-            //로깅 남기기
-            logFuntion(api_name,req_host, req_data, row.rows,api_call_time)
-
-            res.send(result)
-            db.end()
+                const sql="SELECT *FROM badonnaproject.board ORDER BY date DESC LIMIT $1 OFFSET $2"
+                const values=[10,offset_num]
             
-        })
-    }else{
-        result.message="잘 못된 token!"
+                db.query(sql,values,(err,row)=>{
+                    if(!err){
+                        result.data=row.rows// row가 어떤 것이 반환이 되는 지 확인 하기 
+                        result.success=true
+                        result.message="성공"
+                    }else{
+                        console.log(err)
+                    }
+
+                    //로깅 남기기
+                    logFuntion(api_name,req_host, req_data, row.rows,api_call_time)
+
+                    res.send(result)
+                    db.end()
+                    
+                })
+            }else{
+                result.message="잘 못된 token!"
+                res.send(result)
+            }
+        }
+
+    }catch(e){
+        result.message="잘 못된 입력 입니다."
         res.send(result)
     }
 
@@ -139,36 +165,47 @@ router.delete("/",(req,res)=>{
     const res_data=" "
 
     const result={
-        "success":false
+        "success":false,
+        "message":null
     }
 
-    if(tokenVerify(token_public)){
+    try{
+        if(board_mumber.length == 0 && board_mumber == null && Number.isInteger(board_mumber)){
+            result.message="옳바르지 않은 게시글 번호 입력 입니다."
+        }else{
 
-        const db=new Client(pgInit)
-        db.connect((err)=>{
-            if(err) {
-                console.log(err)
-            }
-        })
+            if(tokenVerify(token_public)){
 
-        const sql="DELETE FROM badonnaproject.board WHERE board_num=$1;"
-        const values=[board_mumber]
-        
-        db.query(sql,values,(err,row)=>{
-            if(!err){
-                result.success=true
+                const db=new Client(pgInit)
+                db.connect((err)=>{
+                    if(err) {
+                        console.log(err)
+                    }
+                })
+
+                const sql="DELETE FROM badonnaproject.board WHERE board_num=$1;"
+                const values=[board_mumber]
+                
+                db.query(sql,values,(err,row)=>{
+                    if(!err){
+                        result.success=true
+                    }else{
+                        console.log(err)
+                    }
+
+                    //로깅 남기기
+                    logFuntion(api_name,req_host, req_data, res_data,api_call_time)
+
+                    res.send(result)
+                    db.end()
+                })
+
             }else{
-                console.log(err)
+                res.send(result)
             }
-
-            //로깅 남기기
-            logFuntion(api_name,req_host, req_data, res_data,api_call_time)
-
-            res.send(result)
-            db.end()
-        })
-
-    }else{
+        }
+    }catch(e){
+        result.message="잘 못된 입력 입니다."
         res.send(result)
     }
 
@@ -191,36 +228,55 @@ router.put("/",(req,res)=>{
     const api_call_time=moment()
 
     const result={
-        "success":false
+        "success":false,
+        "message":null
     }
 
-    if(tokenVerify(token_public)){
+    try{
 
-        const db=new Client(pgInit)
-        db.connect((err)=>{
-            if(err) {
-                console.log(err)
-            }  
-        })
+        if(board_number == 0 && board_number == null && Number.isInteger(board_number)){
+            result.message="옳바르지 않은 게시번호 입력 입니다."
+        }else if(board_title.length == 0 && board_title == null && board_title >=200){
+            result.message="옳바르지 않은 제목 입력 입니다."
+        }else if(board_contents.length == 0 && board_contents == null && board_contents >=200 ){
+            result.message="옳바르지 않은 내용 입력 입니다."
+        }else if(board_place.length == 0 && board_place == null &&board_place >500){
+            result.message="옳바르지 않은 주소 입력 입니다."
+        }else if(board_date !=8 && board_date == null){
+            result.message="옳바르지 않은 날짜 입력 입니다."
+        }else{
+            if(tokenVerify(token_public)){
 
-        const sql="UPDATE badonnaproject.board SET title=$2,contents=$3,address=$4,date=$5 WHERE board_num=$1 "
-        const values=[board_number,board_title,board_contents,board_place,board_date]
-        
-        db.query(sql,values,(err,row)=>{
-            if(!err){
-                result.success=true
-            }else{
-                console.log(err)
+                const db=new Client(pgInit)
+                db.connect((err)=>{
+                    if(err) {
+                        console.log(err)
+                    }  
+                })
+
+                const sql="UPDATE badonnaproject.board SET title=$2,contents=$3,address=$4,date=$5 WHERE board_num=$1 "
+                const values=[board_number,board_title,board_contents,board_place,board_date]
+                
+                db.query(sql,values,(err,row)=>{
+                    if(!err){
+                        result.success=true
+                    }else{
+                        console.log(err)
+                    }
+
+                    //로깅 남기기
+                    logFuntion(api_name,req_host, req_data, row.rows,api_call_time)
+
+                    res.send(result)
+                    db.end()
+                })
             }
+        }
 
-            //로깅 남기기
-            logFuntion(api_name,req_host, req_data, row.rows,api_call_time)
-
-            res.send(result)
-            db.end()
-        })
+    }catch(e){
+        result.message="옳바르지 않은 입력 입니다."
+        res.send(result)
     }
-
 
 
 })
