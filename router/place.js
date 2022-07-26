@@ -22,37 +22,47 @@ router.post("/",(req,res)=>{
         "success":false,
         "message":null
     }
+    
+    try{
+        if(user_id.length == 0 || user_id == null || user_id.length >12){
+            result.message="옯바르지 않은 아이디 입력 입니다. "
+            res.send(result)
+        }else if(user_place.length == 0 || user_place == null || user_place > 200){
+            result.message="옯바르지 않은 주소 입력 입니다. "
+            res.send(result)
+        }else{
+                if(tokenVerify(token_public)){
 
-    if(user_place.length !=0){
+                    const db = new Client(pgInit)
+                    db.connect((err)=>{
+                        if(err) {
+                            console.log(err)
+                        }
+                    })
+                    const sql="INSERT INTO badonnaproject.place(id,place) VALUES($1,$2)"
+                    const values=[user_id,user_place]
+                    
+                    db.query(sql,values,(err,row)=>{
+                        if(!err){
+                            result.success=true
+                            result.message="성공"
+                        }else{
+                            console.log(err)
+                        }
 
-        if(tokenVerify(token_public)){
+                        //로깅 남기기
+                        logFuntion(api_name,req_host, req_data, row.rows[0],api_call_time)
 
-            const db = new Client(pgInit)
-            db.connect((err)=>{
-                if(err) {
-                    console.log(err)
-                }
-            })
-            const sql="INSERT INTO badonnaproject.place(id,place) VALUES($1,$2)"
-            const values=[user_id,user_place]
-            
-            db.query(sql,values,(err,row)=>{
-                if(!err){
-                    result.success=true
-                    result.message="성공"
+                        res.send(result)
+                        db.end()
+                    })
                 }else{
-                    console.log(err)
+                    result.message="잘못된 토큰 입니다."
                 }
+            }
 
-                //로깅 남기기
-                logFuntion(api_name,req_host, req_data, row.rows[0],api_call_time)
-
-                res.send(result)
-                db.end()
-            })
-        }
-    }else{
-        result.message="장소 입력 실패"
+    }catch(e){
+        result.message="옳바르지 않은 입력 입니다."
         res.send(result)
     }
 })
@@ -69,33 +79,50 @@ router.get("/",(req,res)=>{
 
     const result={
         "success":false,
-        "data":null
+        "data":null,
+        "message":null
     }
-    if(tokenVerify(token_public)){
 
-        const db = new Client(pgInit)
-        db.connect((err)=>{
-            if(err) {
-                console.log(err)
-            }
-        })
-        const sql="SELECT * FROM  badonnaproject.place WHERE id=$1"
-        const values=[user_id]
-        
-        db.query(sql,values,(err,row)=>{
-            if(!err){
-                result.success=true
-                result.data=row.rows
-            }else{
-                console.log(err)
-            }
-
-            //로깅 남기기
-            logFuntion(api_name,req_host, req_data, row.rows[0],api_call_time)
-
+    try{
+        if(user_id.length == 0 || user_id == null || user_id.length >12){
+            result.message="옳바르지 않은 아이디 입력 입니다. "
             res.send(result)
-            db.end()
-        })
+        }else{
+
+            if(tokenVerify(token_public)){
+
+                const db = new Client(pgInit)
+                db.connect((err)=>{
+                    if(err) {
+                        console.log(err)
+                    }
+                })
+                const sql="SELECT * FROM  badonnaproject.place WHERE id=$1"
+                const values=[user_id]
+                
+                db.query(sql,values,(err,row)=>{
+                    if(!err){
+                        result.success=true
+                        result.data=row.rows
+                    }else{
+                        console.log(err)
+                    }
+
+                    //로깅 남기기
+                    logFuntion(api_name,req_host, req_data, row.rows[0],api_call_time)
+
+                    res.send(result)
+                    db.end()
+                })
+            }else{
+                result.message="잘 못된 토큰 입니다."
+                res.send(result)
+            }
+        }
+
+    }catch(e){
+        result.message="에러 입니다."
+        res.send(result)
     }
 
 })
@@ -112,36 +139,51 @@ router.delete("/",(req,res)=>{
     const res_data=" "
 
     const result={
-        "success":false
+        "success":false,
+        "message":null
     }
 
-    if(tokenVerify(token_public)){
-
-        const db = new Client(pgInit)
-        db.connect((err)=>{
-            if(err) {
-                console.log(err)
-            }
-        })
-
-        const sql="DELETE FROM badonnaproject.place WHERE place_num=$1"
-        const values=[place_number]
-        
-        db.query(sql,values,(err,row)=>{
-
-            if(!err){
-                result.success=true
-            }else{
-                console.log(err)
-            }
-
-            //로깅 남기기
-            logFuntion(api_name,req_host, req_data, res_data,api_call_time)
-            
+    try{
+        if(place_number.length == 0 || place_number == null || Number.isInteger(place_number)){
+            result.message="옳바르지 않은 주소 번호 입니다."
             res.send(result)
-            db.end()
-            
-        })
+        }else{
+
+            if(tokenVerify(token_public)){
+
+                const db = new Client(pgInit)
+                db.connect((err)=>{
+                    if(err) {
+                        console.log(err)
+                    }
+                })
+
+                const sql="DELETE FROM badonnaproject.place WHERE place_num=$1"
+                const values=[place_number]
+                
+                db.query(sql,values,(err,row)=>{
+
+                    if(!err){
+                        result.success=true
+                    }else{
+                        console.log(err)
+                    }
+
+                    //로깅 남기기
+                    logFuntion(api_name,req_host, req_data, res_data,api_call_time)
+                    
+                    res.send(result)
+                    db.end()
+                    
+                })
+
+            }else{
+                result.message="잘못된 토큰 입니다."
+                res.send(result)
+            }
+        }
+
+    }catch(e){
 
     }
 })
