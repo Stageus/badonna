@@ -30,15 +30,15 @@ router.post("/",(req,res)=>{
     } 
     try{
 
-        if(board_title.length ==0 && board_title == null ){
+        if(board_title.length ==0 || board_title == null ){
             result.message="옳바르지 않은 제목 입력 입니다."
-        }else if(board_contents.length == 0 && board_contents == null && board_contents.length >=200){
+        }else if(board_contents.length == 0 || board_contents == null || board_contents.length >=200){
             result.message="옳바르지 않은 내용 입력 입니다."
-        }else if(board_place.length == 0 && board_place == null){
+        }else if(board_place.length == 0 || board_place == null){
             result.message="옳바르지 않은 주소 입력 입니다."
-        }else if(board_date.length != 8 && board_date == null){
+        }else if(board_date.length != 8 || board_date == null){
             result.message="옳바르지 않은 날짜 입력 입니다."
-        }else if(user_id.length == 0 && user_id == null && user_id >=12){
+        }else if(user_id.length == 0 || user_id == null || user_id >=12){
             result.message="옳바르지 않은 아이디 입력 입니다."
         }else{
 
@@ -105,9 +105,9 @@ router.get("/",(req,res)=>{
     }
 
     try{
-        if(user_id.length == 0 && user_id == null && user_id.length >=12){
+        if(user_id.length == 0 || user_id == null || user_id.length >=12){
             result.message="옳바르지 않은 아이디 입력 입니다."
-        }else if(temp_num.length == 0 && temp_num == null && Number.isInteger(temp_num)){
+        }else if(temp_num.length == 0 || temp_num == null || Number.isInteger(temp_num)){
             result.message="옳바르지 않은 페이지 입력 입니다."
         }else{
 
@@ -170,7 +170,7 @@ router.delete("/",(req,res)=>{
     }
 
     try{
-        if(board_mumber.length == 0 && board_mumber == null && Number.isInteger(board_mumber)){
+        if(board_mumber.length == 0 || board_mumber == null || Number.isInteger(board_mumber)){
             result.message="옳바르지 않은 게시글 번호 입력 입니다."
         }else{
 
@@ -234,15 +234,15 @@ router.put("/",(req,res)=>{
 
     try{
 
-        if(board_number == 0 && board_number == null && Number.isInteger(board_number)){
+        if(board_number == 0 || board_number == null || Number.isInteger(board_number)){
             result.message="옳바르지 않은 게시번호 입력 입니다."
-        }else if(board_title.length == 0 && board_title == null && board_title >=200){
+        }else if(board_title.length == 0 || board_title == null || board_title >=200){
             result.message="옳바르지 않은 제목 입력 입니다."
-        }else if(board_contents.length == 0 && board_contents == null && board_contents >=200 ){
+        }else if(board_contents.length == 0 || board_contents == null || board_contents >=200 ){
             result.message="옳바르지 않은 내용 입력 입니다."
-        }else if(board_place.length == 0 && board_place == null &&board_place >500){
+        }else if(board_place.length == 0 || board_place == null ||board_place >500){
             result.message="옳바르지 않은 주소 입력 입니다."
-        }else if(board_date !=8 && board_date == null){
+        }else if(board_date !=8 || board_date == null){
             result.message="옳바르지 않은 날짜 입력 입니다."
         }else{
             if(tokenVerify(token_public)){
