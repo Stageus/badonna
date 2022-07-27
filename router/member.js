@@ -31,90 +31,57 @@ router.post("/permission",(req,res)=>{//승인 버튼을 누를 때 마다 조�
         "message":null
     }
 
-    if(board_member.length!=0 && member_id.length !=0){
+    try{
 
-        if(tokenVerify(token_public)){
-
-            const db = new Client(pgInit)
-            db.connect((err)=>{
-                if(err){
-                    console.log(err)
-                }
-            })
-
-            const sql="INSERT INTO badonnaproject.member(board_num,member_list) VALUES($1,$2)"
-            const values=[board_member,member_id]
-            
-            db.query(sql,values,(err,row)=>{
-
-                if(!err){
-                    result.success=true
-                    result.message="성공"
-                }else{
-                    console.log(err)
-                }
-                //로깅 남기기
-                logFuntion(api_name,req_host, req_data, row.rows[0],api_call_time)
-
-                res.send(result)
-                db.end()
-                
-            })
-
-        }
-    }else{
-        result.message="실패"
-    }
-
-})
-
-
-router.get("/count",(req,res)=>{
-    const token_public=req.headers.token 
-    const board_member=req.query.board_num 
-
-    const api_name="member" + req.url
-    const req_host=req.headers.req_host
-    const req_data=[board_member]
-    const api_call_time=moment()
-
-    const result={
-        "success":false,
-        "count":null
-    }
-
-    if(tokenVerify(token_public)){
-
-        const db = new Client(pgInit)
-        db.connect((err)=>{
-            if(err){
-                console.log(err)
-            }
-        })
-
-        const sql="SELECT member_list FROM badonnaproject.member WHERE board_num=$1"
-        const values=[board_member]
-        
-        db.query(sql,values,(err,row)=>{
-
-            if(!err){
-                result.success=true
-                result.count=row.rows[0].member_list.length
-              
-            }else{
-                console.log(err)
-            }
-            //로깅 남기기
-            logFuntion(api_name,req_host, req_data, result.count,api_call_time)
-
+        if(board_member.length == 0 || board_member == null){
+            result.message="옳바르지 않은 게시글 번호 입니다."
             res.send(result)
-            db.end()
-            
-        })
+        }else if(member_id.length == 0 || member_id == null ||member_id >12){
+            result.message="옳바르지 않은 맴버 아이디 입니다."
+            res.send(result)
+        }else{
 
-    } 
+            if(tokenVerify(token_public)){
+
+                const db = new Client(pgInit)
+                db.connect((err)=>{
+                    if(err){
+                        console.log(err)
+                    }
+                })
+
+                const sql="INSERT INTO badonnaproject.member(board_num,member_list) VALUES($1,$2)"
+                const values=[board_member,member_id]
+                
+                db.query(sql,values,(err,row)=>{
+
+                    if(!err){
+                        result.success=true
+                        result.message="성공"
+                    }else{
+                        console.log(err)
+                    }
+                    //로깅 남기기
+                    logFuntion(api_name,req_host, req_data, row.rows[0],api_call_time)
+
+                    res.send(result)
+                    db.end()
+                    
+                })
+
+            }else{
+                result.message="잘 못된 token"
+                res.send(result)
+            }
+        }
+
+    }catch(e){
+        result.message="에러 입니다."
+        res.send(result)
+    }
 
 })
+
 
 
 router.get("/",(req,res)=>{
@@ -129,37 +96,48 @@ router.get("/",(req,res)=>{
     const result={
         "success":false,
         "data":null,
+        "message":null
     }
 
-    if(tokenVerify(token_public)){
-
-        const db = new Client(pgInit)
-        db.connect((err)=>{
-            if(err){
-                console.log(err)
-            }
-        })
-
-        const sql="SELECT member_list FROM badonnaproject.member WHERE board_num=$1"
-        const values=[board_member]
-        
-        db.query(sql,values,(err,row)=>{
-
-            if(!err){
-                result.success=true
-                result.data=row.rows[0]
-            }else{
-                console.log(err)
-            }
-            //로깅 남기기
-            logFuntion(api_name,req_host, req_data, result.data,api_call_time)
-
+    try{
+        if(board_member.length ==0 || board_member == null){
+            result.message="옳바르지 않은 게시글 번호 입니다."
             res.send(result)
-            db.end()
-            
-        })
+        }
 
-    } 
+            if(tokenVerify(token_public)){
+
+                const db = new Client(pgInit)
+                db.connect((err)=>{
+                    if(err){
+                        console.log(err)
+                    }
+                })
+
+                const sql="SELECT member_list FROM badonnaproject.member WHERE board_num=$1"
+                const values=[board_member]
+                
+                db.query(sql,values,(err,row)=>{
+
+                    if(!err){
+                        result.success=true
+                        result.data=row.rows[0]
+                    }else{
+                        console.log(err)
+                    }
+                    //로깅 남기기
+                    logFuntion(api_name,req_host, req_data, result.data,api_call_time)
+
+                    res.send(result)
+                    db.end()
+                    
+                })
+
+            } 
+
+    }catch(e){
+
+    }
 
 })
 

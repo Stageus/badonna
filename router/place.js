@@ -62,7 +62,7 @@ router.post("/",(req,res)=>{
             }
 
     }catch(e){
-        result.message="옳바르지 않은 입력 입니다."
+        result.message="에러 입니다."
         res.send(result)
     }
 })
@@ -184,7 +184,8 @@ router.delete("/",(req,res)=>{
         }
 
     }catch(e){
-
+        result.message="에러 입니다."
+        res.send(result)
     }
 })
 

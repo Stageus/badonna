@@ -59,6 +59,9 @@ router.post("/",(req,res)=>{
                     
                 })
 
+            }else{
+                result.message="잘 못된 token!"
+                res.send(result)
             }
         }
 
@@ -129,9 +132,12 @@ router.get("/",(req,res)=>{
                         
                     })
                 }else{
-                    result.data="비밀 댓글"
+                    result.data="댓글을 볼 수없습니다."
                     res.send(result)
                 }
+            }else{
+                result.message="잘 못된 token!"
+                res.send(result)
             }
         }
 
@@ -196,6 +202,9 @@ router.put("/",(req,res)=>{
                     res.send(result)
                     db.end()
                 })
+            }else{
+                result.message="잘 못된 token!"
+                res.send(result)
             }
         }
         
@@ -254,11 +263,14 @@ router.delete("/",(req,res)=>{
                     
                 })
 
+            }else{
+                result.message="잘 못된 token!"
+                res.send(result)
             }
         }
 
     }catch(e){
-        result.message="옯바르지 않은 댓글 번호 입니다. "
+        result.message="에러 입니다. "
         res.send(result)
     }
 

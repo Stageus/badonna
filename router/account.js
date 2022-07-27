@@ -115,14 +115,19 @@ router.post("/",(req,res)=>{
     try{
         if(idValue.length ==0 || idValue == null || idValue.length >=12 ){
             result.message="옳바르지 않은 아이디 입력 입니다."
+            res.send(result)
         }else if(pwValue.length ==0 || pwValue == null || pwValue.length >=16){
             result.message="옳바르지 않은 비밀번호 입력 입니다."
+            res.send(result)
         }else if(user_name == null || user_name.length > 4 || user_name.length <2){
             result.message="옳바르지 않은 이름 입력 입니다."
+            res.send(result)
         }else if(user_phone.length == 0 || user_phone == null || user_phone.length != 11 ){
             result.message="옳바르지 않은 전화번호 입력 입니다."
+            res.send(result)
         }else if(join_date.length != 8 || join_date == null){
             result.message="옳바르지 않은 날짜 입력 입니다."
+            res.send(result)
         }else{ 
             const db=new Client(pgInit)
             db.connect((err)=>{
@@ -174,6 +179,7 @@ router.get("/",(req,res)=>{
 
         if(idValue.length !=0 || idValue == null || idValue.length >=12){
             result.message="아이디 입력이 잘 못 되었습니다."
+            res.send(result)
         }else{
         
             //token verify 
@@ -233,6 +239,7 @@ router.post("/duplicate/id",(req,res)=>{
         
         if(idValue.length !=0 || idValue == null || idValue.length >=12){
             result.message="아이디 입력이 잘 못 되었습니다."
+            res.send(result)
         }else{
             //db 연결
             const db=new Client(pgInit)
