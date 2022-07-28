@@ -1,4 +1,4 @@
-import { HOME, SCROLL, LOGIN, JOIN, BOARD, PROFILE, ADDRESS, ADDRESS_SEARCH, ADDRESS_DETAIL, ADDRESS_CLOSE, COMMENT, COMMENT_INPUT_TEXT, RE_COMMENT_INPUT, RE_COMMENT_INPUT_UPLOAD, RE_COMMENT_INPUT_TEXT, BOARD_WRITE } from "../Action/action"
+import { HOME, SCROLL, LOGIN, JOIN, BOARD, PROFILE, ADDRESS, ADDRESS_SEARCH, ADDRESS_DETAIL, ADDRESS_CLOSE, COMMENT, COMMENT_INPUT_TEXT, COMMENT_UPLOAD, RE_COMMENT_INPUT, RE_COMMENT_UPLOAD, RE_COMMENT_INPUT_TEXT } from "../Action/action"
 
 const initState = {
     currentCon: true,
@@ -15,26 +15,41 @@ const initState = {
             user: "user",
             date: "2022-08-28",
             location: "인천"
+        },
+        {
+            title: "title2",
+            content: "content2",
+            user: "user2",
+            date: "2022-08-282",
+            location: "인천2"
         }
     ],
     comment: false,
     commentNum: null,
+    commentInputText: null,
     commentList: [
         [
             {
                 user: "조민혁",
                 content: "파일 날라가서 다시 코딩중"
-            }
+            },
         ],
+        [
+            {
+                user: null,
+                content: null
+            }
+        ]
     ],
     reComment: null,
     reCommentNum: null,
     reCommentInput: false,
+    reCommentInputText: null,
     reCommentList: [
         [
             {
-            user: "민민",
-            content: "ㅇ"
+                user: "민민",
+                content: "ㅇ"
             },
             {
                 user: "민민",
@@ -49,15 +64,15 @@ const initState = {
             {
                 user: "조조",
                 content: "ㅁ"
-                },
-                {
-                    user: "조",
-                    content: "ㅁㅁ"
-                },
-                {
-                    user: "조주",
-                    content: "ㅁㅁㅁ"
-                },
+            },
+            {
+                user: "조",
+                content: "ㅁㅁ"
+            },
+            {
+                user: "조주",
+                content: "ㅁㅁㅁ"
+            },
         ]
     ],
     boardWrite: false,
@@ -88,6 +103,7 @@ const reducer = ( state = initState, action ) => {
                 boardWrite: false,
                 profile: false,
                 comment: false,
+                reCommentInputText: null,
             }
         case SCROLL:
             state.scroll += action.scroll 
@@ -110,6 +126,7 @@ const reducer = ( state = initState, action ) => {
                 boardWrite: false,
                 profile: false,
                 comment: false,
+                reCommentInputText: null,
             }
         case JOIN:
             return{
@@ -120,6 +137,7 @@ const reducer = ( state = initState, action ) => {
                 board: false,
                 boardWrite: false,
                 profile: false,
+                reCommentInputText: null,
             }
         case BOARD:
             return{
@@ -130,6 +148,7 @@ const reducer = ( state = initState, action ) => {
                 board: true,
                 boardWrite: false,
                 profile: false,
+                reCommentInputText: null,
             }
         case PROFILE:
             return{
@@ -141,6 +160,7 @@ const reducer = ( state = initState, action ) => {
                 boardWrite: false,
                 profile: true,
                 comment: false,
+                reCommentInputText: null,
             }
         case ADDRESS:
             if(state.address){
@@ -195,6 +215,11 @@ const reducer = ( state = initState, action ) => {
         case COMMENT_INPUT_TEXT:
             return {
                 ...state,
+                commentInputText: action.text
+            }
+        case COMMENT_UPLOAD:
+            return{
+                ...state,
             }
         case RE_COMMENT_INPUT:
             return{
@@ -203,13 +228,32 @@ const reducer = ( state = initState, action ) => {
                 reCommentNum: action.reCommentNum,
                 reCommentInput: true
             }
-        case RE_COMMENT_INPUT_UPLOAD:
+        case RE_COMMENT_UPLOAD:
             if(action.cancel == null){
-                console.log("hi")
+                const reCommentList = [...state.reCommentList]
+                reCommentList[state.commentNum] = [...reCommentList[state.commentNum]]
+                reCommentList[state.commentNum].push(
+                    {
+                        user: state.user.name,
+                        content: state.reCommentInputText
+                    }
+                )
+                return {
+                    ...state,
+                    reCommentList: reCommentList,
+                    reCommentInput: false,
+                    reCommentInputText: null,
+                }
             }
             return {
                 ...state,
-                reCommentInput: false
+                reCommentInput: false,
+                reCommentInputText: null,
+            }
+        case RE_COMMENT_INPUT_TEXT:
+            return {
+                ...state,
+                reCommentInputText: action.text,
             }
         default:
             return state

@@ -1,6 +1,6 @@
 import React from "react"
 import { useDispatch } from "react-redux"
-import { reCommentInputText } from "../../Redux/Action/action"
+import { commentInputText, reCommentInputText } from "../../Redux/Action/action"
 
 const Text = (props) => {
 
@@ -9,7 +9,7 @@ const Text = (props) => {
     const onChangeEvent = (event) => {
         switch(props.name){
             case "comment":
-                dispatch()
+                dispatch(commentInputText(event.target.value))
                 break
             case "reComment":
                 dispatch(reCommentInputText(event.target.value))

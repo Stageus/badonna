@@ -23,7 +23,7 @@ const CommentPage = () => {
                 }
                 <div id = {style.commentInputBox}>
                     <Text name = "comment"/>
-                    <Button text = "댓글 추가"/>
+                    <Button text = "댓글 추가" name = "commentUpload"/>
                 </div>
             </div>
         </main>
