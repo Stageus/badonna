@@ -111,3 +111,26 @@
         }
     }
 }
+
+#boardWriteBox{
+    width: 50%;
+    max-width: 500px;
+    #titleBox{
+        width: 100%;
+        input{
+            width: 100%;
+            margin-bottom: 12px;
+        }
+        button{
+            margin-bottom: 12px
+        }
+    }
+    #contentBox{
+        width: 100%;
+        input{
+            width: 100%;
+            margin-bottom: 60px;
+            height: 80px;
+        }
+    }
+}

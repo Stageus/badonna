@@ -9,7 +9,6 @@ import { useSelector } from "react-redux"
 const Comment = (props) => {
 
     const reCommentListState = useSelector(state => state.reCommentList[props.commentNum])
-    console.log(reCommentListState)
 
     return (
         <div id = {style.commentBox}>

@@ -6,22 +6,8 @@ import Button from "../Common/Button"
 
 const Board = (props) => {
     
-    if(props.commentUser == undefined){
+    if(props.commentUser != undefined){
         return (
-            <article className = {style.board}>
-                <div className = {style.boardTitleBox}>
-                    <H2 id = {style.name} text = {props.boardUser}/>
-                    <H2 text = {props.boardTitle}/>
-                    <Button text = "…"/>
-                    <P text = {`${props.boardDate} ${props.boardLocation}`}/>
-                </div>
-                <div className = {style.boardContent}>
-                    <P text = {props.boardContent}/>
-                </div>
-            </article>
-        )
-    }
-    return (
         <article className = {style.board}>
             <div className = {style.boardTitleBox}>
                 <H2 id = {style.name} text = {props.boardUser}/>
@@ -45,6 +31,20 @@ const Board = (props) => {
             </div>
         </article>
     )
+    }
+    return (
+            <article className = {style.board}>
+                <div className = {style.boardTitleBox}>
+                    <H2 id = {style.name} text = {props.boardUser}/>
+                    <H2 text = {props.boardTitle}/>
+                    <Button text = "…"/>
+                    <P text = {`${props.boardDate} ${props.boardLocation}`}/>
+                </div>
+                <div className = {style.boardContent}>
+                    <P text = {props.boardContent}/>
+                </div>
+            </article>
+        )
 }
 
 export default Board

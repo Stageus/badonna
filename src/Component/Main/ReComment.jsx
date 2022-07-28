@@ -6,6 +6,11 @@ import P from "../Common/P"
 
 const ReComment = (props) => {
 
+    if(props.user == null){
+        return(
+            <React.Fragment></React.Fragment>
+        )
+    }
     return (
         <div id = {style.reComment}>
             <H2 text = {props.user}/>

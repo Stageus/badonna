@@ -1,4 +1,4 @@
-import { HOME, SCROLL, LOGIN, JOIN, BOARD, PROFILE, ADDRESS, ADDRESS_SEARCH, ADDRESS_DETAIL, ADDRESS_CLOSE, COMMENT, COMMENT_INPUT_TEXT, COMMENT_UPLOAD, RE_COMMENT_INPUT, RE_COMMENT_UPLOAD, RE_COMMENT_INPUT_TEXT } from "../Action/action"
+import { HOME, SCROLL, LOGIN, JOIN, BOARD, PROFILE, ADDRESS, ADDRESS_SEARCH, ADDRESS_DETAIL, ADDRESS_CLOSE, COMMENT, COMMENT_INPUT_TEXT, COMMENT_UPLOAD, RE_COMMENT_INPUT, RE_COMMENT_UPLOAD, RE_COMMENT_INPUT_TEXT, BOARD_WRITE } from "../Action/action"
 
 const initState = {
     currentCon: true,
@@ -8,6 +8,13 @@ const initState = {
     join: false,
     board: false,
     boardNum: null,
+    boardInput: {
+        title: null,
+        constent: null,
+        user: null,
+        date: null,
+        location: null,
+    },
     boardList: [
         {
             title: "title",
@@ -62,17 +69,9 @@ const initState = {
         ],
         [
             {
-                user: "조조",
-                content: "ㅁ"
-            },
-            {
-                user: "조",
-                content: "ㅁㅁ"
-            },
-            {
-                user: "조주",
-                content: "ㅁㅁㅁ"
-            },
+                user: null,
+                content: null
+            }
         ]
     ],
     boardWrite: false,
@@ -104,6 +103,7 @@ const reducer = ( state = initState, action ) => {
                 profile: false,
                 comment: false,
                 reCommentInputText: null,
+                commentInputText: null
             }
         case SCROLL:
             state.scroll += action.scroll 
@@ -127,6 +127,7 @@ const reducer = ( state = initState, action ) => {
                 profile: false,
                 comment: false,
                 reCommentInputText: null,
+                commentInputText: null
             }
         case JOIN:
             return{
@@ -138,6 +139,7 @@ const reducer = ( state = initState, action ) => {
                 boardWrite: false,
                 profile: false,
                 reCommentInputText: null,
+                commentInputText: null
             }
         case BOARD:
             return{
@@ -149,6 +151,13 @@ const reducer = ( state = initState, action ) => {
                 boardWrite: false,
                 profile: false,
                 reCommentInputText: null,
+                commentInputText: null
+            }
+        case BOARD_WRITE:
+            return{
+                ...state,
+                board: false,
+                boardWrite: true
             }
         case PROFILE:
             return{
@@ -161,6 +170,7 @@ const reducer = ( state = initState, action ) => {
                 profile: true,
                 comment: false,
                 reCommentInputText: null,
+                commentInputText: null
             }
         case ADDRESS:
             if(state.address){
@@ -218,8 +228,17 @@ const reducer = ( state = initState, action ) => {
                 commentInputText: action.text
             }
         case COMMENT_UPLOAD:
+            const commentList = [...state.commentList]
+            commentList[state.boardNum] = [...commentList[state.boardNum]]
+            commentList[state.boardNum].push(
+                {
+                    user: state.user.name,
+                    content: state.commentInputText
+                }
+            )
             return{
                 ...state,
+                commentList: commentList
             }
         case RE_COMMENT_INPUT:
             return{
