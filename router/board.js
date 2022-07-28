@@ -133,8 +133,9 @@ router.get("/",(req,res)=>{
             
                 db.query(sql,values,(err,row)=>{
                     if(!err){
-                        result.count=row.rows[0].member_list.length
+                    
                         for(let i = 0; i<row.rows.length; i++){
+                            result.count=row.rows[i].member_list.length
                             delete row.rows[i].member_list
                         }
                         result.data=row.rows// row가 어떤 것이 반환이 되는 지 확인 하기 
@@ -182,7 +183,7 @@ router.delete("/",(req,res)=>{
     }
 
     try{
-        if(board_mumber.length == 0 || board_mumber == null || Number.isInteger(board_mumber)){
+        if(board_mumber.length == 0 || board_mumber == null){
             result.message="옳바르지 않은 게시글 번호 입력 입니다."
             res.send(result)
         }else{
@@ -260,7 +261,7 @@ router.put("/",(req,res)=>{
         }else if(board_place.length == 0 || board_place == null ||board_place >500){
             result.message="옳바르지 않은 주소 입력 입니다."
             res.send(result)
-        }else if(board_date !=8 || board_date == null){
+        }else if(board_date.length !=8 || board_date == null){
             result.message="옳바르지 않은 날짜 입력 입니다."
             res.send(result)
         }else{

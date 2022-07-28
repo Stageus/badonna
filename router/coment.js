@@ -28,7 +28,7 @@ router.post("/",(req,res)=>{
         if(coment_contents.length ==0 || coment_contents ==null || coment_contents >200){
             result.message="옳바르지 않은 내용 입력 입니다. "
             res.send(result)
-        }else if(board_member.length ==0 || board_member == null || Number.isInteger(board_member)){
+        }else if(board_member.length ==0 || board_member == null){
             result.message="옯바르지 않은 게시글 번호 입력 입니다."
             res.send(result)
         }else{
@@ -66,7 +66,7 @@ router.post("/",(req,res)=>{
         }
 
     }catch(e){
-        result.message="옯바르지 않은 입력 입니다."
+        result.message="에러 입니다."
         res.send(result)
     }
 
@@ -92,7 +92,7 @@ router.get("/",(req,res)=>{
     }
 
     try{
-        if(coment_number.length ==0 || coment_number == null || Number.isInteger(coment_number)){
+        if(coment_number.length ==0 || coment_number == null){
             result.message="옳바르지 않은 댓글 번호 입니다. "
             res.send(result)
         }else if(idValue.length == 0 || idValue == null || idValue >=12){
@@ -142,7 +142,7 @@ router.get("/",(req,res)=>{
         }
 
     }catch(e){
-        result.message="옳바르지 않은 입력 입니다. "
+        result.message="에러 입니다. "
         res.send(result)
     }
 
@@ -169,7 +169,7 @@ router.put("/",(req,res)=>{
     
     try {
 
-        if(coment_number.length == 0 || coment_number == null || Number.isInteger(coment_number)){
+        if(coment_number.length == 0 || coment_number == null ){
             result.message="옳바르지 않은 댓글 번호 입니다."
             res.send(result)
         }else if(coment_contents.length == 0 || coment_contents == null || coment_contents >200){
@@ -231,7 +231,7 @@ router.delete("/",(req,res)=>{
     }
 
     try{
-        if(coment_number.length == 0 || coment_number == null || Number.isInteger(coment_number)){
+        if(coment_number.length == 0 || coment_number == null){
             result.message="옳바르지 않은 댓글 번호 입니다."
             res.send(result)
         }else{

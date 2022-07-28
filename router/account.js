@@ -113,13 +113,13 @@ router.post("/",(req,res)=>{
     }
 
     try{
-        if(idValue.length ==0 || idValue == null || idValue.length >=12 ){
+        if(idValue == null || idValue.length >=12 || idValue.length <6){
             result.message="옳바르지 않은 아이디 입력 입니다."
             res.send(result)
-        }else if(pwValue.length ==0 || pwValue == null || pwValue.length >=16){
+        }else if(pwValue == null || pwValue.length >=16 || pwValue.length <6){
             result.message="옳바르지 않은 비밀번호 입력 입니다."
             res.send(result)
-        }else if(user_name == null || user_name.length > 4 || user_name.length <2){
+        }else if(user_name == null || user_name.length > 4 && user_name.length <2){
             result.message="옳바르지 않은 이름 입력 입니다."
             res.send(result)
         }else if(user_phone.length == 0 || user_phone == null || user_phone.length != 11 ){
@@ -152,7 +152,7 @@ router.post("/",(req,res)=>{
             })
         }
     }catch(e){
-        result.message="잘못된 입력 입니다."
+        result.message="에러 입니다."
         res.send(result)
     }
 
@@ -177,7 +177,7 @@ router.get("/",(req,res)=>{
 
     try{
 
-        if(idValue.length !=0 || idValue == null || idValue.length >=12){
+        if(idValue.length ==0 || idValue == null || idValue.length >=12){
             result.message="아이디 입력이 잘 못 되었습니다."
             res.send(result)
         }else{
@@ -196,8 +196,12 @@ router.get("/",(req,res)=>{
                 const values=[idValue]
                 db.query(sql,values,(err,row)=>{
                     if(!err){
-                        result.success=true
-                        result.data=row.rows[0]
+                        if(row.rows.length == 0){
+                            result.message="회원이 아닙니다."
+                        }else{
+                            result.data=row.rows[0]
+                            result.success=true
+                        }
                     }else{
                         console.log(err)
                     }
@@ -237,7 +241,7 @@ router.post("/duplicate/id",(req,res)=>{
     
     try{
         
-        if(idValue.length !=0 || idValue == null || idValue.length >=12){
+        if(idValue.length ==0 || idValue == null || idValue.length >=12){
             result.message="아이디 입력이 잘 못 되었습니다."
             res.send(result)
         }else{
@@ -271,7 +275,7 @@ router.post("/duplicate/id",(req,res)=>{
         }
 
     }catch(e){
-        result.message="아이디 입력이 잘 못 되었습니다."
+        result.message="에러 입니다. "
         res.send(result)
     }
 

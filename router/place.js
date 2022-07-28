@@ -144,7 +144,7 @@ router.delete("/",(req,res)=>{
     }
 
     try{
-        if(place_number.length == 0 || place_number == null || Number.isInteger(place_number)){
+        if(place_number.length == 0 || place_number == null){
             result.message="옳바르지 않은 주소 번호 입니다."
             res.send(result)
         }else{

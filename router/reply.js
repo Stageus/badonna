@@ -26,7 +26,7 @@ router.post("/",(req,res)=>{
     }
 
     try{
-        if(coment_number.length == 0 || coment_number == null || Number.isInteger(coment_number)){
+        if(coment_number.length == 0 || coment_number == null ){
             result.message="옳바르지 않은 댓글 번호 입니다."
             res.send(result)
         }else if(reply_contents.length == 0 || reply_contents == null || reply_contents >200){
@@ -91,7 +91,7 @@ router.get("/",(req,res)=>{
     }
 
     try{
-        if(reply_number.length ==0 || reply_number == null || Number.isInteger(reply_number)){
+        if(reply_number.length ==0 || reply_number == null){
             result.message="옳바르지 않은 대댓글 번호 입니다."
             result.send(result)
         }else{
@@ -153,10 +153,10 @@ router.put("/",(req,res)=>{
 
     try{
 
-        if(coment_number.length == 0 || coment_number == null || Number.isInteger(coment_number)){
+        if(coment_number.length == 0 || coment_number == null){
             result.message="옳바르지 않은 댓글 번호 입니다."
             res.send(result)
-        }else if(reply_number.length == 0 || reply_number == null || Number.isInteger(reply_number)){
+        }else if(reply_number.length == 0 || reply_number == null){
             result.message="옳바르지 않은 대댓글 번호 입니다."
             res.send(result)
         }else if(reply_contents.length == 0 || reply_contents == null || reply_contents.length >200){
@@ -216,7 +216,7 @@ router.delete("/",(req,res)=>{
     }
 
     try{
-        if(reply_number.length == 0 || reply_number == null || Number.isInteger(reply_number)){
+        if(reply_number.length == 0 || reply_number == null){
             result.message="옳바르지 않은 대댓글 번호 입니다."
             res.send(result)
         }else{
