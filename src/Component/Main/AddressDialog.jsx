@@ -1,6 +1,6 @@
 import React from "react"
 import { useSelector, useDispatch } from "react-redux"
-import { address, addressClose } from "../../Redux/Action/action"
+import { addressClose } from "../../Redux/Action/action"
 import style from "./SCSS/Address.module.scss"
 import H1 from "../Common/H1"
 import H2 from "../Common/H2"
@@ -10,7 +10,7 @@ import Text from "../Common/Text"
 
 const Address = () => {
 
-    const userAddressState = useSelector(state => state.userAddress)
+    const userAddressState = useSelector(state => state.user.address)
     const addressState = useSelector(state => state.address)
     const addressSearchState = useSelector(state => state.addressSearch)
     const addressDetailState = useSelector(state => state.addressDetail)

@@ -1,6 +1,6 @@
 import React from "react"
 import style from "./SCSS/Comment.module.scss"
-import ReCommentWrite from "./ReCommentWrite"
+import ReCommentInput from "./ReCommentInput"
 import H2 from "../Common/H2"
 import P from "../Common/P"
 
@@ -10,7 +10,7 @@ const ReComment = (props) => {
         <div id = {style.reComment}>
             <H2 text = {props.user}/>
             <P text = {props.content}/>
-            <ReCommentWrite commentNum = {props.commentNum} reCommentNum = {props.reCommentNum}/>
+            <ReCommentInput commentNum = {props.commentNum} reCommentNum = {props.reCommentNum}/>
         </div>
     )
 }

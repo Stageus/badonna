@@ -5,4 +5,4 @@ import store from "./Redux/Store/store"
 import {Provider} from "react-redux"
 
 const rootDom = document.getElementById("root")
-ReactDom.createRoot(rootDom).render(<Provider store={store}><App/></Provider>)
+ReactDom.createRoot(rootDom).render(<Provider store = {store}><App/></Provider>)

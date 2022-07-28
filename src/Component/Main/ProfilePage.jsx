@@ -7,10 +7,10 @@ import { useSelector } from "react-redux"
 
 const Profile = () => {
 
-    const userId = useSelector(state => state.userId)
-    const userTel = useSelector(state => state.userTel)
-    const userName = useSelector(state => state.userName)
-    let userAddress = useSelector(state => state.userAddress)
+    const userId = useSelector(state => state.user.id)
+    const userTel = useSelector(state => state.user.tel)
+    const userName = useSelector(state => state.user.name)
+    let userAddress = useSelector(state => state.user.address)
 
     if (userAddress.length > 1){
         userAddress = `${userAddress[0]} 등`

@@ -1,4 +1,4 @@
-import { HOME, SCROLL, LOGIN, JOIN, BOARD, BOARD_WRITE, PROFILE, COMMENT, RE_COMMENT_WRITE, ADDRESS, ADDRESS_SEARCH, ADDRESS_DETAIL, ADDRESS_CLOSE } from "../Action/action"
+import { HOME, SCROLL, LOGIN, JOIN, BOARD, PROFILE, ADDRESS, ADDRESS_SEARCH, ADDRESS_DETAIL, ADDRESS_CLOSE, COMMENT, COMMENT_INPUT_TEXT, RE_COMMENT_INPUT, RE_COMMENT_INPUT_UPLOAD, RE_COMMENT_INPUT_TEXT, BOARD_WRITE } from "../Action/action"
 
 const initState = {
     currentCon: true,
@@ -7,30 +7,71 @@ const initState = {
     login: false,
     join: false,
     board: false,
+    boardNum: null,
+    boardList: [
+        {
+            title: "title",
+            content: "content",
+            user: "user",
+            date: "2022-08-28",
+            location: "인천"
+        }
+    ],
+    comment: false,
+    commentNum: null,
+    commentList: [
+        [
+            {
+                user: "조민혁",
+                content: "파일 날라가서 다시 코딩중"
+            }
+        ],
+    ],
+    reComment: null,
+    reCommentNum: null,
+    reCommentInput: false,
+    reCommentList: [
+        [
+            {
+            user: "민민",
+            content: "ㅇ"
+            },
+            {
+                user: "민민",
+                content: "ㅇㅇ"
+            },
+            {
+                user: "민민",
+                content: "ㅇㅇㅇ"
+            },
+        ],
+        [
+            {
+                user: "조조",
+                content: "ㅁ"
+                },
+                {
+                    user: "조",
+                    content: "ㅁㅁ"
+                },
+                {
+                    user: "조주",
+                    content: "ㅁㅁㅁ"
+                },
+        ]
+    ],
     boardWrite: false,
     profile: false,
-    comment: false,
+    user: {
+        id: "cmh8037",
+        tel: "010-5161-8037",
+        name: "조민혁",
+        address: ["서울시 구로구 궁동", "목성주피터제우스"],
+    },
     address: false,
     addressSearch: false,
     addressDetail: false,
-    userId: "cmh8037",
-    userTel: "010-5161-8037",
-    userName: "조민혁",
-    userAddress: ["서울시 구로구 궁동", "목성주피터제우스"],
     termsOfService: false,
-    boardTitle: ["마라탕 드실분", "캐리캐캐리"],
-    boardContent: ["모집 장소는...", "에에어ㅔ어ㅔㅇ"],
-    boardUser: ["조민혁", "외계인"],
-    boardDate: ["2022-07-22", "2222-08-30"],
-    boardLocation: ["인천시 부평구", "목성어딘가"],
-    boardNum: null,
-    commentUser: [["조민혁","민혁"], ["미녁", "미냑"]],
-    commentContent: [["저요", "저저"], ["저주", "주저"]],
-    commentNum: null,
-    reCommentUser: [["조민혁", "민혁"], ["조민혁", "민혁"]],
-    reCommentContent: [["승낙했어요", "감사합니다"], ["승낙 했습니다", "네"]],
-    reCommentWrite: false,
-    reCommentNum: null,
 }
 
 const reducer = ( state = initState, action ) => {
@@ -47,10 +88,6 @@ const reducer = ( state = initState, action ) => {
                 boardWrite: false,
                 profile: false,
                 comment: false,
-                boardNum: null,
-                commentNum: null,
-                reCommentNum: null,
-                reCommentWrite: false,
             }
         case SCROLL:
             state.scroll += action.scroll 
@@ -73,10 +110,6 @@ const reducer = ( state = initState, action ) => {
                 boardWrite: false,
                 profile: false,
                 comment: false,
-                boardNum: null,
-                commentNum: null,
-                reCommentNum: null,
-                reCommentWrite: false,
             }
         case JOIN:
             return{
@@ -87,11 +120,6 @@ const reducer = ( state = initState, action ) => {
                 board: false,
                 boardWrite: false,
                 profile: false,
-                comment: false,
-                boardNum: null,
-                commentNum: null,
-                reCommentNum: null,
-                reCommentWrite: false,
             }
         case BOARD:
             return{
@@ -102,26 +130,6 @@ const reducer = ( state = initState, action ) => {
                 board: true,
                 boardWrite: false,
                 profile: false,
-                comment: false,
-                boardNum: null,
-                commentNum: null,
-                reCommentNum: null,
-                reCommentWrite: false,
-            }
-        case BOARD_WRITE:
-            return{
-                ...state,
-                home: false,
-                login: false,
-                join: false,
-                board: false,
-                boardWrite: true,
-                profile: false,
-                comment: false,
-                boardNum: null,
-                commentNum: null,
-                reCommentNum: null,
-                reCommentWrite: false,
             }
         case PROFILE:
             return{
@@ -133,32 +141,6 @@ const reducer = ( state = initState, action ) => {
                 boardWrite: false,
                 profile: true,
                 comment: false,
-                boardNum: null,
-                commentNum: null,
-                reCommentNum: null,
-                reCommentWrite: false,
-            }
-        case COMMENT:
-            return{
-                ...state,
-                home: false,
-                login: false,
-                join: false,
-                board: false,
-                boardWrite: false,
-                profile: false,
-                comment: true,
-                commentNum: null,
-                reCommentNum: null,
-                reCommentWrite: false,
-                boardNum: action.index,
-            }
-        case RE_COMMENT_WRITE:
-            return{
-                ...state,
-                commentNum: action.commentNum,
-                reCommentNum: action.reCommentNum,
-                reCommentWrite: true
             }
         case ADDRESS:
             if(state.address){
@@ -202,6 +184,32 @@ const reducer = ( state = initState, action ) => {
                 address: false,
                 addressSearch: false,
                 addressDetail: false,
+            }
+        case COMMENT:
+            return {
+                ...state,
+                comment: true,
+                board: false,
+                boardNum: action.index
+            }
+        case COMMENT_INPUT_TEXT:
+            return {
+                ...state,
+            }
+        case RE_COMMENT_INPUT:
+            return{
+                ...state,
+                commentNum: action.commentNum,
+                reCommentNum: action.reCommentNum,
+                reCommentInput: true
+            }
+        case RE_COMMENT_INPUT_UPLOAD:
+            if(action.cancel == null){
+                console.log("hi")
+            }
+            return {
+                ...state,
+                reCommentInput: false
             }
         default:
             return state

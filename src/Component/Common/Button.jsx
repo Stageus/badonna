@@ -1,7 +1,8 @@
 import React from "react"
 import Img from "./Img"
 import { useDispatch, useSelector } from "react-redux"
-import { login, join, profile, home, board, comment, address, reCommentWrite, addressSearch, addressDetail } from "../../Redux/Action/action"
+import { login, join, profile, home, board, address, addressSearch, addressDetail, comment, reCommentInput, reCommentInputUpload, boardWrite } from "../../Redux/Action/action"
+
 
 const Button = (props) => {
 
@@ -21,14 +22,20 @@ const Button = (props) => {
             case "board":
                 dispatch(board())
                 break
+            case "boardWrite":
+                dispatch(boardWrite())
+                break
             case "profile":
                 dispatch(profile())
                 break
             case "comment":
                 dispatch(comment(props.boardNum))
                 break
-            case "reCommentWrite":
-                dispatch(reCommentWrite(props.commentNum, props.reCommentNum))
+            case "reCommentInput":
+                dispatch(reCommentInput(props.commentNum, props.reCommentNum))
+                break
+            case "reCommentInputUpload":
+                dispatch(reCommentInputUpload(props.cancel))
                 break
             case "addressSearch":
                 dispatch(addressSearch())

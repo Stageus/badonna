@@ -7,13 +7,8 @@ import { useSelector } from "react-redux"
 
 const BoardPage = () => {
 
-    const boardTitleList = useSelector(state => state.boardTitle)
-    const boardContentList = useSelector(state => state.boardContent)
-    const boardUserList = useSelector(state => state.boardUser)
-    const boardDateList = useSelector(state => state.boardDate)
-    const boardLocationList = useSelector(state => state.boardLocation)
-    const commentUserList = useSelector(state => state.commentUser)
-    const commentContentList = useSelector(state => state.commentContent)
+    const boardListState = useSelector(state => state.boardList)
+    const commentListState = useSelector(state => state.commentList)
 
     return (
         <main id = {style.main}>
@@ -22,11 +17,11 @@ const BoardPage = () => {
                 <Button text = "게시글 쓰기" name = "boardWrite"/>
             </div>
             {
-                boardTitleList.map((element, index, arr) =>
-                    <Board key = {index} index = {index} boardTitle = {element} boardContent = {boardContentList[index]}
-                            boardUser = {boardUserList[index]} boardDate = {boardDateList[index]}
-                            boardLocation = {boardLocationList[index]} commentUser = {commentUserList[index][0]}
-                            commentContent = {commentContentList[index][0]}/>
+                boardListState.map((element, index, arr) =>
+                    <Board key = {index} index = {index} boardTitle = {element.title} boardContent = {element.content}
+                            boardUser = {element.user} boardDate = {element.date}
+                            boardLocation = {element.location} commentUser = {commentListState[index][0].user}
+                            commentContent = {commentListState[index][0].content}/>
                 )
             }
         </main>

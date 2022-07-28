@@ -1,4 +1,5 @@
 import React, { useMemo } from "react"
+import { Provider } from "react-redux"
 import style from "./SCSS/Main.module.scss"
 import { useSelector, useDispatch } from "react-redux"
 import { changeScroll } from "../../Redux/Action/action"
@@ -7,6 +8,7 @@ import LoginPage from "./LoginPage"
 import JoinPage from "./JoinPage"
 import BoardPage from "./BoardPage"
 import ProfilePage from "./ProfilePage"
+import BoardWritePage from "./BoardWritePage"
 import CommentPage from "./CommentPage"
 import Img from "../Common/Img"
 import H1 from "../Common/H1"
@@ -49,12 +51,15 @@ const Main = () => {
                 <BoardPage/>
             )
         }else if(boardWriteState){
-
+            return(
+                <BoardWritePage/>
+            )
         }else if(profileState){
             return(
                 <ProfilePage/>
             )
-        }else if(commentState){
+        }
+        else if(commentState){
             return(
                 <CommentPage/>
             )
