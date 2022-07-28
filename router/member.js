@@ -136,7 +136,8 @@ router.get("/",(req,res)=>{
             } 
 
     }catch(e){
-
+        result.message="에러 입니다."
+        res.send(result)
     }
 
 })

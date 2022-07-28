@@ -14,10 +14,11 @@ router.post("/",(req,res)=>{
     const token_public=req.headers.token 
     const coment_number=req.body.coment_num 
     const reply_contents=req.body.contents
+    const user_name=req.body.name
 
     const api_name="reply" + req.url
     const req_host=req.headers.req_host
-    const req_data=[coment_number,reply_contents]
+    const req_data=[coment_number,reply_contents,user_name]
     const api_call_time=moment()
 
     const result={
@@ -42,8 +43,8 @@ router.post("/",(req,res)=>{
                         console.log(err)
                     }
                 })
-                const sql="INSERT INTO badonnaproject.reply(coment_num,contents) VALUES($1,$2)"
-                const values=[coment_number,reply_contents]
+                const sql="INSERT INTO badonnaproject.reply(coment_num,contents,name) VALUES($1,$2,$3)"
+                const values=[coment_number,reply_contents,user_name]
                 
                 db.query(sql,values,(err,row)=>{
                     if(!err){
@@ -104,7 +105,7 @@ router.get("/",(req,res)=>{
                         console.log(err)
                     }
                 })
-                const sql="SELECT contents FROM  badonnaproject.reply WHERE reply_num=$1"
+                const sql="SELECT contents,name FROM  badonnaproject.reply WHERE reply_num=$1"
                 const values=[reply_number]
                 
                 db.query(sql,values,(err,row)=>{
