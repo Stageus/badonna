@@ -16,7 +16,8 @@ router.post("/",(req,res)=>{
     const board_place=req.body.place
     const user_id=req.body.id
     const board_date=req.body.date 
-
+    const board_is_end=req.body.is_end 
+    
     const token_public=req.headers.token
 
     const api_name="board" + req.url
@@ -45,6 +46,9 @@ router.post("/",(req,res)=>{
         }else if(user_id.length == 0 || user_id == null || user_id >=12){
             result.message="옳바르지 않은 아이디 입력 입니다."
             res.send(result)
+        }else if(board_is_end.length == 0 || board_is_end == null || board_is_end !=0 && board_is_end !=1){
+            result.message="옳바르지 않은 모집글 완료 입력 입니다."
+            res.send(result)
         }else{
 
             if(tokenVerify(token_public)){//인증 완료 되면 
@@ -55,8 +59,8 @@ router.post("/",(req,res)=>{
                         console.log(err)    
                 })
 
-                const sql="INSERT INTO badonnaproject.board(id,title,contents,address,date) VALUES($1,$2,$3,$4,$5)"
-                const values=[user_id, board_title,board_contents,board_place,board_date]
+                const sql="INSERT INTO badonnaproject.board(id,title,contents,address,date,is_end) VALUES($1,$2,$3,$4,$5,$6)"
+                const values=[user_id, board_title,board_contents,board_place,board_date,board_is_end]
                 db.query(sql,values,(err,row)=>{
                     if(!err){
                         result.success=true
@@ -96,7 +100,7 @@ router.get("/",(req,res)=>{
     let temp_num=parseInt(temp)
     let offset_num=temp_num*10//offset 지정 해주기 위한 변수 
    
-    console.log(temp_num )
+    // console.log(temp_num )
     
     const api_name="board" + req.url
     const req_host=req.headers.req_host
@@ -303,6 +307,75 @@ router.put("/",(req,res)=>{
 
 
 })
+
+
+//모집 완료 버튼을 클릭 한 경우 호출 하는 api 
+
+router.put("/is_end",(req,res)=>{
+
+    const token_public=req.headers.token
+    const board_is_end=req.body.is_end
+    const board_number=req.body.board_num 
+
+
+    const api_name="board" + req.url
+    const req_host=req.headers.req_host
+    const req_data=[temp]
+    const api_call_time=moment()
+
+    const result={
+        "success":false,
+        "message":null
+    }
+
+    try{
+        if(board_is_end.length ==0 || board_is_end == null || board_is_end !=1){
+            result.message="옳바르지 않은 모집 완료 입력 입니다."
+            res.send(result)
+        }else if(board_number.length == 0 || board_number == null){
+            result.message="옳바르지 않은 게시글 번호 입력 입니다."
+            res.send(result)
+        }else{
+
+            if(tokenVerify(token_public)){
+
+                const db=new Client(pgInit)
+                db.connect((err)=>{
+                    if(err) {
+                        console.log(err)
+                    }  
+                })
+
+                const sql="UPDATE badonnaproject.board SET is_end=$2 WHERE board_num=$1 "
+                const values=[board_number,board_is_end]
+                
+                db.query(sql,values,(err,row)=>{
+                    if(!err){
+                        result.success=true
+                    }else{
+                        console.log(err)
+                    }
+
+                    //로깅 남기기
+                    logFuntion(api_name,req_host, req_data, row.rows,api_call_time)
+
+                    res.send(result)
+                    db.end()
+                })
+            }else{
+                result.message="잘못된 token!"
+                res.send(result)
+            }
+
+        }
+
+    }catch(e){
+        result.message="에러 입니다."
+        res.send(result)
+    }
+
+})
+
 
 
 module.exports=router
