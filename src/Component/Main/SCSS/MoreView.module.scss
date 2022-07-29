@@ -1,5 +1,10 @@
 @import "../../../Variable.module.scss";
 
+#moreView{
+    &:active{
+        background-color: darken(white, 10);
+    }
+}
 #hiddenButtons{
     display: none;
 }

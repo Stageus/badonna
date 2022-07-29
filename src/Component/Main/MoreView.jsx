@@ -5,7 +5,7 @@ const MoreView = () => {
     
     return (
         <React.Fragment>
-            <button>...</button>
+            <button id = {style.moreView}>...</button>
             <ul id = {style.hiddenButtons}>
                 <li>
                     <button>게시물 수정</button>

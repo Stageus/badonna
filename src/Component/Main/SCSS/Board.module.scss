@@ -38,6 +38,9 @@
         background-color: transparent;
         color: black;
         font-size: 18px;
+        &:active{
+            background-color: darken(white, 10);
+        }
     }
 
     .boardTitleBox{

@@ -218,15 +218,15 @@ const reducer = ( state = initState, action ) => {
                     recruit: state.boardInput.recruit
                 }
             )
-            commentList = [...commentList[boardList.length - 1]] 
             commentList.push(
-                {
-                    user: " ",
-                    content: " "
-                }
+                [
+                    {
+                        user: "",
+                        content: ""
+                    }
+                ]  
             )
             console.log(commentList)
-
             return{
                 ...state,
                 board: true,
@@ -310,7 +310,6 @@ const reducer = ( state = initState, action ) => {
                     }
                 ]
             )
-            console.log(reCommentList)
             return{
                 ...state,
                 commentList: commentList,

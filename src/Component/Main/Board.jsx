@@ -7,7 +7,7 @@ import MoreView from "./MoreView"
 
 const Board = (props) => {
     
-    if(props.commentUser != undefined){
+    if(props.commentUser != ""){
         return (
             <article className = {style.board}>
                 <div className = {style.boardTitleBox}>
