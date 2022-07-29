@@ -18,7 +18,7 @@ const Comment = (props) => {
                 <ReCommentInput commentNum = {props.commentNum}/>
             </div>
             {
-                reCommentListState.map((element, index, arr) => 
+                reCommentListState.map((element, index) => 
                 <ReComment key = {index} reCommentNum = {index} commentNum = {props.commentNum} user = {element.user} content = {element.content}/>)
             }
         </div>

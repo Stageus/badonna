@@ -10,6 +10,7 @@ const CommentPage = () => {
 
     const boardNum = useSelector(state => state.boardNum)
     const commentListState = useSelector(state => state.commentList[boardNum])
+    console.log(commentListState)
 
     return (
         <main id = {style.main}>
@@ -18,11 +19,11 @@ const CommentPage = () => {
             </div>
             <div id = {style.commentMain}>
                 {
-                    commentListState.map((element, index, arr) =>  
+                    commentListState.map((element, index) =>  
                     <Comment key = {index} user = {element.user} content = {element.content} commentNum = {index}/>)
                 }
                 <div id = {style.commentInputBox}>
-                    <Text name = "comment"/>
+                    <Text name = "comment" maxLength = "200"/>
                     <Button text = "댓글 추가" name = "commentUpload"/>
                 </div>
             </div>

@@ -1,4 +1,4 @@
-import { HOME, SCROLL, LOGIN, JOIN, BOARD, PROFILE, ADDRESS, ADDRESS_SEARCH, ADDRESS_DETAIL, ADDRESS_CLOSE, COMMENT, COMMENT_INPUT_TEXT, COMMENT_UPLOAD, RE_COMMENT_INPUT, RE_COMMENT_UPLOAD, RE_COMMENT_INPUT_TEXT, BOARD_WRITE } from "../Action/action"
+import { HOME, SCROLL, LOGIN, JOIN, BOARD, PROFILE, ADDRESS, ADDRESS_SEARCH, ADDRESS_DETAIL, ADDRESS_CLOSE, COMMENT, COMMENT_INPUT_TEXT, COMMENT_UPLOAD, RE_COMMENT_INPUT, RE_COMMENT_UPLOAD, RE_COMMENT_INPUT_TEXT, BOARD_WRITE, BOARD_TITLE_TEXT, BOARD_RECRUIT_TEXT, BOARD_ADDRESS_TEXT, BOARD_CONTENT_TEXT, BOARD_UPLOAD } from "../Action/action"
 
 const initState = {
     currentCon: true,
@@ -9,11 +9,12 @@ const initState = {
     board: false,
     boardNum: null,
     boardInput: {
-        title: null,
-        constent: null,
-        user: null,
-        date: null,
-        location: null,
+        title: "",
+        content: "",
+        user: "",
+        date: "",
+        location: "",
+        recruit: "",
     },
     boardList: [
         {
@@ -21,15 +22,17 @@ const initState = {
             content: "content",
             user: "user",
             date: "2022-08-28",
-            location: "인천"
+            location: "인천",
+            recruit: "3"
         },
         {
             title: "title2",
             content: "content2",
             user: "user2",
             date: "2022-08-282",
-            location: "인천2"
-        }
+            location: "인천2",
+            recruit: "4"
+        },
     ],
     comment: false,
     commentNum: null,
@@ -43,8 +46,8 @@ const initState = {
         ],
         [
             {
-                user: null,
-                content: null
+                user: "",
+                content: ""
             }
         ]
     ],
@@ -67,12 +70,6 @@ const initState = {
                 content: "ㅇㅇㅇ"
             },
         ],
-        [
-            {
-                user: null,
-                content: null
-            }
-        ]
     ],
     boardWrite: false,
     profile: false,
@@ -90,6 +87,10 @@ const initState = {
 
 const reducer = ( state = initState, action ) => {
 
+    const boardInput = {...state.boardInput}
+    const commentList = [...state.commentList]
+    const reCommentList = [...state.reCommentList]
+    
     switch( action.type ){
         case HOME:
             return{
@@ -141,6 +142,21 @@ const reducer = ( state = initState, action ) => {
                 reCommentInputText: null,
                 commentInputText: null
             }
+        case PROFILE:
+            return{
+                ...state,
+                home: false,
+                login: false,
+                join: false,
+                board: false,
+                boardWrite: false,
+                profile: true,
+                comment: false,
+                reCommentInputText: null,
+                commentInputText: null
+            }
+
+        //게시글
         case BOARD:
             return{
                 ...state,
@@ -159,19 +175,67 @@ const reducer = ( state = initState, action ) => {
                 board: false,
                 boardWrite: true
             }
-        case PROFILE:
+        case BOARD_TITLE_TEXT:
+            boardInput.title = action.text
+            boardInput.date = "2022-07-29"
+            boardInput.location = state.user.address[0]
+            
             return{
                 ...state,
-                home: false,
-                login: false,
-                join: false,
-                board: false,
-                boardWrite: false,
-                profile: true,
-                comment: false,
-                reCommentInputText: null,
-                commentInputText: null
+                boardInput: boardInput,
             }
+        case BOARD_ADDRESS_TEXT:
+            boardInput.location = action.text
+            
+            return{
+                ...state,
+                boardInput: boardInput,
+            }
+        case BOARD_RECRUIT_TEXT:
+            boardInput.recruit = action.text
+            
+            return{
+                ...state,
+                boardInput: boardInput,
+            }
+        case BOARD_CONTENT_TEXT:
+            boardInput.content = action.text
+            
+            return{
+                ...state,
+                boardInput: boardInput,
+            }
+        case BOARD_UPLOAD:
+
+            const boardList = [...state.boardList]
+            boardList.push(
+                {
+                    title: state.boardInput.title,
+                    date: state.boardInput.date,
+                    content: state.boardInput.content,
+                    user: state.user.name,
+                    location: state.user.address[0],
+                    recruit: state.boardInput.recruit
+                }
+            )
+            commentList = [...commentList[boardList.length - 1]] 
+            commentList.push(
+                {
+                    user: " ",
+                    content: " "
+                }
+            )
+            console.log(commentList)
+
+            return{
+                ...state,
+                board: true,
+                boardWrite: false,
+                boardList: boardList,
+                commentList: commentList
+            }
+
+        //주소 즐겨찾기
         case ADDRESS:
             if(state.address){
                 state.address = false
@@ -215,6 +279,8 @@ const reducer = ( state = initState, action ) => {
                 addressSearch: false,
                 addressDetail: false,
             }
+
+        //댓글, 답글
         case COMMENT:
             return {
                 ...state,
@@ -228,7 +294,6 @@ const reducer = ( state = initState, action ) => {
                 commentInputText: action.text
             }
         case COMMENT_UPLOAD:
-            const commentList = [...state.commentList]
             commentList[state.boardNum] = [...commentList[state.boardNum]]
             commentList[state.boardNum].push(
                 {
@@ -236,9 +301,20 @@ const reducer = ( state = initState, action ) => {
                     content: state.commentInputText
                 }
             )
+            reCommentList[0] = [...reCommentList[0]]
+            reCommentList.push(
+                [
+                    {
+                        user:"",
+                        content: "",
+                    }
+                ]
+            )
+            console.log(reCommentList)
             return{
                 ...state,
-                commentList: commentList
+                commentList: commentList,
+                reCommentList: reCommentList
             }
         case RE_COMMENT_INPUT:
             return{
@@ -249,7 +325,6 @@ const reducer = ( state = initState, action ) => {
             }
         case RE_COMMENT_UPLOAD:
             if(action.cancel == null){
-                const reCommentList = [...state.reCommentList]
                 reCommentList[state.commentNum] = [...reCommentList[state.commentNum]]
                 reCommentList[state.commentNum].push(
                     {
@@ -257,6 +332,8 @@ const reducer = ( state = initState, action ) => {
                         content: state.reCommentInputText
                     }
                 )
+
+                console.log(reCommentList)
                 return {
                     ...state,
                     reCommentList: reCommentList,

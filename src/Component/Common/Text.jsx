@@ -1,6 +1,6 @@
 import React from "react"
 import { useDispatch } from "react-redux"
-import { commentInputText, reCommentInputText } from "../../Redux/Action/action"
+import { boardAddressText, boardRecruitText, boardTitleText, commentInputText, reCommentInputText } from "../../Redux/Action/action"
 
 const Text = (props) => {
 
@@ -14,7 +14,14 @@ const Text = (props) => {
             case "reComment":
                 dispatch(reCommentInputText(event.target.value))
                 break
-            case "board":
+            case "boardTitle":
+                dispatch(boardTitleText(event.target.value))
+                break
+            case "boardAddress":
+                dispatch(boardAddressText(event.target.value))
+                break
+            case "boardRecruit":
+                dispatch(boardRecruitText(event.target.value))
                 break
             case "address":
                 break
@@ -22,7 +29,7 @@ const Text = (props) => {
     }
 
     return (
-        <input type="text" placeholder = {props.placeholder} onChange = {onChangeEvent}>
+        <input id = {props.id} type="text" placeholder = {props.placeholder} onChange = {onChangeEvent} maxLength = {props.maxLength}>
             {props.text}
         </input>
     )

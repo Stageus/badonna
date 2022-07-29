@@ -6,7 +6,7 @@ import P from "../Common/P"
 
 const ReComment = (props) => {
 
-    if(props.user == null){
+    if(props.user == ""){
         return(
             <React.Fragment></React.Fragment>
         )

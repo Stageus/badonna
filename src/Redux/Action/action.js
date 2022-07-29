@@ -6,16 +6,24 @@ export const JOIN = "JOIN"
 export const BOARD = "BOARD"
 export const PROFILE = "PROFILE"
 export const ADDRESS = "ADDRESS"
+export const COMMENT = "COMMENT"
+
 export const ADDRESS_SEARCH = "ADDRESS_SEARCH"
 export const ADDRESS_DETAIL = "ADDRESS_DETAIL"
 export const ADDRESS_CLOSE = "ADDRESS_CLOSE"
-export const COMMENT = "COMMENT"
+
 export const COMMENT_UPLOAD = "COMMENT_UPLOAD"
 export const COMMENT_INPUT_TEXT = "COMMENT_INPUT_TEXT"
 export const RE_COMMENT_INPUT = "RE_COMMENT_INPUT"
 export const RE_COMMENT_UPLOAD = "RE_COMMENT_UPLOAD"
 export const RE_COMMENT_INPUT_TEXT = "RE_COMMENT_INPUT_TEXT"
+
 export const BOARD_WRITE = "BOARD_WRITE"
+export const BOARD_TITLE_TEXT = "BOARD_TITLE_TEXT"
+export const BOARD_ADDRESS_TEXT = "BOARD_ADDRESS_TEXT"
+export const BOARD_RECRUIT_TEXT = "BOARD_RECRUIT_TEXT"
+export const BOARD_CONTENT_TEXT = "BOARD_CONTENT_TEXT"
+export const BOARD_UPLOAD = "BOARD_UPLOAD"
 
 
 const home = () => {
@@ -54,6 +62,14 @@ const address = () => {
         type: ADDRESS
     }
 }
+const comment = (index) => {
+    return{
+        type: COMMENT,
+        index: index
+    }
+}
+
+
 const addressSearch = () => {
     return{
         type: ADDRESS_SEARCH
@@ -69,17 +85,44 @@ const addressClose = () => {
         type: ADDRESS_CLOSE
     }
 }
-const comment = (index) => {
-    return{
-        type: COMMENT,
-        index: index
-    }
-}
+
+
 const boardWrite = () => {
     return {
         type: BOARD_WRITE
     }
 }
+const boardTitleText = (text) => {
+    return{
+        type: BOARD_TITLE_TEXT,
+        text: text,
+    }
+}
+const boardAddressText = (text) => {
+    return{
+        type: BOARD_ADDRESS_TEXT,
+        text: text,
+    }
+}
+const boardRecruitText = (text) => {
+    return{
+        type: BOARD_RECRUIT_TEXT,
+        text: text,
+    }
+}
+const boardContentText = (text) => {
+    return{
+        type: BOARD_CONTENT_TEXT,
+        text: text,
+    }
+}
+const boardUpload = () => {
+    return{
+        type: BOARD_UPLOAD,
+    }
+}
+
+
 const commentInputText= (text) => {
     return {
         type: COMMENT_INPUT_TEXT,
@@ -110,4 +153,10 @@ const reCommentInputText = (text) => {
         text: text
     }
 }
-export { home, changeScroll, login, join, board, profile, address, addressSearch, addressDetail, addressClose, boardWrite, comment, reCommentInput, reCommentUpload, reCommentInputText, commentInputText, commentUpload }
+
+
+
+export { home, changeScroll, login, join, board, profile, address, comment,
+         addressSearch, addressDetail, addressClose, 
+         boardWrite, boardTitleText, boardAddressText, boardContentText, boardRecruitText, boardUpload,
+         reCommentInput, reCommentUpload, reCommentInputText, commentInputText, commentUpload }
