@@ -23,11 +23,10 @@ const MoreView = (props) => {
                 <Button id = {style.moreView} text = ">" name = "moreView" boardNum = {props.boardNum} moreViewName = {props.name}/>
                 <ul id = {style.hiddenButton} style = {hiddenButtonStyle}>
                     <li>
-                        <Button text = "게시글 수정"/>
+                        <Button text = "게시글 수정" name = "boardEdit"/>
                     </li>
-                    <li id = {style.line}></li>
                     <li>
-                        <Button text = "게시글 삭제"/>
+                        <Button text = "게시글 삭제" name = "boardDelete"/>
                     </li>
                 </ul>
             </React.Fragment>
@@ -38,11 +37,10 @@ const MoreView = (props) => {
                 <Button id = {style.moreView} text = ">" name = "moreView" commentNum = {props.commentNum} moreViewName = {props.name}/>
                 <ul id = {style.hiddenButton} style = {hiddenButtonStyle}>
                     <li>
-                        <Button text = "댓글 수정"/>
+                        <Button text = "댓글 수정" name = "commentEdit"/>
                     </li>
-                    <li id = {style.line}></li>
                     <li>
-                        <Button text = "댓글 삭제"/>
+                        <Button text = "댓글 삭제" name = "commentDelete"/>
                     </li>
                 </ul>
             </React.Fragment>
@@ -53,11 +51,10 @@ const MoreView = (props) => {
             <Button id = {style.moreView} text = ">" name = "moreView" reCommentNum = {props.reCommentNum} moreViewName = {props.name}/>
             <ul id = {style.hiddenButton} style = {hiddenButtonStyle}>
                 <li>
-                    <Button text = "답글 수정"/>
+                    <Button text = "답글 수정" name = "reCommentEdit"/>
                 </li>
-                <li id = {style.line}></li>
                 <li>
-                    <Button text = "답글 삭제"/>
+                    <Button text = "답글 삭제" name = "reCommentDelete"/>
                 </li>
             </ul>
         </React.Fragment>

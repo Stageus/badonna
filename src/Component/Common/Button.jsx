@@ -50,7 +50,6 @@ const Button = (props) => {
                 dispatch(addressDetail())
                 break
             case "moreView":
-                console.log(props.reCommentNum)
                 if(props.commentNum === undefined && props.reCommentNum === undefined){
                     dispatch(moreView(props.boardNum, props.moreViewName))
                     break
@@ -61,6 +60,18 @@ const Button = (props) => {
                     dispatch(moreView(props.reCommentNum, props.moreViewName))
                     break
                 }
+                break
+            case "boardEdit":
+                break
+            case "boardDelete":
+                break
+            case "commentEdit":
+                break
+            case "commentDelete":
+                break
+            case "reCommentEdit":
+                break
+            case "reCommentDelete":
                 break
             default:
                 dispatch(home())
