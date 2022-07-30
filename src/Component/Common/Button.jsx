@@ -1,7 +1,7 @@
 import React from "react"
 import Img from "./Img"
 import { useDispatch } from "react-redux"
-import { login, join, profile, home, board, address, addressSearch, addressDetail, comment, reCommentInput, reCommentUpload, boardWrite, commentUpload, boardUpload } from "../../Redux/Action/action"
+import { login, join, profile, home, board, address, addressSearch, addressDetail, comment, reCommentInput, reCommentUpload, boardWrite, commentUpload, boardUpload, moreView } from "../../Redux/Action/action"
 
 
 const Button = (props) => {
@@ -48,6 +48,19 @@ const Button = (props) => {
                 break
             case "addressDetail":
                 dispatch(addressDetail())
+                break
+            case "moreView":
+                console.log(props.reCommentNum)
+                if(props.commentNum === undefined && props.reCommentNum === undefined){
+                    dispatch(moreView(props.boardNum, props.moreViewName))
+                    break
+                }else if(props.reCommentNum === undefined && props.boardNum === undefined){
+                    dispatch(moreView(props.commentNum, props.moreViewName))
+                    break
+                }else if(props.commentNum === undefined && props.boardNum === undefined){
+                    dispatch(moreView(props.reCommentNum, props.moreViewName))
+                    break
+                }
                 break
             default:
                 dispatch(home())

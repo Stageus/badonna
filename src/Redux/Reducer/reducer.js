@@ -1,12 +1,16 @@
-import { HOME, SCROLL, LOGIN, JOIN, BOARD, PROFILE, ADDRESS, ADDRESS_SEARCH, ADDRESS_DETAIL, ADDRESS_CLOSE, COMMENT, COMMENT_INPUT_TEXT, COMMENT_UPLOAD, RE_COMMENT_INPUT, RE_COMMENT_UPLOAD, RE_COMMENT_INPUT_TEXT, BOARD_WRITE, BOARD_TITLE_TEXT, BOARD_RECRUIT_TEXT, BOARD_ADDRESS_TEXT, BOARD_CONTENT_TEXT, BOARD_UPLOAD } from "../Action/action"
+import { HOME, SCROLL, LOGIN, JOIN, BOARD, PROFILE, ADDRESS, ADDRESS_SEARCH, ADDRESS_DETAIL, ADDRESS_CLOSE, COMMENT, COMMENT_INPUT_TEXT, COMMENT_UPLOAD, RE_COMMENT_INPUT, RE_COMMENT_UPLOAD, RE_COMMENT_INPUT_TEXT, BOARD_WRITE, BOARD_TITLE_TEXT, BOARD_RECRUIT_TEXT, BOARD_ADDRESS_TEXT, BOARD_CONTENT_TEXT, BOARD_UPLOAD, MORE_VIEW } from "../Action/action"
 
 const initState = {
     currentCon: true,
     home: true,
     scroll: 0,
     login: false,
+    termsOfService: false,
     join: false,
     board: false,
+    boardWrite: false,
+
+
     boardNum: null,
     boardInput: {
         title: "",
@@ -34,6 +38,8 @@ const initState = {
             recruit: "4"
         },
     ],
+
+
     comment: false,
     commentNum: null,
     commentInputText: null,
@@ -51,6 +57,8 @@ const initState = {
             }
         ]
     ],
+
+
     reComment: null,
     reCommentNum: null,
     reCommentInput: false,
@@ -71,7 +79,8 @@ const initState = {
             },
         ],
     ],
-    boardWrite: false,
+
+
     profile: false,
     user: {
         id: "cmh8037",
@@ -79,10 +88,15 @@ const initState = {
         name: "조민혁",
         address: ["서울시 구로구 궁동", "목성주피터제우스"],
     },
+
+
     address: false,
     addressSearch: false,
     addressDetail: false,
-    termsOfService: false,
+
+
+    moreView: false,
+    moreViewName: "",
 }
 
 const reducer = ( state = initState, action ) => {
@@ -92,6 +106,7 @@ const reducer = ( state = initState, action ) => {
     const reCommentList = [...state.reCommentList]
     
     switch( action.type ){
+        //홈페이지
         case HOME:
             return{
                 ...state,
@@ -104,8 +119,15 @@ const reducer = ( state = initState, action ) => {
                 profile: false,
                 comment: false,
                 reCommentInputText: null,
-                commentInputText: null
+                commentInputText: null,
+                boardNum: null,
+                commentNum: null,
+                moreView: false,
+                moreViewName: "",
             }
+
+
+        //메인페이지 스크롤
         case SCROLL:
             state.scroll += action.scroll 
 
@@ -117,6 +139,9 @@ const reducer = ( state = initState, action ) => {
             return{
                 ...state,
             }
+
+        
+        //로그인 페이지
         case LOGIN:
             return{
                 ...state,
@@ -128,8 +153,15 @@ const reducer = ( state = initState, action ) => {
                 profile: false,
                 comment: false,
                 reCommentInputText: null,
-                commentInputText: null
+                commentInputText: null,
+                boardNum: null,
+                commentNum: null,
+                moreView: false,
+                moreViewName: "",
             }
+
+        
+        //회원가입 페이지
         case JOIN:
             return{
                 ...state,
@@ -140,8 +172,15 @@ const reducer = ( state = initState, action ) => {
                 boardWrite: false,
                 profile: false,
                 reCommentInputText: null,
-                commentInputText: null
+                commentInputText: null,
+                boardNum: null,
+                commentNum: null,
+                moreView: false,
+                moreViewName: "",
             }
+
+
+        //회원 정보 페이지
         case PROFILE:
             return{
                 ...state,
@@ -153,8 +192,13 @@ const reducer = ( state = initState, action ) => {
                 profile: true,
                 comment: false,
                 reCommentInputText: null,
-                commentInputText: null
+                commentInputText: null,
+                boardNum: null,
+                commentNum: null,
+                moreView: false,
+                moreViewName: "",
             }
+
 
         //게시글
         case BOARD:
@@ -167,14 +211,20 @@ const reducer = ( state = initState, action ) => {
                 boardWrite: false,
                 profile: false,
                 reCommentInputText: null,
-                commentInputText: null
+                commentInputText: null,
+                boardNum: null,
+                commentNum: null,
+                moreView: false,
+                moreViewName: "",
             }
+        //게시글 쓰기 페이지
         case BOARD_WRITE:
             return{
                 ...state,
                 board: false,
                 boardWrite: true
             }
+        //입력한 제목
         case BOARD_TITLE_TEXT:
             boardInput.title = action.text
             boardInput.date = "2022-07-29"
@@ -184,6 +234,7 @@ const reducer = ( state = initState, action ) => {
                 ...state,
                 boardInput: boardInput,
             }
+        //입력한 주소
         case BOARD_ADDRESS_TEXT:
             boardInput.location = action.text
             
@@ -191,6 +242,7 @@ const reducer = ( state = initState, action ) => {
                 ...state,
                 boardInput: boardInput,
             }
+        //입력한 모집인원
         case BOARD_RECRUIT_TEXT:
             boardInput.recruit = action.text
             
@@ -198,6 +250,7 @@ const reducer = ( state = initState, action ) => {
                 ...state,
                 boardInput: boardInput,
             }
+        //입력한 내용
         case BOARD_CONTENT_TEXT:
             boardInput.content = action.text
             
@@ -205,6 +258,7 @@ const reducer = ( state = initState, action ) => {
                 ...state,
                 boardInput: boardInput,
             }
+        //게시글 등록 버튼
         case BOARD_UPLOAD:
 
             const boardList = [...state.boardList]
@@ -226,7 +280,6 @@ const reducer = ( state = initState, action ) => {
                     }
                 ]  
             )
-            console.log(commentList)
             return{
                 ...state,
                 board: true,
@@ -234,6 +287,7 @@ const reducer = ( state = initState, action ) => {
                 boardList: boardList,
                 commentList: commentList
             }
+
 
         //주소 즐겨찾기
         case ADDRESS:
@@ -249,6 +303,7 @@ const reducer = ( state = initState, action ) => {
             return{
                 ...state,
             }
+        //2번째 주소 즐찾창
         case ADDRESS_SEARCH:
             if(state.addressSearch){
                 state.address = true
@@ -261,6 +316,7 @@ const reducer = ( state = initState, action ) => {
             return{
                 ...state,
             }
+        //3번째 주소즐찾창
         case ADDRESS_DETAIL:
             if(state.addressDetail){
                 state.addressSearch = true
@@ -272,6 +328,7 @@ const reducer = ( state = initState, action ) => {
             return{
                 ...state,
             }
+        //주소 즐찾닫기
         case ADDRESS_CLOSE:
             return{
                 ...state,
@@ -280,19 +337,25 @@ const reducer = ( state = initState, action ) => {
                 addressDetail: false,
             }
 
-        //댓글, 답글
+
+        //댓글, 답글 페이지 전환
         case COMMENT:
             return {
                 ...state,
                 comment: true,
                 board: false,
-                boardNum: action.index
+                boardNum: action.index,
+                commentNum: null,
+                moreView: false,
+                moreViewName: "",
             }
+        //입력한 댓글
         case COMMENT_INPUT_TEXT:
             return {
                 ...state,
                 commentInputText: action.text
             }
+        //댓글 올리기 버튼 클릭
         case COMMENT_UPLOAD:
             commentList[state.boardNum] = [...commentList[state.boardNum]]
             commentList[state.boardNum].push(
@@ -315,13 +378,17 @@ const reducer = ( state = initState, action ) => {
                 commentList: commentList,
                 reCommentList: reCommentList
             }
+        //답글달기 입력
         case RE_COMMENT_INPUT:
             return{
                 ...state,
                 commentNum: action.commentNum,
                 reCommentNum: action.reCommentNum,
-                reCommentInput: true
+                reCommentInput: true,
+                moreView: false,
+                moreViewName: ""
             }
+        //답글 올리기 버튼 클릭
         case RE_COMMENT_UPLOAD:
             if(action.cancel == null){
                 reCommentList[state.commentNum] = [...reCommentList[state.commentNum]]
@@ -331,8 +398,6 @@ const reducer = ( state = initState, action ) => {
                         content: state.reCommentInputText
                     }
                 )
-
-                console.log(reCommentList)
                 return {
                     ...state,
                     reCommentList: reCommentList,
@@ -345,11 +410,89 @@ const reducer = ( state = initState, action ) => {
                 reCommentInput: false,
                 reCommentInputText: null,
             }
+        //입력한 답글
         case RE_COMMENT_INPUT_TEXT:
             return {
                 ...state,
                 reCommentInputText: action.text,
             }
+
+
+        //더보기 버튼
+        case MORE_VIEW:
+            console.log(action.text)
+            console.log(action.num)
+            if(action.text === "board"){
+                if(state.moreView){
+                    if(action.num !== state.boardNum){
+                        return{
+                            ...state,
+                            boardNum: action.num
+                        }
+                    }
+                    return{
+                        ...state,
+                        moreView: false,
+                        boardNum: null
+                    }
+                }
+                return {
+                    ...state,
+                    moreView: true,
+                    boardNum: action.num
+                }
+            }else if(action.text === "comment"){
+                if(state.moreView){
+                    if(action.num !== state.commentNum){
+                        return{
+                            ...state,
+                            commentNum: action.num,
+                            reCommentNum: null,
+                            reCommentInput: false,
+                        }
+                    }
+                    return{
+                        ...state,
+                        moreView: false,
+                        commentNum: null,
+                        reCommentNum: null,
+                        reCommentInput: false,
+                    }
+                }
+                return {
+                    ...state,
+                    moreView: true,
+                    commentNum: action.num,
+                    reCommentNum: null,
+                    reCommentInput: false,
+                }
+            }
+            if(state.moreView){
+                if(action.num !== state.reCommentNum){
+                    return{
+                        ...state,
+                        reCommentNum: action.num,
+                        commentNum: null,
+                        reCommentInput: false,
+                    }
+                }
+                return{
+                    ...state,
+                    moreView: false,
+                    reCommentNum: null,
+                    commentNum: null,
+                    reCommentInput: false,
+                }
+            }
+            return {
+                ...state,
+                moreView: true,
+                reCommentNum: action.num,
+                commentNum: null,
+                reCommentInput: false,
+            }
+            
+            
         default:
             return state
     }

@@ -27,6 +27,7 @@
         
         #comment, #reComment{
             display: flex;
+            position: relative;
             width: 100%;
             align-items: center;
             margin-bottom: 10px;
@@ -38,7 +39,7 @@
                 flex-grow: 5;
                 font-size: 14px;
             }
-            button{
+            #reCommentButton{
                 background-color: transparent;
                 font-size: 12px;
                 color: black;
@@ -46,6 +47,9 @@
                 &:active{
                     background-color: darken(white, 10);
                 }
+            }
+            ul{
+                left: 100%;
             }
             transition: all 1s;
         }

@@ -5,6 +5,7 @@ import P from "../Common/P"
 import ReCommentInput from "./ReCommentInput"
 import ReComment from "./ReComment"
 import { useSelector } from "react-redux"
+import MoreView from "./MoreView"
 
 const Comment = (props) => {
 
@@ -15,6 +16,7 @@ const Comment = (props) => {
             <div id = {style.comment}>
                 <H2 text = {props.user}/>
                 <P text = {props.content}/>
+                <MoreView commentNum = {props.commentNum} name = "comment"/>
                 <ReCommentInput commentNum = {props.commentNum}/>
             </div>
             {

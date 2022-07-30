@@ -25,6 +25,8 @@ export const BOARD_RECRUIT_TEXT = "BOARD_RECRUIT_TEXT"
 export const BOARD_CONTENT_TEXT = "BOARD_CONTENT_TEXT"
 export const BOARD_UPLOAD = "BOARD_UPLOAD"
 
+export const MORE_VIEW = "MORE_VIEW"
+
 
 const home = () => {
     return {
@@ -154,9 +156,18 @@ const reCommentInputText = (text) => {
     }
 }
 
+const moreView = (num, text) => {
+    return{
+        type: MORE_VIEW,
+        num: num,
+        text: text
+    }
+}
+
 
 
 export { home, changeScroll, login, join, board, profile, address, comment,
          addressSearch, addressDetail, addressClose, 
          boardWrite, boardTitleText, boardAddressText, boardContentText, boardRecruitText, boardUpload,
-         reCommentInput, reCommentUpload, reCommentInputText, commentInputText, commentUpload }
+         reCommentInput, reCommentUpload, reCommentInputText, commentInputText, commentUpload,
+         moreView }

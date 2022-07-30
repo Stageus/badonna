@@ -10,7 +10,6 @@ const CommentPage = () => {
 
     const boardNum = useSelector(state => state.boardNum)
     const commentListState = useSelector(state => state.commentList[boardNum])
-    console.log(commentListState)
 
     return (
         <main id = {style.main}>

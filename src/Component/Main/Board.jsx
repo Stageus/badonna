@@ -13,7 +13,7 @@ const Board = (props) => {
                 <div className = {style.boardTitleBox}>
                     <H2 id = {style.name} text = {props.boardUser}/>
                     <H2 text = {`[0 / ${props.boardRecruit}] ${props.boardTitle}`}/>
-                    <MoreView/>
+                    <MoreView boardNum = {props.index} name = "board"/>
                     <P text = {`${props.boardDate} ${props.boardLocation}`}/>
                 </div>
                 <div className = {style.boardContent}>
@@ -25,7 +25,6 @@ const Board = (props) => {
                         <div className = {style.commentText}>
                             <H2 id = {style.name} text = {props.commentUser}/>
                             <P text = {props.commentContent}/>
-                            <MoreView/>
                         </div>
                         <Button id = {style.more} name = "comment" text = "댓글 더보기" boardNum = {props.index}/>
                     </div>
@@ -37,13 +36,18 @@ const Board = (props) => {
         <article className = {style.board}>
             <div className = {style.boardTitleBox}>
                 <H2 id = {style.name} text = {props.boardUser}/>
-                <H2 text = {props.boardTitle}/>
-                <Button text = "…"/>
+                <H2 text = {`[0 / ${props.boardRecruit}] ${props.boardTitle}`}/>
+                <MoreView boardNum = {props.index} name = "board"/>
                 <P text = {`${props.boardDate} ${props.boardLocation}`}/>
             </div>
             <div className = {style.boardContent}>
                 <P text = {props.boardContent}/>
             </div>
+            <div className = {style.boardComment}>
+                    <div className = {style.commentBox}>
+                        <Button id = {style.more} name = "comment" text = "댓글 쓰기" boardNum = {props.index}/>
+                    </div>
+                </div>
         </article>
     )
 }

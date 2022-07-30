@@ -65,7 +65,7 @@ const Main = () => {
             )
         }
     }
-    if(homeState){
+    if(homeState || loginState || boardState || profileState){
         if(scrollState == 0){
             return(
                 <main id = {style.main1} onWheel = {throttleScroll}>
