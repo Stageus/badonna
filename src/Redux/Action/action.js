@@ -1,12 +1,5 @@
-
-export const HOME = "HOME"
 export const SCROLL = "SCROLL"
-export const LOGIN = "LOGIN"
-export const JOIN = "JOIN"
-export const BOARD = "BOARD"
-export const PROFILE = "PROFILE"
 export const ADDRESS = "ADDRESS"
-export const COMMENT = "COMMENT"
 
 export const ADDRESS_SEARCH = "ADDRESS_SEARCH"
 export const ADDRESS_DETAIL = "ADDRESS_DETAIL"
@@ -18,7 +11,6 @@ export const RE_COMMENT_INPUT = "RE_COMMENT_INPUT"
 export const RE_COMMENT_UPLOAD = "RE_COMMENT_UPLOAD"
 export const RE_COMMENT_INPUT_TEXT = "RE_COMMENT_INPUT_TEXT"
 
-export const BOARD_WRITE = "BOARD_WRITE"
 export const BOARD_TITLE_TEXT = "BOARD_TITLE_TEXT"
 export const BOARD_ADDRESS_TEXT = "BOARD_ADDRESS_TEXT"
 export const BOARD_RECRUIT_TEXT = "BOARD_RECRUIT_TEXT"
@@ -28,46 +20,15 @@ export const BOARD_UPLOAD = "BOARD_UPLOAD"
 export const MORE_VIEW = "MORE_VIEW"
 
 
-const home = () => {
-    return {
-        type: HOME
-    }
-}
 const changeScroll = (scroll) => {
     return {
         type: SCROLL,
         scroll: scroll
     }
 }
-const login = () => {
-    return {
-        type: LOGIN
-    }
-}
-const join = () => {
-    return {
-        type: JOIN
-    }
-}
-const board = () => {
-    return {
-        type: BOARD
-    }
-}
-const profile = () => {
-    return{
-        type: PROFILE
-    }
-}
 const address = () => {
     return{
         type: ADDRESS
-    }
-}
-const comment = (index) => {
-    return{
-        type: COMMENT,
-        index: index
     }
 }
 
@@ -89,11 +50,6 @@ const addressClose = () => {
 }
 
 
-const boardWrite = () => {
-    return {
-        type: BOARD_WRITE
-    }
-}
 const boardTitleText = (text) => {
     return{
         type: BOARD_TITLE_TEXT,
@@ -131,9 +87,10 @@ const commentInputText= (text) => {
         text: text
     }
 }
-const commentUpload = () => {
+const commentUpload = (boardNum = null) => {
     return {
         type: COMMENT_UPLOAD,
+        boardNum: boardNum
     }
 }
 const reCommentInput = (commentNum, reCommentNum) => {
@@ -143,10 +100,11 @@ const reCommentInput = (commentNum, reCommentNum) => {
         reCommentNum: reCommentNum
     }
 }
-const reCommentUpload = (cancel = null) => {
+const reCommentUpload = (cancel = null, commentNum) => {
     return {
         type: RE_COMMENT_UPLOAD,
-        cancel: cancel
+        cancel: cancel,
+        commentNum: commentNum
     }
 }
 const reCommentInputText = (text) => {
@@ -166,8 +124,7 @@ const moreView = (num, text) => {
 
 
 
-export { home, changeScroll, login, join, board, profile, address, comment,
-         addressSearch, addressDetail, addressClose, 
-         boardWrite, boardTitleText, boardAddressText, boardContentText, boardRecruitText, boardUpload,
+export { changeScroll, address, addressSearch, addressDetail, addressClose, 
+         boardTitleText, boardAddressText, boardContentText, boardRecruitText, boardUpload,
          reCommentInput, reCommentUpload, reCommentInputText, commentInputText, commentUpload,
          moreView }

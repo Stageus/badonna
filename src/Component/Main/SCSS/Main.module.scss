@@ -4,7 +4,6 @@ main{
     overflow-y: hidden;
     img{
         max-width: 1025px;
-        width: 50%;
     }
     
     div{
@@ -35,30 +34,39 @@ main{
 #main1{
     img{
         margin-top: auto;
+        flex-grow: 4;
+    }
+    div{
+        flex-grow: 2;
     }
 }
 
 #main2{
+    img{
+        flex-grow: 3;
+    }
     div{
-        margin-left: 5%;
+        text-align: center;
+        flex-grow: 3;
     }
 }
 
 #main3{
-    img{
-        width: 50%;
-        margin-left: 10%;
-    }
     div{
-        margin-left: auto;
+        text-align: center;
+        flex-grow: 4;
+    }
+    img{
+        flex-grow: 2;
     }
 }
 
 #main4{
     img{
-        margin-left: 5%;
+        flex-grow: 2;
     }
     div{
-        margin-left: 8%;
+        text-align: center;
+        flex-grow: 4;
     }
 }

@@ -10,7 +10,7 @@ import MoreView from "./MoreView"
 const Comment = (props) => {
 
     const reCommentListState = useSelector(state => state.reCommentList[props.commentNum])
-
+    
     return (
         <div id = {style.commentBox}>
             <div id = {style.comment}>
@@ -20,8 +20,8 @@ const Comment = (props) => {
                 <ReCommentInput commentNum = {props.commentNum}/>
             </div>
             {
-                reCommentListState.map((element, index) => 
-                <ReComment key = {index} reCommentNum = {index} commentNum = {props.commentNum} user = {element.user} content = {element.content}/>)
+                reCommentListState&&reCommentListState.map((element, index) => 
+                <ReComment key = {index} reCommentNum = {element.reCommentNum} commentNum = {props.commentNum} user = {element.user} content = {element.content}/>)
             }
         </div>
     )

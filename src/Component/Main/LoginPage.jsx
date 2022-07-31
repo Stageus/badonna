@@ -4,6 +4,7 @@ import Button from "../Common/Button"
 import H1 from "../Common/H1"
 import P from "../Common/P"
 import Text from "../Common/Text"
+import { Link } from "react-router-dom"
 
 const Login = () => {
 
@@ -22,7 +23,7 @@ const Login = () => {
                 </div>
                 <div id = {style.buttonBox}>
                     <Button text = "로그인"/>
-                    <Button id = {style.join} name = "join" text = "회원 가입"/>
+                    <Link id = {style.join} to = "/join">회원가입</Link>
                 </div>
             </div>
         </main>

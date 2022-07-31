@@ -8,7 +8,7 @@ const App = () => {
 
     return (
         <React.Fragment>
-            <Topbar/>            
+            <Topbar/>          
             <MainPage/>            
             <AddressDialog/>          
         </React.Fragment>

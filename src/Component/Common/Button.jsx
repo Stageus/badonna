@@ -1,7 +1,7 @@
 import React from "react"
 import Img from "./Img"
 import { useDispatch } from "react-redux"
-import { login, join, profile, home, board, address, addressSearch, addressDetail, comment, reCommentInput, reCommentUpload, boardWrite, commentUpload, boardUpload, moreView } from "../../Redux/Action/action"
+import { addressSearch, addressDetail, comment, reCommentInput, reCommentUpload, commentUpload, boardUpload, moreView } from "../../Redux/Action/action"
 
 
 const Button = (props) => {
@@ -10,38 +10,17 @@ const Button = (props) => {
     
     const onClickEvent = () => {
         switch(props.name){
-            case "login":
-                dispatch(login())
-                break
-            case "join":
-                dispatch(join())
-                break
-            case "address":
-                dispatch(address())
-                break
-            case "board":
-                dispatch(board())
-                break
-            case "boardWrite":
-                dispatch(boardWrite())
-                break
             case "boardUpload":
                 dispatch(boardUpload())
                 break
-            case "profile":
-                dispatch(profile())
-                break
-            case "comment":
-                dispatch(comment(props.boardNum))
-                break
             case "commentUpload":
-                dispatch(commentUpload())
+                dispatch(commentUpload(props.boardNum))
                 break
             case "reCommentInput":
                 dispatch(reCommentInput(props.commentNum, props.reCommentNum))
                 break
             case "reCommentInputUpload":
-                dispatch(reCommentUpload(props.cancel))
+                dispatch(reCommentUpload(props.cancel, props.commentNum))
                 break
             case "addressSearch":
                 dispatch(addressSearch())
@@ -74,7 +53,7 @@ const Button = (props) => {
             case "reCommentDelete":
                 break
             default:
-                dispatch(home())
+                console.log("Error")
         }
     }
 

@@ -4,6 +4,7 @@ import H1 from "../Common/H1"
 import Board from "./Board"
 import Button from "../Common/Button"
 import { useSelector } from "react-redux"
+import { Link } from "react-router-dom"
 
 const BoardPage = () => {
 
@@ -14,14 +15,22 @@ const BoardPage = () => {
         <main id = {style.main}>
             <div id = {style.boardNav}>
                 <H1 text = "게시글"/>
-                <Button text = "게시글 쓰기" name = "boardWrite"/>
+                <button>
+                    <Link to="/boardWrite">게시글 쓰기</Link>
+                </button>
             </div>
             {
                 boardListState.map((element, index, arr) =>
-                    <Board key = {index} index = {index} boardTitle = {element.title} boardContent = {element.content}
-                            boardUser = {element.user} boardDate = {element.date}
-                            boardLocation = {element.location} boardRecruit = {element.recruit} commentUser = {commentListState[index][0].user}
-                            commentContent = {commentListState[index][0].content}/>
+                    <Board key = {index} 
+                        boardNum = {element.boardNum} 
+                        boardTitle = {element.title} 
+                        boardContent = {element.content}
+                        boardUser = {element.user} 
+                        boardDate = {element.date}
+                        boardLocation = {element.location}
+                        boardRecruit = {element.recruit} 
+                        commentUser = {commentListState[index][0].user}
+                        commentContent = {commentListState[index][0].content}/>
                 )
             }
         </main>

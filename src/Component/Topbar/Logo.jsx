@@ -1,21 +1,14 @@
 import React from "react"
 import Img from "../Common/Img"
 import style from "./SCSS/Logo.module.scss"
-import { useDispatch } from "react-redux"
-import { home } from "../../Redux/Action/action"
+import { Link } from "react-router-dom"
 
 const Logo = () => {
 
-    const dispatch = useDispatch()
-
-    const onClickEvent = (event) => {
-        dispatch(home())
-    }
-
     return(
-        <div id = {style.logo} name = "home" onClick = {onClickEvent}>
+        <Link to = "/" id = {style.logo}>
             <Img src = "./img/logo-white.svg"/>
-        </div>
+        </Link>
     )
 }
 

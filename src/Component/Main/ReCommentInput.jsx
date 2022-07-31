@@ -14,7 +14,7 @@ const ReCommentInput = (props) => {
         return (
             <div id = {style.reCommentInputBox}>
                 <Text placeholder = "답글 달기" name = "reComment" maxLength = "200"/>
-                <Button id = {style.reCommentButton} text = "확인" name = "reCommentInputUpload"/>
+                <Button id = {style.reCommentButton} text = "확인" name = "reCommentInputUpload" commentNum = {props.commentNum}/>
                 <Button id = {style.reCommentButton} text = "취소" name = "reCommentInputUpload" cancel = "cancel"/>
             </div>
         )

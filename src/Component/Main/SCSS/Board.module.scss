@@ -91,6 +91,10 @@
                 height: fit-content;
                 font-size: 10px;
                 font-weight: bold;
+                a{
+                    background-color: transparent;
+                    color: black
+                }
             }
             .commentText{
                 display: flex;
@@ -135,7 +139,7 @@
         }
         #addressBox{
                 #addressInput{
-                width: 30%;
+                width: 40%;
                 margin-right: 20px;
             }
         }

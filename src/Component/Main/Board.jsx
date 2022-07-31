@@ -4,6 +4,7 @@ import H2 from "../Common/H2"
 import P from "../Common/P"
 import Button from "../Common/Button"
 import MoreView from "./MoreView"
+import { Link } from "react-router-dom"
 
 const Board = (props) => {
     
@@ -26,7 +27,9 @@ const Board = (props) => {
                             <H2 id = {style.name} text = {props.commentUser}/>
                             <P text = {props.commentContent}/>
                         </div>
-                        <Button id = {style.more} name = "comment" text = "댓글 더보기" boardNum = {props.index}/>
+                        <button id = {style.more}>
+                            <Link to = {`/comment/${props.boardNum}`}>댓글 더보기</Link>
+                        </button>
                     </div>
                 </div>
             </article>
@@ -45,7 +48,9 @@ const Board = (props) => {
             </div>
             <div className = {style.boardComment}>
                     <div className = {style.commentBox}>
-                        <Button id = {style.more} name = "comment" text = "댓글 쓰기" boardNum = {props.index}/>
+                        <button id = {style.more}>
+                        <Link to = {`/comment/${props.boardNum}`}>댓글 쓰기</Link>
+                        </button>
                     </div>
                 </div>
         </article>

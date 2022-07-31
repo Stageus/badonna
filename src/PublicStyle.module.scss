@@ -71,16 +71,20 @@ div{
     }
 }
 
-button{
+button, a{
     cursor: pointer;
     height: fit-content;
     padding-top: 2px;
     padding-bottom: 2px;
+    padding-left: 8px;
+    padding-right: 8px;
     font-family: "Badonna";
     color: white;
     background-color: $main-color;
     border: 1px solid transparent;
     border-radius: 4px;
+    text-decoration: none;
+    border: none;
 
     &:active{
         background-color: darken($main-color, 10);
