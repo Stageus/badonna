@@ -2,10 +2,10 @@ import React from "react"
 import H1 from "../Common/H1"
 import P from "../Common/P"
 import Button from "../Common/Button"
-import style from "./SCSS/TermsOfServiceStyle.module.scss"
+import style from "./SCSS/TermsOfService.module.scss"
 import { Link } from "react-router-dom"
 import { useDispatch } from "react-redux"
-import { termsOfService } from "../../Redux/Action/action"
+import { termsOfService } from "../../Redux/Action/joinAction"
 
 const TermsOfService = () => {
 

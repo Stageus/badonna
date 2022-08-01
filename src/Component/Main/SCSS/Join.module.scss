@@ -1,21 +1,23 @@
 #join{
     width: 80%;
-    max-width: 900px;
+    height: 1000px;
+    max-width: 450px;
     margin-left: auto;
     margin-right: auto;
     justify-content: flex-start;
     flex-direction: column;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
+    overflow-y: scroll;
 
     #inputBox{
         display: flex;
         flex-direction: column;
         width: 100%;
-        height: 70%;
+        height: fit-content;
         margin-top: 10%;
         div{
-            width: 47%;
-            height: 33%;
+            width: 100%;
+            height: 130px;
             h2{
                 width: 100%;
                 height: fit-content;
@@ -64,10 +66,15 @@
             }
         }
     }
-}
-
-#joinButton{
-    width: 50%;
-    max-width: 400px;
-    height: 30px;
+    a{
+        width: 50%;
+        margin-top: 24px;
+        max-width: 400px;
+        height: 30px;
+        text-align: center;
+        button{
+            width: 100%;
+            height: 100%;
+        }
+    }
 }

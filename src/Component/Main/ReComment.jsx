@@ -4,8 +4,11 @@ import ReCommentInput from "./ReCommentInput"
 import H2 from "../Common/H2"
 import P from "../Common/P"
 import MoreView from "./MoreView"
+import { useSelector } from "react-redux"
 
 const ReComment = (props) => {
+
+    const userNameState = useSelector(state => state.profile.user.name)
 
     if(props.user == ""){
         return(
@@ -17,7 +20,7 @@ const ReComment = (props) => {
             <H2 text = {props.user}/>
             <P text = {props.content}/>
             <MoreView name = "reComment" reCommentNum = {props.reCommentNum}/>
-            <ReCommentInput commentNum = {props.commentNum} reCommentNum = {props.reCommentNum}/>
+            <ReCommentInput commentNum = {props.commentNum} reCommentNum = {props.reCommentNum} userName = {userNameState}/>
         </div>
     )
 }

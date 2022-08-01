@@ -9,8 +9,13 @@ import MoreView from "./MoreView"
 
 const Comment = (props) => {
 
-    const reCommentListState = useSelector(state => state.reCommentList[props.commentNum])
-    
+    const reCommentListState = useSelector(state => state.comment.reCommentList[props.commentNum])
+
+    if(props.commentNum == null){
+        return (
+            <React.Fragment></React.Fragment>
+        )
+    }
     return (
         <div id = {style.commentBox}>
             <div id = {style.comment}>

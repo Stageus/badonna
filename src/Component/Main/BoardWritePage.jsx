@@ -4,15 +4,16 @@ import Text from "../Common/Text"
 import Button from "../Common/Button"
 import P from "../Common/P"
 import { useSelector, useDispatch } from "react-redux"
-import { boardContentText, boardInputLength } from "../../Redux/Action/action"
+import { boardContentText } from "../../Redux/Action/boardAction"
+import { Link } from "react-router-dom"
 
 const BoardWritePage = () => {
 
     const dispatch = useDispatch()
-    const inputLengthState = useSelector(state => state.boardInput.content)
+    const inputLengthState = useSelector(state => state.board.boardInput.content)
+    const userNameState = useSelector(state => state.profile.userName)
     
     const inputEvent = (event) => {
-        console.log(event.target.value)
         dispatch(boardContentText(event.target.value))
     }
 
@@ -34,7 +35,10 @@ const BoardWritePage = () => {
                     <textarea id = "content" placeholder = "내용" onChange = {inputEvent} maxLength = "200" value = {inputLengthState}></textarea>
                     <P id = "contentLength" text = {`${inputLengthState.length}/200`}/>
                 </div>
-                <Button text = "게시글 등록" name = "boardUpload"/>
+                <Link to = "/board">
+                    <Button text = "게시글 등록" name = "boardUpload" userName = {userNameState}/>
+                </Link>
+                
             </div>
         </main>
     )

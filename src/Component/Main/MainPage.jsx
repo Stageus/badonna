@@ -13,9 +13,7 @@ import { Routes, Route } from "react-router-dom"
 
 const Main = () => {
 
-    const currentConState = useSelector(state => state.currentCon)
-    const termsOfServiceState = useSelector(state => state.termsOfService)
-    console.log(termsOfServiceState)
+    const currentConState = useSelector(state => state.home.currentCon)
 
     if(currentConState){
         return (
@@ -38,8 +36,7 @@ const Main = () => {
             <Route path = "/join" element = {<JoinPage />}/>
             <Route path = "/board" element = {<BoardPage />}/>
             <Route path = "/profile" element = {<ProfilePage />}/>
-            <Route path = {`/comment/:boardNum`} element = {<CommentPage />}/>
-            <Route path = "/boardWrite" element = {<BoardWritePage />}/>
+            <Route path = "/termsOfService" element = {<TermsOfService />}/>
         </Routes>
     )
 }
