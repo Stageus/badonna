@@ -28,7 +28,7 @@ const Board = (props) => {
                             <P text = {props.commentContent}/>
                         </div>
                         <button id = {style.more}>
-                            <Link to = {`/comment/${props.boardNum}`}>댓글 더보기</Link>
+                            <Link to = {`/board${props.boardNum}/comment`}>댓글 더보기</Link>
                         </button>
                     </div>
                 </div>
@@ -49,7 +49,7 @@ const Board = (props) => {
             <div className = {style.boardComment}>
                     <div className = {style.commentBox}>
                         <button id = {style.more}>
-                        <Link to = {`/comment/${props.boardNum}`}>댓글 쓰기</Link>
+                        <Link to = {`/board${props.boardNum}/comment`}>댓글 쓰기</Link>
                         </button>
                     </div>
                 </div>

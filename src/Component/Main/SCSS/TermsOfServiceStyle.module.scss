@@ -1,0 +1,33 @@
+#termsOfService{
+    flex-direction: column;
+    h1{
+        margin-bottom: 24px;
+    }
+    textarea{
+        resize: none;
+        width: 40%;
+        max-width: 600px;
+        height: 300px
+    }
+    #checkBox{
+        width: 40%;
+        display: flex;
+        flex-wrap: wrap;
+        margin-bottom: 12px;
+        max-width: 600px;
+        justify-content: end;
+        p{
+            font-size: 14px;
+        }
+    }
+    #buttonBox{
+        width: 40%;
+        display: flex;
+        max-width: 600px;
+        justify-content: end;
+        button{
+            width: 100px;
+            margin-left: 12px;
+        }
+    }
+}

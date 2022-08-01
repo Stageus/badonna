@@ -11,7 +11,7 @@ const config = {
     },
     output: {
         filename: "bundle.js",
-        path: __dirname + "/public"
+        path: __dirname + "/public",
     },
     module: {
         rules: [
@@ -45,7 +45,10 @@ const config = {
         static: {
             directory: __dirname + "/public"
         },
-        port: 3000
+        port: 3000,
+        historyApiFallback: {
+            index:'/'
+        }
     }
 }
 

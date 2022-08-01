@@ -10,6 +10,9 @@ const Button = (props) => {
     
     const onClickEvent = () => {
         switch(props.name){
+            case "address":
+                dispatch(address())
+                break
             case "boardUpload":
                 dispatch(boardUpload())
                 break

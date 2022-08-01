@@ -1,7 +1,7 @@
-import { SCROLL, ADDRESS, ADDRESS_SEARCH, ADDRESS_DETAIL, ADDRESS_CLOSE, 
+import { TERMS_OF_SERVICE, SCROLL, ADDRESS, ADDRESS_SEARCH, ADDRESS_DETAIL, ADDRESS_CLOSE, 
          COMMENT_INPUT_TEXT, COMMENT_UPLOAD, RE_COMMENT_INPUT, RE_COMMENT_UPLOAD, RE_COMMENT_INPUT_TEXT, 
          BOARD_TITLE_TEXT, BOARD_RECRUIT_TEXT, BOARD_ADDRESS_TEXT, BOARD_CONTENT_TEXT, BOARD_UPLOAD, 
-         MORE_VIEW } from "../Action/action"
+         MORE_VIEW, } from "../Action/action"
 
 const initState = {
     currentCon: true,
@@ -123,8 +123,20 @@ const reducer = ( state = initState, action ) => {
             return{
                 ...state,
             }
+        case TERMS_OF_SERVICE:
+            if(action.cancel){
+                return{
+                    ...state,
+                    termsOfService: false
+                }
+            }
+            return{
+                ...state,
+                termsOfService: true,
+            }
 
-        
+
+        //게시글
         //입력한 제목
         case BOARD_TITLE_TEXT:
             boardInput.title = action.text

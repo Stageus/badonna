@@ -1,23 +1,26 @@
-#ul{
-    display: flex;
-    width: fit-content;
-    height: fit-content;
-    margin: 0;
-    padding: 0;
-    flex-direction: column;
-    margin-left: auto;
-    margin-right: 12px;
+#ulBox{
     flex-grow: 1;
-    li{
+    #ul{
+        list-style-type: none;
         display: flex;
-        width: 30px;
-        height: 30px;
-        align-items: center;
-        justify-content: center;
+        width: 40px;
+        height: fit-content;
+        margin-left: auto;
+        padding: 0;
+        flex-direction: column;
+        margin-left: auto;
+        margin-right: 12px;
+        li{
+            display: flex;
+            width: 30px;
+            height: 30px;
+            align-items: center;
+            justify-content: center;
 
-        img{
-            margin: 0;
-            width: 100%;
+            img{
+                margin: 0;
+                width: 100%;
+            }
         }
     }
 }

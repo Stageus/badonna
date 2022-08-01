@@ -9,39 +9,47 @@ const Scroll = () => {
 
     if(scrollState == 0){
         return (
-            <ul id = {style.ul}>
-                <li><Img src = "./img/scroll_point_full.svg"/></li>
-                <li><Img src = "./img/scroll_point_empty.svg"/></li>
-                <li><Img src = "./img/scroll_point_empty.svg"/></li>
-                <li><Img src = "./img/scroll_point_empty.svg"/></li>
-            </ul>
+            <div id = {style.ulBox}>
+                <ul id = {style.ul}>
+                    <li><Img src = "./img/scroll_point_full.svg"/></li>
+                    <li><Img src = "./img/scroll_point_empty.svg"/></li>
+                    <li><Img src = "./img/scroll_point_empty.svg"/></li>
+                    <li><Img src = "./img/scroll_point_empty.svg"/></li>
+                </ul>
+            </div>
         )
     }else if(scrollState == 1){
         return (
-            <ul id = {style.ul}>
-                <li><Img src = "./img/scroll_point_empty.svg"/></li>
-                <li><Img src = "./img/scroll_point_full.svg"/></li>
-                <li><Img src = "./img/scroll_point_empty.svg"/></li>
-                <li><Img src = "./img/scroll_point_empty.svg"/></li>
-            </ul>
+            <div id = {style.ulBox}>
+                <ul id = {style.ul}>
+                    <li><Img src = "./img/scroll_point_empty.svg"/></li>
+                    <li><Img src = "./img/scroll_point_full.svg"/></li>
+                    <li><Img src = "./img/scroll_point_empty.svg"/></li>
+                    <li><Img src = "./img/scroll_point_empty.svg"/></li>
+                </ul>
+            </div>
         )
     }else if(scrollState == 2){
         return (
-            <ul id = {style.ul}>
-                <li><Img src = "./img/scroll_point_empty.svg"/></li>
-                <li><Img src = "./img/scroll_point_empty.svg"/></li>
-                <li><Img src = "./img/scroll_point_full.svg"/></li>
-                <li><Img src = "./img/scroll_point_empty.svg"/></li>
-            </ul>
+            <div id = {style.ulBox}>
+                <ul id = {style.ul}>
+                    <li><Img src = "./img/scroll_point_empty.svg"/></li>
+                    <li><Img src = "./img/scroll_point_empty.svg"/></li>
+                    <li><Img src = "./img/scroll_point_full.svg"/></li>
+                    <li><Img src = "./img/scroll_point_empty.svg"/></li>
+                </ul>
+            </div>
         )
     }else {
         return (
-            <ul id = {style.ul}>
-                <li><Img src = "./img/scroll_point_empty.svg"/></li>
-                <li><Img src = "./img/scroll_point_empty.svg"/></li>
-                <li><Img src = "./img/scroll_point_empty.svg"/></li>
-                <li><Img src = "./img/scroll_point_full.svg"/></li>
-            </ul>
+            <div id = {style.ulBox}>
+                <ul id = {style.ul}>
+                    <li><Img src = "./img/scroll_point_empty.svg"/></li>
+                    <li><Img src = "./img/scroll_point_empty.svg"/></li>
+                    <li><Img src = "./img/scroll_point_empty.svg"/></li>
+                    <li><Img src = "./img/scroll_point_full.svg"/></li>
+                </ul>
+            </div>
         )
     }
 }

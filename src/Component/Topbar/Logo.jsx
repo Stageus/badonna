@@ -6,9 +6,11 @@ import { Link } from "react-router-dom"
 const Logo = () => {
 
     return(
-        <Link to = "/" id = {style.logo}>
-            <Img src = "./img/logo-white.svg"/>
-        </Link>
+        <div>
+            <Link to = "/" id = {style.logo}>
+                <Img src = "./img/logo-white.svg"/>
+            </Link>
+        </div>
     )
 }
 

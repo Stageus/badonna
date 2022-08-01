@@ -11,7 +11,22 @@ const CommentPage = () => {
 
     const { boardNum } = useParams()
     const commentListState = useSelector(state => state.commentList[boardNum])
-
+    
+    if(commentListState.commentNum == null){
+        return (
+            <main id = {style.main}>
+                <div id = {style.commentNav}>
+                    <H1 text = "댓글"/>
+                </div>
+                <div id = {style.commentMain}>
+                    <div id = {style.commentInputBox}>
+                        <Text name = "comment" maxLength = "200"/>
+                        <Button text = "댓글 추가" name = "commentUpload" boardNum = {boardNum}/>
+                    </div>
+                </div>
+            </main>
+        )
+    }
     return (
         <main id = {style.main}>
             <div id = {style.commentNav}>

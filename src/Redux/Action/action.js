@@ -1,5 +1,6 @@
 export const SCROLL = "SCROLL"
 export const ADDRESS = "ADDRESS"
+export const TERMS_OF_SERVICE = "TERMS_OF_SERVICE"
 
 export const ADDRESS_SEARCH = "ADDRESS_SEARCH"
 export const ADDRESS_DETAIL = "ADDRESS_DETAIL"
@@ -19,7 +20,12 @@ export const BOARD_UPLOAD = "BOARD_UPLOAD"
 
 export const MORE_VIEW = "MORE_VIEW"
 
-
+const termsOfService = (cancel = false) => {
+    return {
+        type: TERMS_OF_SERVICE,
+        cancel: cancel
+    }
+}
 const changeScroll = (scroll) => {
     return {
         type: SCROLL,
@@ -31,8 +37,6 @@ const address = () => {
         type: ADDRESS
     }
 }
-
-
 const addressSearch = () => {
     return{
         type: ADDRESS_SEARCH
@@ -124,7 +128,7 @@ const moreView = (num, text) => {
 
 
 
-export { changeScroll, address, addressSearch, addressDetail, addressClose, 
+export { termsOfService, changeScroll, address, addressSearch, addressDetail, addressClose, 
          boardTitleText, boardAddressText, boardContentText, boardRecruitText, boardUpload,
          reCommentInput, reCommentUpload, reCommentInputText, commentInputText, commentUpload,
          moreView }

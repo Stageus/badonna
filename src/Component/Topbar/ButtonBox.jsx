@@ -7,10 +7,17 @@ const ButtonBox = () => {
 
     return(
         <div id = {style.buttonBox}>
-            <Link to = "/login">로그인</Link>
+            <button>
+                <Link to = "/login">로그인</Link>
+            </button>
             <Button text = "주소 즐겨찾기" name = "address"/>
-            <Link to = "/board">게시글</Link>
-            <Link to = "/profile">회원정보</Link>
+            <button>
+                <Link to = "/board">게시글</Link>
+            </button>
+            <button>
+                <Link to = "/profile">회원정보</Link>
+            </button>
+            
         </div>
     )
 }

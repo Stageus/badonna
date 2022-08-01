@@ -16,7 +16,7 @@
   },
   "scripts": {
     "build": "webpack",
-    "start": "webpack serve"
+    "start": "webpack serve --history-api-fallback"
   },
   "author": "",
   "license": "ISC",

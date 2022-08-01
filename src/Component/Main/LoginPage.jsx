@@ -23,7 +23,7 @@ const Login = () => {
                 </div>
                 <div id = {style.buttonBox}>
                     <Button text = "로그인"/>
-                    <Link id = {style.join} to = "/join">회원가입</Link>
+                    <Link id = {style.join} to = "/termsOfService">회원가입</Link>
                 </div>
             </div>
         </main>

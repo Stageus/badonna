@@ -16,7 +16,7 @@ const BoardPage = () => {
             <div id = {style.boardNav}>
                 <H1 text = "게시글"/>
                 <button>
-                    <Link to="/boardWrite">게시글 쓰기</Link>
+                    <Link to="board/boardWrite">게시글 쓰기</Link>
                 </button>
             </div>
             {
