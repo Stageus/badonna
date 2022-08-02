@@ -1,17 +1,36 @@
-import React from "react"
+import React, { useEffect } from "react"
 import Img from "./Img"
 import { useDispatch } from "react-redux"
 import { address, addressSearch, addressDetail, moreView, idCheck, telCheck } from "../../Redux/Action/action"
 import { boardUpload, } from "../../Redux/Action/boardAction"
 import { reCommentInput, reCommentUpload, commentUpload, } from "../../Redux/Action/commentAction"
+import { idCheckButton, join, } from "../../Redux/Action/joinAction"
+import { login, logout } from "../../Redux/Action/loginAction"
+import { profile } from "../../Redux/Action/profileAction"
 
 
 const Button = (props) => {
-
-    const dispatch = useDispatch()
     
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        onClickEvent
+    }, [dispatch])
     const onClickEvent = () => {
         switch(props.name){
+            case "loginPage":
+                break
+            case "logout":
+                dispatch(logout())
+                break
+            case "boardPage":
+                break
+            case "profilePage":
+                dispatch(profile())
+                break
+            case "login":
+                dispatch(login())
+                break
             case "address":
                 dispatch(address())
                 break
@@ -21,8 +40,10 @@ const Button = (props) => {
             case "telCheckDialog":
                 dispatch(telCheck())
                 break
+            case "idCheck":
+                dispatch(idCheckButton())
             case "boardUpload":
-                dispatch(boardUpload(props.userName))
+                dispatch(boardUpload(props.userId))
                 break
             case "commentUpload":
                 dispatch(commentUpload(props.boardNum, props.userName))
@@ -62,6 +83,9 @@ const Button = (props) => {
             case "reCommentEdit":
                 break
             case "reCommentDelete":
+                break
+            case "joinButton":
+                dispatch(join())
                 break
             default:
                 console.log("Error")

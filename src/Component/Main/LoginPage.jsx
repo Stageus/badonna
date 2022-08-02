@@ -13,16 +13,18 @@ const Login = () => {
             <div id = {style.login}>
                 <div id = "id">
                     <H1 text = "아이디"/>
-                    <Text/>
+                    <Text name = "loginId"/>
                     <P text = "아이디를 입력 해주세요."/>
                 </div>
                 <div pw = "pw">
                     <H1 text = "비밀번호"/>
-                    <Text/>
+                    <Text name = "loginPw"/>
                     <P text = "비밀번호를 입력 해주세요."/>
                 </div>
                 <div id = {style.buttonBox}>
-                    <Button text = "로그인"/>
+                    <Link id = {style.loginButton} to = "/">
+                        <Button text = "로그인" name = "login"/>
+                    </Link>
                     <Link id = {style.join} to = "/termsOfService">회원가입</Link>
                 </div>
             </div>

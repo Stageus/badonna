@@ -24,8 +24,8 @@
             }
         }
         input{
-            height: 24px;
-            font-size: 20px;
+            height: 20px;
+            font-size: 14px;
             width: 100%;
             margin-top: 12px;
             margin-bottom: 4px;
@@ -34,12 +34,21 @@
         #buttonBox{
             width: 72%;
             text-align: right;
-
-            button{
-                background-color: $main-color;
-                width: 101%;
-                font-size: 22px;
-                margin-bottom: 12px;
+            margin-bottom: 12px;
+            #loginButton{
+                display: flex;
+                align-items: center;
+                width: 100%;
+                height: 30px;
+                padding-bottom: 4px;
+                padding-top: 4px;
+                button{
+                    background-color: $main-color;
+                    width: 100%;
+                    height: 28px;
+                    font-size: 18px;
+                    padding: 0;
+                }
             }
             #join{
                 background-color: transparent;

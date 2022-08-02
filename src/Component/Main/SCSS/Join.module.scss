@@ -1,80 +1,83 @@
 #join{
-    width: 80%;
-    height: 1000px;
-    max-width: 450px;
+    width: 100%;
+    height: calc(100% - 100px);
     margin-left: auto;
     margin-right: auto;
     justify-content: flex-start;
     flex-direction: column;
     flex-wrap: nowrap;
     overflow-y: scroll;
-
-    #inputBox{
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        height: fit-content;
-        margin-top: 10%;
-        div{
+    #joinBox{
+        width: 70%;
+        max-width: 450px;
+    
+        #inputBox{
+            display: flex;
+            flex-direction: column;
             width: 100%;
-            height: 130px;
-            h2{
+            height: fit-content;
+            margin-top: 10%;
+            div{
                 width: 100%;
-                height: fit-content;
-                font-weight: normal;
-                font-size: 22px;
-                margin-bottom: 8px;
+                height: 130px;
+                h2{
+                    width: 100%;
+                    height: fit-content;
+                    font-weight: normal;
+                    font-size: 22px;
+                    margin-bottom: 8px;
+                }
+                p{
+                    width: 100%;
+                    height: fit-content;
+                    font-size: 12px;
+                    margin-top: 4px;
+                    color: red;
+                }
+                input{
+                    width: 65%;
+                    height: 16px;
+                }
             }
-            p{
-                width: 100%;
-                height: fit-content;
-                font-size: 12px;
-                margin-top: 4px;
-                color: red;
-            }
-            input{
-                width: 65%;
-                height: 16px;
-            }
-        }
 
-        #id{
-            align-items: center;
-            input{
-                margin-right: 5%;
+            #id{
+                align-items: center;
+                input{
+                    margin-right: 5%;
+                }
+                button{
+                    width: 25%;
+                }
             }
-            button{
-                width: 25%;
+            #tel{
+                #telText{
+                    display: inline-block;
+                    width: fit-content;
+                    font-size: 16px;
+                    margin-left: 4px;
+                    margin-right: 4px;
+                }
+                input{
+                    width: 18%;
+                    margin-left: 4px;
+                    margin-right: 4px;
+                }
+                button{
+                    margin-left: 4%;
+                    width: 24%;
+                }
             }
         }
-        #tel{
-            #telText{
-                display: inline-block;
-                width: fit-content;
-                font-size: 16px;
-                margin-left: 4px;
-                margin-right: 4px;
+        a{
+            width: 50%;
+            margin-top: 24px;
+            max-width: 400px;
+            height: 40px;
+            text-align: center;
+            #Button{
+                width: 100%;
+                height: 26px;
             }
-            input{
-                width: 18%;
-                margin-left: 4px;
-                margin-right: 4px;
-            }
-            button{
-                margin-left: 4%;
-                width: 24%;
-            }
-        }
-    }
-    a{
-        width: 50%;
-        margin-top: 24px;
-        max-width: 400px;
-        height: 30px;
-        text-align: center;
-        button{
-            width: 100%;
-            height: 100%;
         }
     }
 }

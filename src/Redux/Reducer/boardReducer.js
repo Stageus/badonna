@@ -1,3 +1,4 @@
+import { boardPost } from "../../Module/fetch"
 import { BOARD_ADDRESS_TEXT, BOARD_CONTENT_TEXT, BOARD_RECRUIT_TEXT, BOARD_TITLE_TEXT, BOARD_UPLOAD, } from "../Action/boardAction"
 
 const initState = {
@@ -5,9 +6,7 @@ const initState = {
         title: "",
         content: "",
         user: "",
-        date: "",
         location: "",
-        recruit: "",
     },
     boardList: [
         {
@@ -39,7 +38,6 @@ const boardReducer = (state = initState, action) => {
         //입력한 제목
         case BOARD_TITLE_TEXT:
             boardInput.title = action.text
-            boardInput.date = "2022-07-29"
             
             return{
                 ...state,
@@ -71,18 +69,12 @@ const boardReducer = (state = initState, action) => {
             }
         //게시글 등록 버튼
         case BOARD_UPLOAD:
-
-            const boardList = [...state.boardList]
-            boardList.push(
-                {
-                    title: state.boardInput.title,
-                    date: state.boardInput.date,
-                    content: state.boardInput.content,
-                    user: action.userName,
-                    location: state.boardInput.location,
-                    recruit: state.boardInput.recruit
-                }
-            )
+            boardPost(
+                state.boardInput.title,
+                state.boardInput.content,
+                state.boardInput.location,
+                action.id)
+            
             return{
                 ...state,
                 board: true,

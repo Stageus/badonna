@@ -28,10 +28,10 @@ const boardContentText = (text) => {
         text: text,
     }
 }
-const boardUpload = (userName) => {
+const boardUpload = (userId) => {
     return{
         type: BOARD_UPLOAD,
-        userName: userName
+        userId: userId
     }
 }
 

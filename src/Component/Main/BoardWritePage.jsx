@@ -11,7 +11,7 @@ const BoardWritePage = () => {
 
     const dispatch = useDispatch()
     const inputLengthState = useSelector(state => state.board.boardInput.content)
-    const userNameState = useSelector(state => state.profile.userName)
+    const userNameState = useSelector(state => state.profile.userId)
     
     const inputEvent = (event) => {
         dispatch(boardContentText(event.target.value))

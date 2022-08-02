@@ -1,14 +1,31 @@
+import { getCookie } from "../../Module/cookie"
+import { profileGet } from "../../Module/fetch"
+import { PROFILE } from "../Action/profileAction"
+
 const initState = {
     user: {
-        id: "cmh8037",
-        tel: "010-5161-8037",
-        name: "조민혁",
-        address: ["서울시 구로구 궁동", "목성주피터제우스"],
+        id: "",
+        pw: "",
+        name: "",
+        phonenum:"",
+        date: "",
     },
 }
 
 const profileReducer = (state = initState, action) => {
-    return state
+    switch(action.type){
+        case PROFILE:
+            const user = profileGet(getCookie("access-token"), getCookie("id"))
+            
+            return{
+                ...state,
+                user: user
+            }
+        default:
+            return{
+                ...state
+            }
+    }
 }
 
 export default profileReducer

@@ -1,8 +1,9 @@
 import React from "react"
 import { useDispatch } from "react-redux"
 import { commentInputText, reCommentInputText } from "../../Redux/Action/commentAction"
-import { joinIdInput, joinIdCheckInput, joinPwInput, joinPwCheckInput,joinTelMiddleInput, joinTelLastInput, joinNameInput } from "../../Redux/Action/joinAction"
+import { idInput, idCheckInput, pwInput, pwCheckInput,telMiddleInput, telLastInput, nameInput } from "../../Redux/Action/joinAction"
 import { boardAddressText, boardRecruitText, boardTitleText, } from "../../Redux/Action/boardAction"
+import { loginId, loginPw } from "../../Redux/Action/loginAction"
 
 const Text = (props) => {
 
@@ -10,26 +11,32 @@ const Text = (props) => {
 
     const onChangeEvent = (event) => {
         switch(props.name){
-            case "joinIdInput":
-                dispatch(joinIdInput(event.target.value))
+            case "loginId":
+                dispatch(loginId(event.target.value))
                 break
-            case "joinIdCheckInput":
-                dispatch(joinIdCheckInput(event.target.value))
+            case "loginPw":
+                dispatch(loginPw(event.target.value))
                 break
-            case "joinPwInput":
-                dispatch(joinPwInput(event.target.value))
+            case "idInput":
+                dispatch(idInput(event.target.value))
                 break
-            case "joinPwCheckInput":
-                dispatch(joinPwCheckInput(event.target.value))
+            case "idCheckInput":
+                dispatch(idCheckInput(event.target.value))
                 break
-            case "joinTelMiddleInput":
-                dispatch(joinTelMiddleInput(event.target.value))
+            case "pwInput":
+                dispatch(pwInput(event.target.value))
                 break
-            case "joinTelLastInput":
-                dispatch(joinTelLastInput(event.target.value))
+            case "pwCheckInput":
+                dispatch(pwCheckInput(event.target.value))
                 break
-            case "joinNameInput":
-                dispatch(joinNameInput(event.target.value))
+            case "telMiddleInput":
+                dispatch(telMiddleInput(event.target.value))
+                break
+            case "telLastInput":
+                dispatch(telLastInput(event.target.value))
+                break
+            case "nameInput":
+                dispatch(nameInput(event.target.value))
                 break
             case "comment":
                 dispatch(commentInputText(event.target.value))

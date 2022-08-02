@@ -9,7 +9,7 @@ import throttle from "lodash"
 
 const HomePage = () => {
 
-    const scrollState = useSelector(state => state.scroll)
+    const scrollState = useSelector(state => state.home.scroll)
     const dispatch = useDispatch()
 
     const scrollEvent = (event) => {

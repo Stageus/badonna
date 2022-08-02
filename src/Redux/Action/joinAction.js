@@ -1,11 +1,13 @@
 export const TERMS_OF_SERVICE = "TERMS_OF_SERVICE"
-export const JOIN_ID_INPUT = "JOIN_ID_INPUT"
-export const JOIN_ID_CHECK_INPUT = "JOIN_ID_CHECK_INPUT"
-export const JOIN_PW_INPUT = "JOIN_PW_INPUT"
-export const JOIN_PW_CHECK_INPUT = "JOIN_PW_CHECK_INPUT"
-export const JOIN_TEL_MIDDLE_INPUT = "JOIN_TEL_MIDDLE_INPUT"
-export const JOIN_TEL_LAST_INPUT = "JOIN_TEL_LAST_INPUT"
-export const JOIN_NAME_INPUT = "JOIN_NAME_INPUT"
+export const ID_INPUT = "ID_INPUT"
+export const ID_CHECK_INPUT = "ID_CHECK_INPUT"
+export const ID_CHECK_BUTTON = "ID_CHECK_BUTTON"
+export const PW_INPUT =  "PW_INPUT"
+export const PW_CHECK_INPUT = "PW_CHECK_INPUT"
+export const TEL_MIDDLE_INPUT = "TEL_MIDDLE_INPUT"
+export const TEL_LAST_INPUT = "TEL_LAST_INPUT"
+export const NAME_INPUT = "NAME_INPUT"
+export const JOIN = "JOIN"
 
 const termsOfService = (cancel = false) => {
     return {
@@ -13,50 +15,60 @@ const termsOfService = (cancel = false) => {
         cancel: cancel
     }
 }
-const joinIdInput = (text) => {
+const idInput = (text) => {
     return {
-        type: JOIN_ID_INPUT,
+        type: ID_INPUT,
         text: text
     }
 }
-const joinIdCheckInput = (text) => {
+const idCheckInput = (text) => {
     return {
-        type: JOIN_ID_CHECK_INPUT,
+        type: ID_CHECK_INPUT,
         text: text
     }
 }
-const joinPwInput = (text) => {
+const idCheckButton = () => {
     return {
-        type: JOIN_PW_INPUT,
+        type: ID_CHECK_BUTTON,
+    }
+}
+const pwInput = (text) => {
+    return {
+        type: PW_INPUT,
         text: text
     }
 }
-const joinPwCheckInput = (text) => {
+const pwCheckInput = (text) => {
     return {
-        type: JOIN_PW_CHECK_INPUT,
+        type: PW_CHECK_INPUT,
         text: text
     }
 }
-const joinTelMiddleInput = (text) => {
+const telMiddleInput = (text) => {
     return {
-        type: JOIN_TEL_MIDDLE_INPUT,
+        type: TEL_MIDDLE_INPUT,
         text: text
     }
 }
-const joinTelLastInput = (text) => {
+const telLastInput = (text) => {
     return {
-        type: JOIN_TEL_LAST_INPUT,
+        type: TEL_LAST_INPUT,
         text: text
     }
 }
-const joinNameInput = (text) => {
+const nameInput = (text) => {
     return {
-        type: JOIN_NAME_INPUT,
+        type: NAME_INPUT,
         text: text
+    }
+}
+const join = () => {
+    return{
+        type: JOIN,
     }
 }
 
-export { termsOfService, joinIdInput, joinIdCheckInput,
-         joinPwInput, joinPwCheckInput, 
-         joinTelMiddleInput, joinTelLastInput, 
-         joinNameInput }
+export { termsOfService, idInput, idCheckInput, idCheckButton,
+         pwInput, pwCheckInput, 
+         telMiddleInput, telLastInput, 
+         nameInput, join }

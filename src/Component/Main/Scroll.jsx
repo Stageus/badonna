@@ -5,7 +5,7 @@ import { useSelector } from "react-redux"
 
 const Scroll = () => {
 
-    const scrollState = useSelector(state => state.scroll)
+    const scrollState = useSelector(state => state.home.scroll)
 
     if(scrollState == 0){
         return (

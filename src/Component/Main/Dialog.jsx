@@ -96,7 +96,7 @@ const Dialog = () => {
                             <H1 text = "ID 중복체크"/>
                         </div>
                         <div id = {style.idCheckInput}>
-                            <Text name = "idCheckText"/>
+                            <Text name = "idCheckInput" maxLength = "12"/>
                             <P id = {style.hiddenText} text = "사용 가능한 아이디 입니다."/>
                             <Button text = "중복 체크" name = "idCheck"/>
                         </div>
