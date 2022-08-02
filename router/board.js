@@ -8,23 +8,22 @@ const moment=require("../module/moment")
 const tokenVerify=require("../module/verify")
 
 
-
 router.post("/",(req,res)=>{
 
     const board_title=req.body.title
     const board_contents=req.body.contents
     const board_place=req.body.place
     const user_id=req.body.id
-    const board_date=req.body.date 
     const board_is_end=req.body.is_end 
-    
     const token_public=req.headers.token
+    const board_date=moment()
 
     const api_name="board" + req.url
     const req_host=req.headers.req_host
     const req_data=[board_title,board_contents,board_place,user_id,board_date]
     const api_call_time=moment()
-
+    
+    
     const result={
         "success":false,
         "message":null
@@ -39,9 +38,6 @@ router.post("/",(req,res)=>{
             res.send(result)
         }else if(board_place.length == 0 || board_place == null){
             result.message="옳바르지 않은 주소 입력 입니다."
-            res.send(result)
-        }else if(board_date.length != 8 || board_date == null){
-            result.message="옳바르지 않은 날짜 입력 입니다."
             res.send(result)
         }else if(user_id.length == 0 || user_id == null || user_id >=12){
             result.message="옳바르지 않은 아이디 입력 입니다."
@@ -70,8 +66,6 @@ router.post("/",(req,res)=>{
                     }
                     //로깅 남기기
                     logFuntion(api_name,req_host, req_data, row.rows[0],api_call_time)
-
-
                     res.send(result)
                     db.end()
                 })
@@ -95,10 +89,11 @@ router.post("/",(req,res)=>{
 router.get("/",(req,res)=>{
 
     const token_public=req.headers.token
-    // const board_number=req.query.board_num //처음 일 경우  없어도 되지 않을까?  page 수만 주면 된다. 정렬 해서 보내기
-    let temp=req.query.offset
+    //const board_number=req.query.board_num //처음 일 경우  없어도 되지 않을까?  
+    //page 수만 주면 된다. 정렬 해서 보내기 vs offset에 board_num 넣어서 +1 증가 
+    let temp=req.query.offset//fe 에서 넘겨 주는 page 수
     let temp_num=parseInt(temp)
-    let offset_num=temp_num*10//offset 지정 해주기 위한 변수 
+    let offset_num=temp_num*10//offset 지정 해주기 위한 변수  0,10,20,30~
    
     // console.log(temp_num )
     
@@ -234,12 +229,11 @@ router.delete("/",(req,res)=>{
 router.put("/",(req,res)=>{
 
     const token_public=req.headers.token
-
     const board_number=req.body.board_num 
     const board_title=req.body.title
     const board_contents=req.body.contents
     const board_place=req.body.place
-    const board_date=req.body.date
+    const board_date=moment()
 
     const api_name="board" + req.url
     const req_host=req.headers.req_host
@@ -312,7 +306,7 @@ router.put("/",(req,res)=>{
 //모집 완료 버튼을 클릭 한 경우 호출 하는 api 
 
 router.put("/is_end",(req,res)=>{
-
+    
     const token_public=req.headers.token
     const board_is_end=req.body.is_end
     const board_number=req.body.board_num 

@@ -9,6 +9,7 @@ const tokenVerify=require("../module/verify")
 
 router.post("/",(req,res)=>{
 
+    res.setHeader('Access-Control-Allow-origin', '*')
     const token_public=req.headers.token 
     const user_id=req.body.id 
     const user_place=req.body.place
@@ -69,6 +70,8 @@ router.post("/",(req,res)=>{
 
 
 router.get("/",(req,res)=>{
+
+    res.setHeader('Access-Control-Allow-origin', '*')
     const token_public=req.headers.token 
     const user_id=req.body.id 
 
@@ -129,6 +132,8 @@ router.get("/",(req,res)=>{
 
 
 router.delete("/",(req,res)=>{
+
+    res.setHeader('Access-Control-Allow-origin', '*')
     const token_public=req.headers.token 
     const place_number=req.body.place_num
 

@@ -137,6 +137,7 @@ router.get("/",(req,res)=>{
 
 
 router.put("/",(req,res)=>{
+
     const token_public=req.headers.token 
     const coment_number=req.body.coment_num 
     const reply_number=req.body.reply_num 
@@ -202,6 +203,7 @@ router.put("/",(req,res)=>{
 
 
 router.delete("/",(req,res)=>{
+    
     const token_public=req.headers.token 
     const reply_number=req.body.reply_num 
 

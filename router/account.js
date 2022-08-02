@@ -74,6 +74,7 @@ router.post("/login",(req,res)=>{
                         //loggin 
                         logFuntion(api_name,req_host, req_data, data.rows[0],api_call_time)
                     }
+                   
                     res.send(result)
                     db.end()
             
@@ -100,12 +101,14 @@ router.post("/",(req,res)=>{
     const pwValue=req.body.pw
     const user_name=req.body.name
     const user_phone=req.body.phone_num
-    const join_date=req.body.date
+    const join_date=moment()
  
     const api_name="account" + req.url
     const req_host=req.headers.req_host
     const req_data=[idValue,pwValue,user_name,user_phone,join_date]
     const api_call_time=moment()
+
+    
 
     const result={
         "success":false,
@@ -113,6 +116,8 @@ router.post("/",(req,res)=>{
     }
 
     try{
+        
+       
         if(idValue == null || idValue.length >=12 || idValue.length <6){
             result.message="옳바르지 않은 아이디 입력 입니다."
             res.send(result)
@@ -124,9 +129,6 @@ router.post("/",(req,res)=>{
             res.send(result)
         }else if(user_phone.length == 0 || user_phone == null || user_phone.length != 11 ){
             result.message="옳바르지 않은 전화번호 입력 입니다."
-            res.send(result)
-        }else if(join_date.length != 8 || join_date == null){
-            result.message="옳바르지 않은 날짜 입력 입니다."
             res.send(result)
         }else{ 
             const db=new Client(pgInit)
@@ -160,7 +162,7 @@ router.post("/",(req,res)=>{
 
 
 router.get("/",(req,res)=>{
-    
+
     const idValue=req.query.id 
     const token_public=req.headers.token
      
@@ -174,7 +176,8 @@ router.get("/",(req,res)=>{
 		"data":null,
         "message":null
     }
-
+    console.log(idValue)
+    console.log(token_public)
     try{
 
         if(idValue.length ==0 || idValue == null || idValue.length >=12){
@@ -227,6 +230,7 @@ router.get("/",(req,res)=>{
 
 //중복 아이디 체크 
 router.post("/duplicate/id",(req,res)=>{
+
     const idValue=req.body.id
 
     const api_name="account" + req.url
@@ -258,12 +262,15 @@ router.post("/duplicate/id",(req,res)=>{
 
             db.query(sql,values,(err,data)=>{
                 if(!err){
-                    const row=data.rows[0].id
-                    console.log(row)
-                    if(row == idValue)
-                        result.success=true
-                    else
+                    const row=data.rows
+                    if(row.length ==0){
                         result.success=false
+                    }else{
+                        if(row[0].id == idValue){
+                            result.success=true
+                        }
+        
+                    }
                 }
 
                 //loggin 

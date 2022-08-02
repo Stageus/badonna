@@ -85,6 +85,7 @@ router.post("/permission",(req,res)=>{//승인 버튼을 누를 때 마다 조�
 
 
 router.get("/",(req,res)=>{
+
     const token_public=req.headers.token 
     const board_member=req.query.board_num 
 

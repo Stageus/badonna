@@ -1,7 +1,11 @@
 const express=require("express")
+const cors=require("cors")
 
 const app=express()
 const port =3000
+app.use(cors({
+    origin: "*" //모든 router에 적용이 된다.
+}))
 app.use(express.json())
 
 
@@ -11,8 +15,8 @@ app.use("/account",accountApi)
 const boardAPI=require("./router/board")
 app.use("/board",boardAPI)
 
-const comentAPI=require("./router/coment")
-app.use("/coment",comentAPI)
+const comentAPI=require("./router/comment")
+app.use("/comment",comentAPI)
 
 const placeAPI=require("./router/place")
 app.use("/place",placeAPI)
