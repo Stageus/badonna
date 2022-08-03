@@ -17,10 +17,12 @@ router.post("/",(req,res)=>{
     const board_is_end=req.body.is_end 
     const token_public=req.headers.token
     const board_date=moment()
+    const join_member_count=req.body.join_count 
+    const now_member_count=0
 
     const api_name="board" + req.url
     const req_host=req.headers.req_host
-    const req_data=[board_title,board_contents,board_place,user_id,board_date]
+    const req_data=[board_title,board_contents,board_place,user_id,board_date,join_member_count]
     const api_call_time=moment()
     
     
@@ -45,7 +47,11 @@ router.post("/",(req,res)=>{
         }else if(board_is_end.length == 0 || board_is_end == null || board_is_end !=0 && board_is_end !=1){
             result.message="옳바르지 않은 모집글 완료 입력 입니다."
             res.send(result)
-        }else{
+        }else if(join_member_count.length == 0 || join_member_count == null){
+            result.message="옳바르지 않은 총인원 수 입력 입니다."
+            res.send(result)
+        }
+        else{
 
             if(tokenVerify(token_public)){//인증 완료 되면 
 
@@ -55,8 +61,8 @@ router.post("/",(req,res)=>{
                         console.log(err)    
                 })
 
-                const sql="INSERT INTO badonnaproject.board(id,title,contents,address,date,is_end) VALUES($1,$2,$3,$4,$5,$6)"
-                const values=[user_id, board_title,board_contents,board_place,board_date,board_is_end]
+                const sql="INSERT INTO badonnaproject.board(id,title,contents,address,date,is_end,join_count,now_count) VALUES($1,$2,$3,$4,$5,$6,$7,$8)"
+                const values=[user_id, board_title,board_contents,board_place,board_date,board_is_end,join_member_count, now_member_count]
                 db.query(sql,values,(err,row)=>{
                     if(!err){
                         result.success=true
@@ -126,24 +132,22 @@ router.get("/",(req,res)=>{
                     }
                 })
 
-                //const sql="SELECT board_num, title, contents, date, address, member_list FROM badonnaproject.board JOIN badonnaproject.member ORDER BY date DESC LIMIT $1 OFFSET $2"
-                const sql="SELECT board.board_num ,title,contents,date,address, member_list FROM badonnaproject.board  INNER JOIN badonnaproject.member ON board.board_num = member.board_num ORDER BY date LIMIT $1 OFFSET $2;"
+                
+
+                const sql="SELECT * FROM badonnaproject.board ORDER BY date DESC LIMIT $1 OFFSET $2"
+                //const sql="SELECT board.board_num ,title,contents,date,address, member_list FROM badonnaproject.board  INNER JOIN badonnaproject.member ON board.board_num = member.board_num ORDER BY date LIMIT $1 OFFSET $2"
                 const values=[10,offset_num]
             
                 db.query(sql,values,(err,row)=>{
                     if(!err){
-                    
-                        for(let i = 0; i<row.rows.length; i++){
-                            result.count=row.rows[i].member_list.length
-                            delete row.rows[i].member_list
-                        }
                         result.data=row.rows// row가 어떤 것이 반환이 되는 지 확인 하기 
                         result.success=true
                         result.message="성공"
+                        
                     }else{
                         console.log(err)
                     }
-
+        
                     //로깅 남기기
                     logFuntion(api_name,req_host, req_data, row,api_call_time)
 
@@ -281,7 +285,7 @@ router.put("/",(req,res)=>{
                     }else{
                         console.log(err)
                     }
-
+                    
                     //로깅 남기기
                     logFuntion(api_name,req_host, req_data, row.rows,api_call_time)
 
@@ -370,6 +374,137 @@ router.put("/is_end",(req,res)=>{
 
 })
 
+//승인 버튼 클릭시 호출 되는 aip 
+router.post("/permission",(req,res)=>{//승인 버튼을 누를 때 마다 조인 하려고 하는 사람의 
+    // id가 member table에 추가 된다.
+    const token_public=req.headers.token 
+
+    const board_member=req.body.board_num 
+    const member_id=req.body.id
+    const member_count=req.body.now_count 
+   // const member_total_count=req.body.join_count 
+    
+    const api_name="board" + req.url
+    const req_host=req.headers.req_host
+    const req_data=[board_member,member_id,member_count]
+    const api_call_time=moment()
+
+    const result={
+        "success":false,
+        "message":null
+    }
+
+    try{
+
+        if(board_member.length == 0 || board_member == null){
+            result.message="옳바르지 않은 게시글 번호 입니다."
+            res.send(result)
+        }else if(member_id.length == 0 || member_id == null || member_id.length ==0){
+            result.message="옳바르지 않은 맴버 아이디 입니다."
+            res.send(result)
+        }else{
+
+            if(tokenVerify(token_public)){
+
+                const db = new Client(pgInit)
+                db.connect((err)=>{
+                    if(err){
+                        console.log(err)
+                    }
+                })
+
+                const sql="UPDATE badonnaproject.board SET now_count=$2 member_list=$3 WHERE board_num=$1"
+                const values=[board_member,member_count,member_id]
+                
+                db.query(sql,values,(err,row)=>{
+
+                    if(!err){
+                        result.success=true
+                        result.message="성공"
+                    }else{
+                        console.log(err)
+                    }
+                    //로깅 남기기
+                    logFuntion(api_name,req_host, req_data, row.rows[0],api_call_time)
+
+                    res.send(result)
+                    db.end()
+                    
+                })
+
+            }else{
+                result.message="잘 못된 token"
+                res.send(result)
+            }
+        }
+
+    }catch(e){
+        result.message="에러 입니다."
+        res.send(result)
+    }
+
+})
+
+//모집 글에 참여한 사람의 id를 조회 하는 api 
+
+router.get("/members",(req,res)=>{
+
+    const token_public=req.headers.token 
+    const board_member=req.query.board_num 
+
+    const api_name="member" + req.url
+    const req_host=req.headers.req_host
+    const req_data=[board_member]
+    const api_call_time=moment()
+
+    const result={
+        "success":false,
+        "data":null,
+        "message":null
+    }
+
+    try{
+        if(board_member.length ==0 || board_member == null){
+            result.message="옳바르지 않은 게시글 번호 입니다."
+            res.send(result)
+        }
+
+            if(tokenVerify(token_public)){
+
+                const db = new Client(pgInit)
+                db.connect((err)=>{
+                    if(err){
+                        console.log(err)
+                    }
+                })
+
+                const sql="SELECT member_list FROM badonnaproject.board WHERE board_num=$1"
+                const values=[board_member]
+                
+                db.query(sql,values,(err,row)=>{
+
+                    if(!err){
+                        result.success=true
+                        result.data=row.rows[0]
+                    }else{
+                        console.log(err)
+                    }
+                    //로깅 남기기
+                    logFuntion(api_name,req_host, req_data, result.data,api_call_time)
+
+                    res.send(result)
+                    db.end()
+                    
+                })
+
+            } 
+
+    }catch(e){
+        result.message="에러 입니다."
+        res.send(result)
+    }
+
+})
 
 
 module.exports=router
