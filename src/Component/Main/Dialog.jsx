@@ -7,10 +7,12 @@ import H2 from "../Common/H2"
 import P from "../Common/P"
 import Button from "../Common/Button"
 import Text from "../Common/Text"
+import DaumPostCode from "react-daum-postcode"
+import swal from "sweetalert2"
 
 const Dialog = () => {
 
-    const userAddressState = useSelector(state => state.profile.user.address)
+    // const userAddressState = useSelector(state => state.profile.user.address)
     const addressState = useSelector(state => state.home.address)
     const addressSearchState = useSelector(state => state.home.addressSearch)
     const addressDetailState = useSelector(state => state.home.addressDetail)
@@ -20,6 +22,17 @@ const Dialog = () => {
 
     const overlayClickEvent = () => {
         dispatch(dialogClose())
+    }
+    const oncomplete = (data) => {
+        dispatch(dialogClose(data.address))
+        swal.fire({
+            width: "500px",
+            title: "성공",
+            icon: "success",
+            confirmButtonText: "확인",
+            confirmButtonColor: "#ff7396",
+            html: "주소 즐겨찾기 등록 완료.<style>.swal2-html-container{margin: 0; height: fit-content;}</style>"
+        })
     }
     
     let overlayDisplayStyle = {
@@ -41,7 +54,7 @@ const Dialog = () => {
                         </div>
                         <div id = {style.address}>
                             {
-                                userAddressState.map(element => <P text = {element}/>)
+                                // userAddressState.map(element => <P text = {element}/>)
                             }
                         </div>
                         <Button text = "주소 삭제" name = "addressDelete"/>
@@ -59,10 +72,7 @@ const Dialog = () => {
                             <Button text = "<" name = "address"/>
                             <H1 text = "주소 검색"/>
                         </div>
-                        <Text/>
-                        <div id = {style.addressSearchResult}>
-                            <Button text = "api" name = "addressDetail"/>
-                        </div>
+                        <DaumPostCode onComplete = {oncomplete} style = {{width: "95%"}}/>
                     </div>
                 </div>
                 <div id = {style.overlay} onClick = {overlayClickEvent} style = {overlayDisplayStyle}></div>

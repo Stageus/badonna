@@ -6,7 +6,7 @@ import { Link } from "react-router-dom"
 const Logo = () => {
 
     return(
-        <div>
+        <div id = {style.logoBox}>
             <Link to = "/" id = {style.logo}>
                 <Img src = "./img/logo-white.svg"/>
             </Link>

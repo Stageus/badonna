@@ -9,6 +9,7 @@
     #dialogBox{
         display: flex;
         flex-direction: column;
+        flex-wrap: nowrap;
         align-items: center;
         width: 360px;
         height: 500px;
@@ -64,9 +65,9 @@
 
 
         #addressSearch, #addressDetail{
-            flex-wrap: nowrap;
             flex-direction: row;
             margin-top: 60px;
+            margin-bottom: 24px;
             button{
                 display: inline-block;
                 width: 40px;
@@ -80,15 +81,6 @@
                 width: 80%;
                 text-align: center;
                 display: inline-block;
-                margin: 0;
-            }
-        }
-        #addressSearchResult{
-            width: 80%;
-            button{
-                background-color: transparent;
-                color: black;
-                width: fit-content;
                 margin: 0;
             }
         }

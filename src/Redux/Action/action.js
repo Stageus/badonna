@@ -47,9 +47,10 @@ const addressDetail = () => {
         type: ADDRESS_DETAIL
     }
 }
-const dialogClose = () => {
+const dialogClose = (text = "") => {
     return{
-        type: DIALOG_CLOSE
+        type: DIALOG_CLOSE,
+        text: text
     }
 }
 const moreView = (num, text) => {

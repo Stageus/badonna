@@ -1,6 +1,9 @@
-#logo{
-    width: 150px;
-    height: 80px;
-    background-color: transparent;
-    margin-left: 36px;
+#logoBox{
+    flex-grow: 3;
+    #logo{
+        width: 150px;
+        height: 80px;
+        background-color: transparent;
+        margin-left: 36px;
+    }
 }

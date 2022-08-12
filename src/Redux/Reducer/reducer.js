@@ -8,6 +8,8 @@ const initState = {
     address: false,
     addressSearch: false,
     addressDetail: false,
+    addressText: "",
+    addressDetailText: "",
     idCheck: false,
     telCheck: false,
 
@@ -88,18 +90,6 @@ const reducer = ( state = initState, action ) => {
             return{
                 ...state,
             }
-        //3번째 주소즐찾창
-        case ADDRESS_DETAIL:
-            if(state.addressDetail){
-                state.addressSearch = true
-                state.addressDetail = false
-            }else{
-                state.addressSearch = false
-                state.addressDetail = true
-            }
-            return{
-                ...state,
-            }
         //주소 즐찾닫기
         case DIALOG_CLOSE:
             return{
@@ -109,6 +99,7 @@ const reducer = ( state = initState, action ) => {
                 addressDetail: false,
                 idCheck: false,
                 telCheck: false,
+                addressText: action.text
             }
 
 

@@ -1,6 +1,5 @@
 #buttonBox{
-    width: 33%;
-    height: 100%;
+    flex-grow: 1;
     display: flex;
     justify-content: space-around;
     align-items: center;
