@@ -9,19 +9,10 @@ import { useSelector } from "react-redux"
 
 const JoinPage = () => {
 
-    const idCheck = useSelector(state => state.idCheck)
-
-    const visibleText = {
-        display: "inline-block"
-    }
-    if(idCheck){
-        const hiddenText = {...visibleText}
-        hiddenText = {
-            display: "none"
-        }
-        visibleText = hiddenText
-    }
-    console.log(visibleText)
+    const idCheck = useSelector(state => state.join.idCheck)
+    const pwCheck = useSelector(state => state.join.pwCheck)
+    const isSamePw = useSelector(state => state.join.isSamePw)
+    const nameCheck = useSelector(state => state.join.nameCheck)
 
     return (
         <main id = {style.join}>
@@ -31,17 +22,29 @@ const JoinPage = () => {
                         <H2 text = "아이디"/>
                         <Text name = "idInput" maxLength = "12"/>
                         <Button text = "중복 체크" name = "idCheckDialog"/>
-                        <P text = "아이디를 입력 해주세요." style = {visibleText}/>
+                        {
+                            idCheck ? 
+                            <P/> :
+                            <P text = "아이디를 입력 해주세요."/>
+                        }
                     </div>
                     <div id = {style.pw}>
                         <H2 text = "비밀번호"/>
-                        <Text name = "pwInput" maxLength = "16"/>
-                        <P text = "비밀번호를 입력 해주세요."/>
+                        <Text name = "pwInput" maxLength = "16" password/>
+                        {
+                            pwCheck ?
+                            <P/> :
+                            <P text = "비밀번호를 입력 해주세요."/>
+                        }
                     </div>
                     <div id = {style.pwCheck}>
                         <H2 text = "비밀번호 확인"/>
-                        <Text name = "pwCheckInput" maxLength = "16"/>
-                        <P text = "비밀번호가 틀립니다."/>
+                        <Text name = "pwCheckInput" maxLength = "16" password/>
+                        {
+                            isSamePw ?
+                            <P/>:
+                            <P text = "비밀번호가 틀립니다."/>
+                        }
                     </div>
                     <div id = {style.tel}>
                         <H2 text = "전화번호"/>
@@ -56,7 +59,11 @@ const JoinPage = () => {
                     <div id = {style.name}>
                         <H2 text = "이름"/>
                         <Text name = "nameInput" maxLength = "4"/>
-                        <P text = "이름을 입력 해주세요."/>
+                        {
+                            nameCheck?
+                            <P/>:
+                            <P text = "이름을 입력 해주세요."/>
+                        }
                     </div>
                 </div>
                 <Link to = "/">

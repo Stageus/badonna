@@ -1,8 +1,20 @@
+import useFetch from "../../Module/fetch"
+
 export const BOARD_TITLE_TEXT = "BOARD_TITLE_TEXT"
 export const BOARD_ADDRESS_TEXT = "BOARD_ADDRESS_TEXT"
 export const BOARD_RECRUIT_TEXT = "BOARD_RECRUIT_TEXT"
 export const BOARD_CONTENT_TEXT = "BOARD_CONTENT_TEXT"
 export const BOARD_UPLOAD = "BOARD_UPLOAD"
+export const BOARD_GET = "BOARD_GET"
+
+const boardGet = () => async dispatch => {
+    const result = await useFetch("http://3.35.16.191:3000/board")
+    console.log(result)
+    return dispatch({
+        type: BOARD_GET,
+        result: result.data
+    })
+}
 
 const boardTitleText = (text) => {
     return{
@@ -35,4 +47,4 @@ const boardUpload = (userId) => {
     }
 }
 
-export { boardTitleText, boardAddressText, boardContentText, boardRecruitText, boardUpload, }
+export { boardTitleText, boardAddressText, boardContentText, boardRecruitText, boardUpload, boardGet}

@@ -12,8 +12,11 @@ const initState = {
     telCheck: false,
 
 
-    moreView: false,
-    moreViewName: "",
+    moreView: {
+        isOpen: false,
+        name: "",
+        num: 0
+    }
 }
 
 const reducer = ( state = initState, action ) => {
@@ -111,55 +114,13 @@ const reducer = ( state = initState, action ) => {
 
         //더보기 버튼
         case MORE_VIEW:
-            console.log(action.text)
-            console.log(action.num)
-            if(action.text === "board"){
-                if(state.moreView){
-                    if(action.num !== state.boardNum){
-                        return{
-                            ...state,
-                        }
-                    }
-                    return{
-                        ...state,
-                        moreView: false,
-                    }
-                }
-                return {
-                    ...state,
-                    moreView: true,
-                }
-            }else if(action.text === "comment"){
-                if(state.moreView){
-                    if(action.num !== state.commentNum){
-                        return{
-                            ...state,
-                        }
-                    }
-                    return{
-                        ...state,
-                        moreView: false,
-                    }
-                }
-                return {
-                    ...state,
-                    moreView: true,
-                }
-            }
-            if(state.moreView){
-                if(action.num !== state.reCommentNum){
-                    return{
-                        ...state,
-                    }
-                }
-                return{
-                    ...state,
-                    moreView: false,
-                }
-            }
             return {
                 ...state,
-                moreView: true,
+                moreView: {
+                    isOpen: !(state.moreView.isOpen),
+                    name: action.text,
+                    num: action.num
+                }
             }
             
             

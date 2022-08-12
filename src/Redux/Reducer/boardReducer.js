@@ -1,33 +1,9 @@
-import { boardPost } from "../../Module/fetch"
-import { BOARD_ADDRESS_TEXT, BOARD_CONTENT_TEXT, BOARD_RECRUIT_TEXT, BOARD_TITLE_TEXT, BOARD_UPLOAD, } from "../Action/boardAction"
+// import { boardPost } from "../../Module/fetch"
+import { BOARD_ADDRESS_TEXT, BOARD_CONTENT_TEXT, BOARD_RECRUIT_TEXT, BOARD_TITLE_TEXT, BOARD_UPLOAD, BOARD_GET } from "../Action/boardAction"
 
 const initState = {
-    boardInput: {
-        title: "",
-        content: "",
-        user: "",
-        location: "",
-    },
-    boardList: [
-        {
-            boardNum: 0,
-            title: "title",
-            content: "content",
-            user: "user",
-            date: "2022-08-28",
-            location: "인천",
-            recruit: "3"
-        },
-        {
-            boardNum: 1,
-            title: "title2",
-            content: "content2",
-            user: "user2",
-            date: "2022-08-282",
-            location: "인천2",
-            recruit: "4"
-        },
-    ],
+    boardInput: {},
+    boardList: [{}],
 }
 
 const boardReducer = (state = initState, action) => {
@@ -36,6 +12,10 @@ const boardReducer = (state = initState, action) => {
     switch( action.type ){
         //게시글
         //입력한 제목
+        case BOARD_GET:
+            return{
+                ...state
+            }
         case BOARD_TITLE_TEXT:
             boardInput.title = action.text
             

@@ -1,25 +1,23 @@
-import { getCookie } from "../../Module/cookie"
-import { profileGet } from "../../Module/fetch"
+// import { getCookie } from "../../Module/cookie"
+// import { profileGet } from "../../Module/fetch"
+import useFetch from "../../Module/fetch"
 import { PROFILE } from "../Action/profileAction"
 
 const initState = {
     user: {
         id: "",
-        pw: "",
-        name: "",
-        phonenum:"",
-        date: "",
+        userId: "",
+        title: "",
+        body: "",
     },
 }
 
 const profileReducer = (state = initState, action) => {
     switch(action.type){
         case PROFILE:
-            const user = profileGet(getCookie("access-token"), getCookie("id"))
-            
             return{
                 ...state,
-                user: user
+                user: action.user
             }
         default:
             return{

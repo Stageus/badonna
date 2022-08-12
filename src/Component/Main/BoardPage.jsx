@@ -20,10 +20,10 @@ const BoardPage = () => {
             {
                 boardListState&&boardListState.map((element, index, arr) =>
                     <Board key = {index} 
-                        boardNum = {element.boardNum} 
+                        boardNum = {element.id} 
                         boardTitle = {element.title} 
-                        boardContent = {element.content}
-                        boardUser = {element.user} 
+                        boardContent = {element.body}
+                        boardUser = {element.userId} 
                         boardDate = {element.date}
                         boardLocation = {element.location}
                         boardRecruit = {element.recruit}/>

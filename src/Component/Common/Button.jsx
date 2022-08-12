@@ -2,28 +2,30 @@ import React, { useEffect } from "react"
 import Img from "./Img"
 import { useDispatch } from "react-redux"
 import { address, addressSearch, addressDetail, moreView, idCheck, telCheck } from "../../Redux/Action/action"
-import { boardUpload, } from "../../Redux/Action/boardAction"
+import { boardGet, boardUpload, } from "../../Redux/Action/boardAction"
 import { reCommentInput, reCommentUpload, commentUpload, } from "../../Redux/Action/commentAction"
 import { idCheckButton, join, } from "../../Redux/Action/joinAction"
 import { login, logout } from "../../Redux/Action/loginAction"
 import { profile } from "../../Redux/Action/profileAction"
+import { test } from "../../Redux/Action/testAction"
 
 
 const Button = (props) => {
     
     const dispatch = useDispatch()
 
-    useEffect(() => {
-        onClickEvent
-    }, [dispatch])
     const onClickEvent = () => {
         switch(props.name){
+            case "test":
+                dispatch(test())
+                break
             case "loginPage":
                 break
             case "logout":
                 dispatch(logout())
                 break
             case "boardPage":
+                dispatch(boardGet())
                 break
             case "profilePage":
                 dispatch(profile())

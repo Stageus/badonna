@@ -1,5 +1,5 @@
 import { TERMS_OF_SERVICE, ID_CHECK_INPUT, ID_INPUT, PW_CHECK_INPUT, PW_INPUT, TEL_LAST_INPUT, TEL_MIDDLE_INPUT, NAME_INPUT, idInput, JOIN, ID_CHECK_BUTTON, idCheckInput } from "../Action/joinAction"
-import { duplicateIdPost, joinPost } from "../../Module/fetch"
+// import { duplicateIdPost, joinPost } from "../../Module/fetch"
 
 const initState = {
     termsOfService: false,
@@ -33,11 +33,11 @@ const joinReducer = ( state = initState, action) => {
                 termsOfService: true,
             }
         case ID_INPUT:
-            console.log(state.idCheck)
-            if(state.idInput.length < 6){
+            if(action.text.length < 6){
                 return{
                     ...state,
-                    idInput: action.text
+                    idInput: action.text,
+                    idCheck: false
                 }
             }
             return{
@@ -65,10 +65,11 @@ const joinReducer = ( state = initState, action) => {
             }
         case PW_INPUT:
             console.log(state.pwInput)
-            if(state.pwInput.length > 6){
+            if(action.text.length < 6){
                 return{
                     ...state,
-                    pwInput: action.text
+                    pwInput: action.text,
+                    pwCheck: false
                 }
             }
             return{
@@ -78,10 +79,11 @@ const joinReducer = ( state = initState, action) => {
             }
         case PW_CHECK_INPUT:
             console.log(state.pwCheckInput)
-            if(state.pwCheckInput !== state.pwInput){
+            if(action.text !== state.pwInput){
                 return{
                     ...state,
                     pwCheckInput: action.text,
+                    isSamePw: false
                 }
             }
             return{
@@ -103,7 +105,7 @@ const joinReducer = ( state = initState, action) => {
             }
         case NAME_INPUT:
             console.log(state.nameInput)
-            if(state.nameInput.length > 3){
+            if(action.text.length > 2){
                 return{
                     ...state,
                     nameInput: action.text,
@@ -112,7 +114,8 @@ const joinReducer = ( state = initState, action) => {
             }
             return{
                 ...state,
-                nameInput: action.text
+                nameInput: action.text,
+                nameCheck: false
             }
         case JOIN:
             joinPost()

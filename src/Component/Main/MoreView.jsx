@@ -5,14 +5,13 @@ import { useSelector } from "react-redux"
 
 const MoreView = (props) => {
     
-    const moreViewState = useSelector(state => state.moreView)
-    const boardNumState = useSelector(state => state.boardNum)
-    const commentNumState = useSelector(state => state.commentNum)
-    const reCommentNumState = useSelector(state => state.reCommentNum)
+    const moreViewState = useSelector(state => state.home.moreView)
     const hiddenButtonStyle = {
         display: "none"
     }
-    if(moreViewState && (props.boardNum === boardNumState || props.commentNum === commentNumState || props.reCommentNum === reCommentNumState)){
+    if(moreViewState.isOpen && 
+        (props.boardNum === moreViewState.num || props.commentNum === moreViewState.num || props.reCommentNum === moreViewState.num) &&
+        (props.name === moreViewState.name)){
         hiddenButtonStyle.display = "flex"
     }
 

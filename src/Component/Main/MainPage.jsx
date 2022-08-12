@@ -9,9 +9,9 @@ import CommentPage from "./CommentPage"
 import HomePage from "./HomePage"
 import TermsOfService from "./TermsOfService"
 import { Routes, Route } from "react-router-dom"
+import Test from "./Test"
 
 const Main = () => {
-
     return (
         <Routes>
             <Route path = "/" element = {<HomePage />}/>
@@ -22,6 +22,7 @@ const Main = () => {
             <Route path = {`board:boardNum/comment`} element = {<CommentPage />}/>
             <Route path = "/board/boardWrite" element = {<BoardWritePage />}/>
             <Route path = "/termsOfService" element = {<TermsOfService />}/>
+            <Route path = "/test" element = {<Test />}/>
         </Routes>
     )
 }

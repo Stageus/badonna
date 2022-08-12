@@ -16,7 +16,7 @@ const Board = (props) => {
                 <div className = {style.boardTitleBox}>
                     <H2 id = {style.name} text = {props.boardUser}/>
                     <H2 text = {`[0 / ${props.boardRecruit}] ${props.boardTitle}`}/>
-                    <MoreView boardNum = {props.index} name = "board"/>
+                    <MoreView boardNum = {props.boardNum} name = "board"/>
                     <P text = {`${props.boardDate} ${props.boardLocation}`}/>
                 </div>
                 <div className = {style.boardContent}>
@@ -42,7 +42,7 @@ const Board = (props) => {
             <div className = {style.boardTitleBox}>
                 <H2 id = {style.name} text = {props.boardUser}/>
                 <H2 text = {`[0 / ${props.boardRecruit}] ${props.boardTitle}`}/>
-                <MoreView boardNum = {props.index} name = "board"/>
+                <MoreView boardNum = {props.boardNum} name = "board"/>
                 <P text = {`${props.boardDate} ${props.boardLocation}`}/>
             </div>
             <div className = {style.boardContent}>

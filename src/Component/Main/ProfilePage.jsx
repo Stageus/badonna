@@ -19,15 +19,15 @@ const Profile = () => {
                 </div>
                 <div id = {style.tel}>
                     <P text = "전화번호"/>
-                    <P id = {style.data} text = {user.phone_num}/>
+                    <P id = {style.data} text = {user.userId}/>
                 </div>
                 <div id = {style.name}>
                     <P text = "이름"/>
-                    <P id = {style.data} text = {user.name}/>
+                    <P id = {style.data} text = {user.title}/>
                 </div>
                 <div id = {style.address}>
                     <P text = "즐겨찾기된 지역"/>
-                    <P id = {style.data} text = {null}/>
+                    <P id = {style.data} text = {user.body}/>
                     <Button text = "변경" name = "address"/>
                 </div>
             </div>
