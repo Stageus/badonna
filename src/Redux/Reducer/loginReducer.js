@@ -9,7 +9,9 @@ if(getCookie("access-token") === null || getCookie("access-token") === ""){
 
 const initState = {
     idInput: "",
+    idCheck: null,
     pwInput: "",
+    pwCheck: null,
     topbar: bool
 }
 
@@ -18,19 +20,29 @@ const loginReducer = (state = initState, action) => {
         case ID_INPUT:
             return{
                 ...state,
-                idInput: action.text
+                idInput: action.text,
+                idCheck: true
             }
         case PW_INPUT:
             return{
                 ...state,
-                pwInput: action.text
+                pwInput: action.text,
+                pwCheck: true
             }
         case LOGIN:
-            loginPost(state.idInput, state.pwInput)
-            setCookie("id", state.idInput)
+            if(state.idCheck && state.pwCheck){
+                loginPost(state.idInput, state.pwInput)
+                setCookie("id", state.idInput)
+
+                return{
+                    ...state,
+                    topbar: true
+                }
+            }
             return{
                 ...state,
-                topbar: true
+                idCheck: false,
+                pwCheck: false
             }
         case LOGOUT:
             delCookie("access-token")

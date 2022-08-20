@@ -64,8 +64,8 @@ const Text = (props) => {
         <React.Fragment>
             {
                 props.password?
-                <input id = {props.id} type="password" placeholder = {props.placeholder} onChange = {onChangeEvent} maxLength = {props.maxLength}/> :
-                <input id = {props.id} type="text" placeholder = {props.placeholder} onChange = {onChangeEvent} maxLength = {props.maxLength}/>
+                <input id = {props.id} type="password" placeholder = {props.placeholder} onChange = {onChangeEvent} maxLength = {props.maxLength} disabled = {props.disabled}/> :
+                <input id = {props.id} type="text" placeholder = {props.placeholder} onChange = {onChangeEvent} maxLength = {props.maxLength} value = {props.value} disabled = {props.disabled}/>
             }
         </React.Fragment>
     )

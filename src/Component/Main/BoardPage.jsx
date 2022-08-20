@@ -8,6 +8,22 @@ import { Link } from "react-router-dom"
 const BoardPage = () => {
 
     const boardListState = useSelector(state => state.board.boardList)
+    console.log(boardListState)
+    if(boardListState[0].title === undefined){
+        return(
+            <main id = {style.main}>
+                <div id = {style.boardNav}>
+                    <H1 text = "게시글"/>
+                    <button>
+                        <Link to="/board/boardWrite">게시글 쓰기</Link>
+                    </button>
+                </div>
+                <div>
+                    게시글이 없습니다 작성해 주세요.
+                </div>
+            </main>
+        )
+    }
 
     return (
         <main id = {style.main}>

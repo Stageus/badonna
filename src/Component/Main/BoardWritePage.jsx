@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React from "react"
 import style from "./SCSS/Board.module.scss"
 import Text from "../Common/Text"
 import Button from "../Common/Button"

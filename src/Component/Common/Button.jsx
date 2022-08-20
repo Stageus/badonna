@@ -1,14 +1,13 @@
-import React, { useEffect } from "react"
-import Img from "./Img"
-import { useDispatch } from "react-redux"
-import { address, addressSearch, addressDetail, moreView, idCheck, telCheck } from "../../Redux/Action/action"
+import React from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { useNavigate } from "react-router-dom"
+import { address, addressSearch, addressDetail, moreView, idCheck, telCheck, dialogClose } from "../../Redux/Action/action"
 import { boardGet, boardUpload, } from "../../Redux/Action/boardAction"
 import { reCommentInput, reCommentUpload, commentUpload, } from "../../Redux/Action/commentAction"
 import { idCheckButton, join, } from "../../Redux/Action/joinAction"
 import { login, logout } from "../../Redux/Action/loginAction"
 import { profile } from "../../Redux/Action/profileAction"
 import { test } from "../../Redux/Action/testAction"
-
 
 const Button = (props) => {
     
@@ -44,6 +43,11 @@ const Button = (props) => {
                 break
             case "idCheck":
                 dispatch(idCheckButton())
+                dispatch(dialogClose())
+                break
+            case "telCheck":
+                dispatch(dialogClose())
+                break
             case "boardUpload":
                 dispatch(boardUpload(props.userId))
                 break

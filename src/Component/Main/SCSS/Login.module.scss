@@ -16,7 +16,6 @@
                 font-size: 20px;
             }
             p{
-                visibility: hidden;
                 width: 100%;
                 height: fit-content;
                 font-size: 12px;
@@ -38,10 +37,11 @@
             #loginButton{
                 display: flex;
                 align-items: center;
-                width: 100%;
+                width: 97%;
                 height: 30px;
                 padding-bottom: 4px;
                 padding-top: 4px;
+                margin-bottom: 12px;
                 button{
                     background-color: $main-color;
                     width: 100%;

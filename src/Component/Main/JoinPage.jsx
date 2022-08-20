@@ -9,7 +9,8 @@ import { useSelector } from "react-redux"
 
 const JoinPage = () => {
 
-    const idCheck = useSelector(state => state.join.idCheck)
+    const isSameId = useSelector(state => state.join.isSameId)
+    const id = useSelector(state => state.join.idInput)
     const pwCheck = useSelector(state => state.join.pwCheck)
     const isSamePw = useSelector(state => state.join.isSamePw)
     const nameCheck = useSelector(state => state.join.nameCheck)
@@ -20,12 +21,16 @@ const JoinPage = () => {
                 <div id = {style.inputBox}>
                     <div id = {style.id}>
                         <H2 text = "아이디"/>
-                        <Text name = "idInput" maxLength = "12"/>
+                        {
+                            isSameId ?
+                            <Text name = "idInput" value = {id} disabled/> :
+                            <Text name = "idInput" disabled/>
+                        }
                         <Button text = "중복 체크" name = "idCheckDialog"/>
                         {
-                            idCheck ? 
+                            isSameId ? 
                             <P/> :
-                            <P text = "아이디를 입력 해주세요."/>
+                            <P text = "아이디 중복체크를 클릭해 주세요."/>
                         }
                     </div>
                     <div id = {style.pw}>
@@ -74,4 +79,4 @@ const JoinPage = () => {
     )
 }
 
-export default JoinPage
+export default React.memo(JoinPage)

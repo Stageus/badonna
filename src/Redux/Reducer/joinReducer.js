@@ -1,5 +1,6 @@
 import { TERMS_OF_SERVICE, ID_CHECK_INPUT, ID_INPUT, PW_CHECK_INPUT, PW_INPUT, TEL_LAST_INPUT, TEL_MIDDLE_INPUT, NAME_INPUT, idInput, JOIN, ID_CHECK_BUTTON, idCheckInput } from "../Action/joinAction"
 // import { duplicateIdPost, joinPost } from "../../Module/fetch"
+import swal from "sweetalert2"
 
 const initState = {
     termsOfService: false,
@@ -20,6 +21,7 @@ const initState = {
 }
 
 const joinReducer = ( state = initState, action) => {
+
     switch( action.type ){
         case TERMS_OF_SERVICE:
             if(action.cancel){
@@ -45,26 +47,26 @@ const joinReducer = ( state = initState, action) => {
                 idInput: action.text,
                 idCheck: true
             }
-            
-        case ID_CHECK_INPUT:
-            console.log(state.idCheckInput)
-            return{
-                ...state,
-                idCheckInput: action.text,
-            }
         case ID_CHECK_BUTTON:
-            if(duplicateIdPost(state.idCheckInput)){
-                return{
-                    ...state,
-                    isSameId: true
-                }
-            }
+            // if(duplicateIdPost(state.idCheckInput)){
+            //     return{
+            //         ...state,
+            //         isSameId: true
+            //     }
+            // }
+            swal.fire({
+                width: "500px",
+                title: "중복 없음",
+                icon: "success",
+                confirmButtonText: "확인",
+                confirmButtonColor: "#ff7396",
+                html: "아이디 중복 체크 완료.<style>.swal2-html-container{margin: 0; height: fit-content;}</style>"
+            })
             return{
                 ...state,
-                isSameId: false
+                isSameId: true
             }
         case PW_INPUT:
-            console.log(state.pwInput)
             if(action.text.length < 6){
                 return{
                     ...state,
@@ -78,7 +80,6 @@ const joinReducer = ( state = initState, action) => {
                 pwCheck: true
             }
         case PW_CHECK_INPUT:
-            console.log(state.pwCheckInput)
             if(action.text !== state.pwInput){
                 return{
                     ...state,
@@ -92,19 +93,16 @@ const joinReducer = ( state = initState, action) => {
                 isSamePw: true
             }
         case TEL_MIDDLE_INPUT:
-            console.log(state.telMiddleInput)
             return{
                 ...state,
                 telMiddleInput: action.text
             }
         case TEL_LAST_INPUT:
-            console.log(state.telLastInput)
             return{
                 ...state,
                 telLastInput: action.text
             }
         case NAME_INPUT:
-            console.log(state.nameInput)
             if(action.text.length > 2){
                 return{
                     ...state,

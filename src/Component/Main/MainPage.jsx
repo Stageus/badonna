@@ -14,7 +14,7 @@ import Test from "./Test"
 const Main = () => {
     return (
         <Routes>
-            <Route path = "/" element = {<HomePage />}/>
+            <Route exact path = "/" element = {<HomePage />}/>
             <Route path = "/login" element = {<LoginPage />}/>
             <Route path = "/join" element = {<JoinPage />}/>
             <Route path = "/board" element = {<BoardPage />}/>

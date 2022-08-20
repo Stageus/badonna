@@ -2,7 +2,12 @@
 import { BOARD_ADDRESS_TEXT, BOARD_CONTENT_TEXT, BOARD_RECRUIT_TEXT, BOARD_TITLE_TEXT, BOARD_UPLOAD, BOARD_GET } from "../Action/boardAction"
 
 const initState = {
-    boardInput: {},
+    boardInput: {
+        title: "",
+        location: "",
+        recruit: "",
+        content: "",
+    },
     boardList: [{}],
 }
 
@@ -57,9 +62,6 @@ const boardReducer = (state = initState, action) => {
             
             return{
                 ...state,
-                board: true,
-                boardWrite: false,
-                boardList: boardList,
             }
         default:
             return{

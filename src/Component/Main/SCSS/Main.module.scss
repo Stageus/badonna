@@ -27,8 +27,6 @@ main{
             font-weight: normal;
         }
     }
-
-    transition: all 1s;
 }
 
 #main1{
@@ -59,12 +57,15 @@ main{
     }
     img{
         flex-grow: 2;
+        max-width: 800px;
     }
 }
 
 #main4{
     img{
         flex-grow: 2;
+        max-width: 800px;
+
     }
     div{
         text-align: center;

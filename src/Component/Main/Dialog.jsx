@@ -8,14 +8,12 @@ import P from "../Common/P"
 import Button from "../Common/Button"
 import Text from "../Common/Text"
 import DaumPostCode from "react-daum-postcode"
-import swal from "sweetalert2"
 
 const Dialog = () => {
 
     // const userAddressState = useSelector(state => state.profile.user.address)
     const addressState = useSelector(state => state.home.address)
     const addressSearchState = useSelector(state => state.home.addressSearch)
-    const addressDetailState = useSelector(state => state.home.addressDetail)
     const idCheckState = useSelector(state => state.home.idCheck)
     const telCheckState = useSelector(state => state.home.telCheck)
     const dispatch = useDispatch()
@@ -24,21 +22,13 @@ const Dialog = () => {
         dispatch(dialogClose())
     }
     const oncomplete = (data) => {
-        dispatch(dialogClose(data.address))
-        swal.fire({
-            width: "500px",
-            title: "성공",
-            icon: "success",
-            confirmButtonText: "확인",
-            confirmButtonColor: "#ff7396",
-            html: "주소 즐겨찾기 등록 완료.<style>.swal2-html-container{margin: 0; height: fit-content;}</style>"
-        })
+        dispatch(dialogClose("address", data.address))
     }
     
     let overlayDisplayStyle = {
         display: "none"
     }
-    if(addressState || addressSearchState || addressDetailState || idCheckState || telCheckState){
+    if(addressState || addressSearchState || idCheckState || telCheckState){
         overlayDisplayStyle.display = "flex"
     }
 
@@ -72,26 +62,7 @@ const Dialog = () => {
                             <Button text = "<" name = "address"/>
                             <H1 text = "주소 검색"/>
                         </div>
-                        <DaumPostCode onComplete = {oncomplete} style = {{width: "95%"}}/>
-                    </div>
-                </div>
-                <div id = {style.overlay} onClick = {overlayClickEvent} style = {overlayDisplayStyle}></div>
-            </React.Fragment>
-        )
-    }else if(addressDetailState){
-        return (
-            <React.Fragment>
-                <div id = {style.background} style = {overlayDisplayStyle}>
-                    <div id = {style.dialogBox}>
-                        <div id = {style.addressDetail}>
-                            <Button text = "<" name = "addressSearch"/>
-                            <H1 text = "상세 주소"/>
-                        </div>
-                        <div id = {style.addressDetailInput}>
-                            <P text = "apiText 가져다 쓰기"/>
-                            <Text/>
-                            <Button text = "등록"/>
-                        </div>
+                        <DaumPostCode onComplete = {oncomplete}/>
                     </div>
                 </div>
                 <div id = {style.overlay} onClick = {overlayClickEvent} style = {overlayDisplayStyle}></div>
@@ -106,7 +77,7 @@ const Dialog = () => {
                             <H1 text = "ID 중복체크"/>
                         </div>
                         <div id = {style.idCheckInput}>
-                            <Text name = "idCheckInput" maxLength = "12"/>
+                            <Text name = "idInput" maxLength = "12"/>
                             <P id = {style.hiddenText} text = "사용 가능한 아이디 입니다."/>
                             <Button text = "중복 체크" name = "idCheck"/>
                         </div>

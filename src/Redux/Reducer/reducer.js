@@ -1,5 +1,6 @@
 import { TERMS_OF_SERVICE, SCROLL, ADDRESS, ADDRESS_SEARCH, ADDRESS_DETAIL, DIALOG_CLOSE,  
          MORE_VIEW, ID_CHECK, TEL_CHECK } from "../Action/action"
+import swal from "sweetalert2"
 
 const initState = {
     currentCon: true,
@@ -92,6 +93,25 @@ const reducer = ( state = initState, action ) => {
             }
         //주소 즐찾닫기
         case DIALOG_CLOSE:
+            if(action.sort === "address"){
+                swal.fire({
+                    width: "500px",
+                    title: "성공",
+                    icon: "success",
+                    confirmButtonText: "확인",
+                    confirmButtonColor: "#ff7396",
+                    html: "주소 즐겨찾기 등록 완료.<style>.swal2-html-container{margin: 0; height: fit-content;}</style>"
+                })
+                 return{
+                    ...state,
+                    address: false,
+                    addressSearch: false,
+                    addressDetail: false,
+                    idCheck: false,
+                    telCheck: false,
+                    addressText: action.text
+                }
+            }
             return{
                 ...state,
                 address: false,
@@ -99,8 +119,8 @@ const reducer = ( state = initState, action ) => {
                 addressDetail: false,
                 idCheck: false,
                 telCheck: false,
-                addressText: action.text
             }
+           
 
 
         //더보기 버튼

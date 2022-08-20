@@ -47,10 +47,11 @@ const addressDetail = () => {
         type: ADDRESS_DETAIL
     }
 }
-const dialogClose = (text = "") => {
+const dialogClose = (sort = "", text = "") => {
     return{
         type: DIALOG_CLOSE,
-        text: text
+        text: text,
+        sort: sort
     }
 }
 const moreView = (num, text) => {
