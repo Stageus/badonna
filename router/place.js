@@ -163,7 +163,7 @@ router.put("/",(req,res)=>{ //주소 추가 버튼 클릭시 업데이트 하기
                             console.log(err)
                         }
                     })
-                const sql="UPDATE badonnaproject.place SET place={$2} WHERE id=$1"
+                const sql="UPDATE badonnaproject.place SET place=array_append(place, $2) WHERE id=$1"
                     const values=[user_id,user_place]
                     
                     db.query(sql,values,(err,row)=>{
@@ -175,7 +175,7 @@ router.put("/",(req,res)=>{ //주소 추가 버튼 클릭시 업데이트 하기
                         }
 
                         //로깅 남기기
-                        logFuntion(api_name,req_host, req_data, row.rows[0],api_call_time)
+                        logFuntion(api_name,req_host, req_data, user_place,api_call_time)
 
                         res.send(result)
                         db.end()
