@@ -53,6 +53,7 @@ router.post("/login",(req,res)=>{
             
                         const row=data.rows;
                         if(row.length == 0){
+                            throw (err)
                         }else{
                             const jwtToken=jwt.sign(
                                 {
@@ -100,9 +101,10 @@ router.post("/",(req,res)=>{
     const idValue=req.body.id
     const pwValue=req.body.pw
     const user_name=req.body.name
-    const user_phone=req.body.phone_num
+    const user_phone=req.body.phonenum
     const join_date=moment()
  
+    console.log(idValue,pwValue,user_name,user_phone,join_date)
     const api_name="account" + req.url
     const req_host=req.headers.req_host
     const req_data=[idValue,pwValue,user_name,user_phone,join_date]
@@ -127,7 +129,7 @@ router.post("/",(req,res)=>{
         }else if(user_name == null || user_name.length > 4 && user_name.length <2){
             result.message="옳바르지 않은 이름 입력 입니다."
             res.send(result)
-        }else if(user_phone.length == 0 || user_phone == null || user_phone.length != 11 ){
+        }else if(user_phone.length == 0 || user_phone == null || user_phone.length != 13 ){
             result.message="옳바르지 않은 전화번호 입력 입니다."
             res.send(result)
         }else{ 
@@ -140,6 +142,23 @@ router.post("/",(req,res)=>{
             const sql="INSERT INTO badonnaproject.account(id,pw,name, phonenum,date) VALUES($1,$2,$3,$4,$5)"
             const values=[idValue,pwValue,user_name,user_phone,join_date]
             db.query(sql,values,(err,data)=>{
+                if(!err){
+                    result.success=true
+                }else{
+                    console.log(err)
+                }
+
+                //logging 
+                logFuntion(api_name,req_host, req_data, data.rows[0],api_call_time)
+                
+                // res.send(result)
+                // db.end()
+            })
+
+            //주소를 기본 값으로 만들어 주기 위해서
+            const sql_place="INSERT INTO badonnaproject.place(id) VALUES($1)"
+            const values_place=[idValue]
+            db.query(sql_place,values_place,(err,data)=>{
                 if(!err){
                     result.success=true
                 }else{
@@ -195,7 +214,7 @@ router.get("/",(req,res)=>{
                     }
                 })
 
-                const sql="SELECT * FROM  badonnaproject.account WHERE id=$1"
+                const sql="SELECT badonnaproject.account.id, name, place, phonenum FROM  badonnaproject.account JOIN badonnaproject.place ON badonnaproject.account.id=$1 AND badonnaproject.place.id=$1 "
                 const values=[idValue]
                 db.query(sql,values,(err,row)=>{
                     if(!err){
@@ -210,6 +229,7 @@ router.get("/",(req,res)=>{
                     }
                     
                     //logging
+
                     logFuntion(api_name,req_host, req_data, row.rows[0],api_call_time)
 
                     res.send(result)

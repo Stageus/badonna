@@ -83,7 +83,7 @@ router.post("/",(req,res)=>{
 
         }
     }catch(e){
-        result.message="잘못된 입력 입니다."
+        result.message="에러 입니다."
         res.send(result)
     }
 

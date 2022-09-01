@@ -7,66 +7,66 @@ const logFuntion=require("../module/logging")
 const moment=require("../module/moment")
 const tokenVerify=require("../module/verify")
 
-router.post("/",(req,res)=>{
+// router.post("/",(req,res)=>{
 
-    res.setHeader('Access-Control-Allow-origin', '*')
-    const token_public=req.headers.token 
-    const user_id=req.body.id 
-    const user_place=req.body.place
+//     res.setHeader('Access-Control-Allow-origin', '*')
+//     const token_public=req.headers.token 
+//     const user_id=req.body.id 
+//     const user_place=req.body.place
 
-    const api_name="place" + req.url
-    const req_host=req.headers.req_host
-    const req_data=[user_id,user_place]
-    const api_call_time=moment()
+//     const api_name="place" + req.url
+//     const req_host=req.headers.req_host
+//     const req_data=[user_id,user_place]
+//     const api_call_time=moment()
 
-    const result={
-        "success":false,
-        "message":null
-    }
+//     const result={
+//         "success":false,
+//         "message":null
+//     }
     
-    try{
-        if(user_id.length == 0 || user_id == null || user_id.length >12){
-            result.message="옯바르지 않은 아이디 입력 입니다. "
-            res.send(result)
-        }else if(user_place.length == 0 || user_place == null || user_place > 200){
-            result.message="옯바르지 않은 주소 입력 입니다. "
-            res.send(result)
-        }else{
-                if(tokenVerify(token_public)){
+//     try{
+//         if(user_id.length == 0 || user_id == null || user_id.length >12){
+//             result.message="옯바르지 않은 아이디 입력 입니다. "
+//             res.send(result)
+//         }else if(user_place.length == 0 || user_place == null || user_place > 200){
+//             result.message="옯바르지 않은 주소 입력 입니다. "
+//             res.send(result)
+//         }else{
+//                 if(tokenVerify(token_public)){
 
-                    const db = new Client(pgInit)
-                    db.connect((err)=>{
-                        if(err) {
-                            console.log(err)
-                        }
-                    })
-                    const sql="INSERT INTO badonnaproject.place(id,place) VALUES($1,$2)"
-                    const values=[user_id,user_place]
+//                     const db = new Client(pgInit)
+//                     db.connect((err)=>{
+//                         if(err) {
+//                             console.log(err)
+//                         }
+//                     })
+//                     const sql="INSERT INTO badonnaproject.place(id,place) VALUES($1,$2)"
+//                     const values=[user_id,user_place]
                     
-                    db.query(sql,values,(err,row)=>{
-                        if(!err){
-                            result.success=true
-                            result.message="성공"
-                        }else{
-                            console.log(err)
-                        }
+//                     db.query(sql,values,(err,row)=>{
+//                         if(!err){
+//                             result.success=true
+//                             result.message="성공"
+//                         }else{
+//                             console.log(err)
+//                         }
 
-                        //로깅 남기기
-                        logFuntion(api_name,req_host, req_data, row.rows[0],api_call_time)
+//                         //로깅 남기기
+//                         logFuntion(api_name,req_host, req_data, row.rows[0],api_call_time)
 
-                        res.send(result)
-                        db.end()
-                    })
-                }else{
-                    result.message="잘못된 토큰 입니다."
-                }
-            }
+//                         res.send(result)
+//                         db.end()
+//                     })
+//                 }else{
+//                     result.message="잘못된 토큰 입니다."
+//                 }
+//             }
 
-    }catch(e){
-        result.message="에러 입니다."
-        res.send(result)
-    }
-})
+//     }catch(e){
+//         result.message="에러 입니다."
+//         res.send(result)
+//     }
+// })
 
 
 router.get("/",(req,res)=>{
@@ -130,6 +130,66 @@ router.get("/",(req,res)=>{
 
 })
 
+router.put("/",(req,res)=>{ //주소 추가 버튼 클릭시 업데이트 하기 
+
+    res.setHeader('Access-Control-Allow-origin', '*')
+    const token_public=req.headers.token 
+    const user_id=req.body.id 
+    const user_place=req.body.place
+
+    const api_name="place" + req.url
+    const req_host=req.headers.req_host
+    const req_data=[user_id,user_place]
+    const api_call_time=moment()
+
+    const result={
+        "success":false,
+        "message":null
+    }
+    
+    try{
+        if(user_id.length == 0 || user_id == null || user_id.length >12){
+            result.message="옯바르지 않은 아이디 입력 입니다. "
+            res.send(result)
+        }else if(user_place.length == 0 || user_place == null || user_place > 200){
+            result.message="옯바르지 않은 주소 입력 입니다. "
+            res.send(result)
+        }else{
+                if(tokenVerify(token_public)){
+
+                    const db = new Client(pgInit)
+                    db.connect((err)=>{
+                        if(err) {
+                            console.log(err)
+                        }
+                    })
+                const sql="UPDATE badonnaproject.place SET place={$2} WHERE id=$1"
+                    const values=[user_id,user_place]
+                    
+                    db.query(sql,values,(err,row)=>{
+                        if(!err){
+                            result.success=true
+                            result.message="성공"
+                        }else{
+                            console.log(err)
+                        }
+
+                        //로깅 남기기
+                        logFuntion(api_name,req_host, req_data, row.rows[0],api_call_time)
+
+                        res.send(result)
+                        db.end()
+                    })
+                }else{
+                    result.message="잘못된 토큰 입니다."
+                }
+            }
+
+    }catch(e){
+        result.message="에러 입니다."
+        res.send(result)
+    }
+})
 
 router.delete("/",(req,res)=>{
 
