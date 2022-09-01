@@ -1,16 +1,15 @@
 import { TERMS_OF_SERVICE, SCROLL, ADDRESS, ADDRESS_SEARCH, ADDRESS_DETAIL, DIALOG_CLOSE,  
          MORE_VIEW, ID_CHECK, TEL_CHECK } from "../Action/action"
 import swal from "sweetalert2"
+import { addressPut } from "../../Module/fetch"
 
 const initState = {
-    currentCon: true,
     scroll: 0,
 
     address: false,
     addressSearch: false,
     addressDetail: false,
-    addressText: "",
-    addressDetailText: "",
+    addressList: [],
     idCheck: false,
     telCheck: false,
 
@@ -77,6 +76,7 @@ const reducer = ( state = initState, action ) => {
             }
             return{
                 ...state,
+                addressList: action.addressList
             }
         //2번째 주소 즐찾창
         case ADDRESS_SEARCH:
@@ -94,6 +94,7 @@ const reducer = ( state = initState, action ) => {
         //주소 즐찾닫기
         case DIALOG_CLOSE:
             if(action.sort === "address"){
+                console.log(addressPut(action.text))
                 swal.fire({
                     width: "500px",
                     title: "성공",
@@ -102,15 +103,6 @@ const reducer = ( state = initState, action ) => {
                     confirmButtonColor: "#ff7396",
                     html: "주소 즐겨찾기 등록 완료.<style>.swal2-html-container{margin: 0; height: fit-content;}</style>"
                 })
-                 return{
-                    ...state,
-                    address: false,
-                    addressSearch: false,
-                    addressDetail: false,
-                    idCheck: false,
-                    telCheck: false,
-                    addressText: action.text
-                }
             }
             return{
                 ...state,

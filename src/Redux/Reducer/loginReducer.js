@@ -1,5 +1,5 @@
 import { delCookie, getCookie, setCookie, } from "../../Module/cookie"
-// import { loginPost } from "../../Module/fetch"
+import { loginPost } from "../../Module/fetch"
 import { ID_INPUT, PW_INPUT, LOGIN, LOGOUT } from "../Action/loginAction"
 
 let bool = true

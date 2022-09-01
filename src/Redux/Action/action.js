@@ -1,3 +1,5 @@
+import { addressGet } from "../../Module/fetch"
+
 export const SCROLL = "SCROLL"
 export const ADDRESS = "ADDRESS"
 export const TERMS_OF_SERVICE = "TERMS_OF_SERVICE"
@@ -32,10 +34,12 @@ const changeScroll = (scroll) => {
         scroll: scroll
     }
 }
-const address = () => {
-    return{
-        type: ADDRESS
-    }
+const address = () => async dispatch => {
+    const addressList = await addressGet()
+    dispatch({
+        type: ADDRESS,
+        addressList: addressList
+    })
 }
 const addressSearch = () => {
     return{

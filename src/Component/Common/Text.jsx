@@ -1,7 +1,7 @@
 import React from "react"
 import { useDispatch } from "react-redux"
 import { commentInputText, reCommentInputText } from "../../Redux/Action/commentAction"
-import { idInput, idCheckInput, pwInput, pwCheckInput,telMiddleInput, telLastInput, nameInput } from "../../Redux/Action/joinAction"
+import { idInput, pwInput, pwCheckInput,telMiddleInput, telLastInput, nameInput } from "../../Redux/Action/joinAction"
 import { boardAddressText, boardRecruitText, boardTitleText, } from "../../Redux/Action/boardAction"
 import { loginId, loginPw } from "../../Redux/Action/loginAction"
 
@@ -19,9 +19,6 @@ const Text = (props) => {
                 break
             case "idInput":
                 dispatch(idInput(event.target.value))
-                break
-            case "idCheckInput":
-                dispatch(idCheckInput(event.target.value))
                 break
             case "pwInput":
                 dispatch(pwInput(event.target.value))

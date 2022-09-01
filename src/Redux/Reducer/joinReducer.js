@@ -1,14 +1,12 @@
 import { TERMS_OF_SERVICE, ID_CHECK_INPUT, ID_INPUT, PW_CHECK_INPUT, PW_INPUT, TEL_LAST_INPUT, TEL_MIDDLE_INPUT, NAME_INPUT, idInput, JOIN, ID_CHECK_BUTTON, idCheckInput } from "../Action/joinAction"
-// import { duplicateIdPost, joinPost } from "../../Module/fetch"
+import { joinPost } from "../../Module/fetch"
 import swal from "sweetalert2"
 
 const initState = {
     termsOfService: false,
     idInput: "",
-    idCheckInput: "",
     idCheck: false,
     isSameId: false,
-    isOnlyId: false,
     pwInput: "",
     pwCheckInput: "",
     isSamePw: false,
@@ -20,7 +18,7 @@ const initState = {
     nameCheck: false
 }
 
-const joinReducer = ( state = initState, action) => {
+const joinReducer = ( state = initState, action ) => {
 
     switch( action.type ){
         case TERMS_OF_SERVICE:
@@ -48,23 +46,30 @@ const joinReducer = ( state = initState, action) => {
                 idCheck: true
             }
         case ID_CHECK_BUTTON:
-            // if(duplicateIdPost(state.idCheckInput)){
-            //     return{
-            //         ...state,
-            //         isSameId: true
-            //     }
-            // }
+            if(action.bool){
+                swal.fire({
+                    width: "500px",
+                    title: "중복 없음",
+                    icon: "success",
+                    confirmButtonText: "확인",
+                    confirmButtonColor: "#ff7396",
+                    html: "아이디 중복 체크 완료.<style>.swal2-html-container{margin: 0; height: fit-content;}</style>"
+                })
+                return{
+                    ...state,
+                    isSameId: true
+                }
+            }
             swal.fire({
                 width: "500px",
-                title: "중복 없음",
-                icon: "success",
+                title: "중복이 있거나 체크 실패",
+                icon: "error",
                 confirmButtonText: "확인",
-                confirmButtonColor: "#ff7396",
-                html: "아이디 중복 체크 완료.<style>.swal2-html-container{margin: 0; height: fit-content;}</style>"
+                confirmButtonColor: "#ff7396"
             })
             return{
                 ...state,
-                isSameId: true
+                isSameId: false
             }
         case PW_INPUT:
             if(action.text.length < 6){
@@ -116,7 +121,11 @@ const joinReducer = ( state = initState, action) => {
                 nameCheck: false
             }
         case JOIN:
-            joinPost()
+            joinPost(
+                state.idInput,
+                state.pwCheckInput,
+                state.nameInput,
+                `010-${state.telMiddleInput}-${state.telLastInput}`)
             return{
                 ...state
             }

@@ -42,7 +42,7 @@ const Button = (props) => {
                 dispatch(telCheck())
                 break
             case "idCheck":
-                dispatch(idCheckButton())
+                dispatch(idCheckButton(props.idInput))
                 dispatch(dialogClose())
                 break
             case "telCheck":

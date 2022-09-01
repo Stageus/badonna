@@ -8,18 +8,23 @@ import P from "../Common/P"
 import Button from "../Common/Button"
 import Text from "../Common/Text"
 import DaumPostCode from "react-daum-postcode"
+import { idInput } from "../../Redux/Action/joinAction"
 
 const Dialog = () => {
 
-    // const userAddressState = useSelector(state => state.profile.user.address)
+    const userAddressState = useSelector(state => state.home.addressList.place)
     const addressState = useSelector(state => state.home.address)
     const addressSearchState = useSelector(state => state.home.addressSearch)
     const idCheckState = useSelector(state => state.home.idCheck)
     const telCheckState = useSelector(state => state.home.telCheck)
+    const idInputState = useSelector(state => state.join.idInput)
+    console.log(userAddressState)
+
     const dispatch = useDispatch()
 
     const overlayClickEvent = () => {
         dispatch(dialogClose())
+        dispatch(idInput(""))
     }
     const oncomplete = (data) => {
         dispatch(dialogClose("address", data.address))
@@ -44,7 +49,9 @@ const Dialog = () => {
                         </div>
                         <div id = {style.address}>
                             {
-                                // userAddressState.map(element => <P text = {element}/>)
+                                userAddressState === undefined?
+                                <P/>:
+                                userAddressState.map(element => <P text = {element}/>)
                             }
                         </div>
                         <Button text = "주소 삭제" name = "addressDelete"/>
@@ -78,8 +85,12 @@ const Dialog = () => {
                         </div>
                         <div id = {style.idCheckInput}>
                             <Text name = "idInput" maxLength = "12"/>
-                            <P id = {style.hiddenText} text = "사용 가능한 아이디 입니다."/>
-                            <Button text = "중복 체크" name = "idCheck"/>
+                            {
+                                idInputState.length > 6 ?
+                                <P text = ""/>:
+                                <P id = {style.hiddenText} text = "6자 이상 입력 해주세요."/>
+                            }
+                            <Button text = "중복 체크" name = "idCheck" idInput = {idInputState}/>
                         </div>
                     </div>
                 </div>
@@ -96,7 +107,11 @@ const Dialog = () => {
                         </div>
                         <div id = {style.idCheckInput}>
                             <Text name = "idCheckText"/>
-                            <P id = {style.hiddenText} text = "사용 가능한 아이디 입니다."/>
+                            {
+                                idInputState.length > 6 ?
+                                <P id = {style.hiddenText} text = "6자 이상 입력 해주세요."/>:
+                                <P/>
+                            }
                             <Button text = "중복 체크" name = "idCheck"/>
                         </div>
                     </div>

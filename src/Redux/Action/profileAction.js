@@ -1,9 +1,9 @@
-import useFetch from "../../Module/fetch"
+import { profileGet } from "../../Module/fetch"
 
 export const PROFILE = "PROFILE"
 
 const profile = () => async dispatch => {
-    const user = await useFetch("https://jsonplaceholder.typicode.com/posts/1")
+    const user = await profileGet()
     return dispatch({
         type: PROFILE,
         user: user

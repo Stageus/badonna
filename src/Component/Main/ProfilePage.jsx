@@ -15,19 +15,36 @@ const Profile = () => {
             <div id = {style.box}>
                 <div id = {style.id}>
                     <P text = "아이디"/>
-                    <P id = {style.data} text = {user.id}/>
+                    {
+                        user === undefined ?
+                        <P/> :
+                        <P id = {style.data} text = {user.id}/>
+                    }
+                    
                 </div>
                 <div id = {style.tel}>
                     <P text = "전화번호"/>
-                    <P id = {style.data} text = {user.userId}/>
+                    {
+                        user === undefined ?
+                        <P/> :
+                        <P id = {style.data} text = {user.phonenum}/>
+                    }
                 </div>
                 <div id = {style.name}>
                     <P text = "이름"/>
-                    <P id = {style.data} text = {user.title}/>
+                    {
+                        user === undefined ?
+                        <P/> :
+                        <P id = {style.data} text = {user.name}/>
+                    }
                 </div>
                 <div id = {style.address}>
                     <P text = "즐겨찾기된 지역"/>
-                    <P id = {style.data} text = {user.body}/>
+                    {
+                        user === undefined ?
+                        <P text = "등록 주소 없음"/> :
+                        <P id = {style.data} text = {user.place[0]}/>
+                    }
                     <Button text = "변경" name = "address"/>
                 </div>
             </div>

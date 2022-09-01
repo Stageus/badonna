@@ -1,3 +1,5 @@
+import { duplicateIdPost } from "../../Module/fetch"
+
 export const TERMS_OF_SERVICE = "TERMS_OF_SERVICE"
 export const ID_INPUT = "ID_INPUT"
 export const ID_CHECK_INPUT = "ID_CHECK_INPUT"
@@ -27,10 +29,12 @@ const idCheckInput = (text) => {
         text: text
     }
 }
-const idCheckButton = () => {
-    return {
+const idCheckButton = (id = "") => async dispatch => {
+    const bool = await duplicateIdPost(id)
+    dispatch({
         type: ID_CHECK_BUTTON,
-    }
+        bool: bool
+    })
 }
 const pwInput = (text) => {
     return {

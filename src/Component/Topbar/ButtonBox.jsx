@@ -32,7 +32,7 @@ const ButtonBox = () => {
             {
                  topBar && 
                  <Link to = "/profile">
-                    <Button text = "회원정보" name = "profilePage"/>
+                    <Button text = "회원정보" name = "profilePage" getId = {id}/>
                 </Link>
             }
         </div>

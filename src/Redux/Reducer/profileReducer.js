@@ -1,14 +1,13 @@
-// import { getCookie } from "../../Module/cookie"
-// import { profileGet } from "../../Module/fetch"
-import useFetch from "../../Module/fetch"
+import { getCookie } from "../../Module/cookie"
+import { profileGet } from "../../Module/fetch"
 import { PROFILE } from "../Action/profileAction"
 
 const initState = {
     user: {
         id: "",
-        userId: "",
-        title: "",
-        body: "",
+        phonenum: "",
+        name: "",
+        place: []
     },
 }
 

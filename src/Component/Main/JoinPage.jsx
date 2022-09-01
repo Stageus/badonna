@@ -71,9 +71,12 @@ const JoinPage = () => {
                         }
                     </div>
                 </div>
-                <Link to = "/">
-                    <Button id = {style.Button} text = "가입" name = "Button"/>
-                </Link>
+                {
+                    
+                    <Link to = "/">
+                        <Button id = {style.Button} text = "가입" name = "joinButton"/>
+                    </Link>
+                }       
             </div>
         </main>
     )
