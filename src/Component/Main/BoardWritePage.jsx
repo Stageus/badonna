@@ -11,7 +11,6 @@ const BoardWritePage = () => {
 
     const dispatch = useDispatch()
     const inputLengthState = useSelector(state => state.board.boardInput.content)
-    const userNameState = useSelector(state => state.profile.userId)
     
     const inputEvent = (event) => {
         dispatch(boardContentText(event.target.value))
@@ -36,7 +35,7 @@ const BoardWritePage = () => {
                     <P id = "contentLength" text = {`${inputLengthState.length}/200`}/>
                 </div>
                 <Link to = "/board">
-                    <Button text = "게시글 등록" name = "boardUpload" userName = {userNameState}/>
+                    <Button text = "게시글 등록" name = "boardUpload"/>
                 </Link>
                 
             </div>

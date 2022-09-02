@@ -3,48 +3,12 @@ import { COMMENT_INPUT_TEXT, COMMENT_UPLOAD, RE_COMMENT_INPUT, RE_COMMENT_UPLOAD
 const initState = {
     comment: false,
     commentInputText: null,
-    commentList: [
-        [
-            {
-                commentNum: 0,
-                user: "조민혁",
-                content: "파일 날라가서 다시 코딩중"
-            },
-        ],
-        [
-            {
-                commentNum: null,
-                user: "",
-                content: ""
-            }
-        ]
-    ],
+    commentList: [],
 
     reComment: null,
     reCommentInput: false,
     reCommentInputText: null,
-    reCommentList: [
-        [
-            {
-                commentNum: 0,
-                reCommentNum: 0,
-                user: "민민",
-                content: "ㅇ"
-            },
-            {
-                commentNum: 0,
-                reCommentNum: 1,
-                user: "민민",
-                content: "ㅇㅇ"
-            },
-            {
-                commentNum: 0,
-                reCommentNum: 2,
-                user: "민민",
-                content: "ㅇㅇㅇ"
-            },
-        ],
-    ],
+    reCommentList: [],
 }
 
 const commentReducer = (state = initState, action) => {

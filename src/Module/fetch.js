@@ -1,8 +1,10 @@
 import { setCookie, getCookie } from "./cookie"
 
+const basic = "http://3.35.16.191:3000"
+
 const loginPost = (id, pw) => {
 
-    fetch("http://3.35.16.191:3000/account/login", {
+    fetch(`${basic}/account/login`, {
         "method": "POST",
         "headers": {
             "Content-Type": "application/json"
@@ -24,7 +26,7 @@ const loginPost = (id, pw) => {
 
 async function profileGet(){
 
-    const data = await fetch(`http://3.35.16.191:3000/account?id=${getCookie("id")}`, {
+    const data = await fetch(`${basic}/account?id=${getCookie("id")}`, {
         "method": "GET",
         "headers": {
             "Content-Type": "application/json",
@@ -48,7 +50,7 @@ async function duplicateIdPost(id){
     if(id === ""){
         return false
     }
-    const bool = await fetch("http://3.35.16.191:3000/account/duplicate/id", {
+    const bool = await fetch(`${basic}/account/duplicate/id`, {
         "method": "POST",
         "headers": {
             "Content-Type": "application/json" // 내가 요청에 담아서 보내는 데이터들의 형태 & 자료형을 설정
@@ -72,7 +74,7 @@ async function duplicateIdPost(id){
 
 const joinPost = (id, pw, name, phonenum) => {
     
-    fetch("http://3.35.16.191:3000/account", {
+    fetch(`${basic}/account`, {
         "method": "POST",
         "headers": {
             "Content-Type": "application/json" // 내가 요청에 담아서 보내는 데이터들의 형태 & 자료형을 설정
@@ -91,7 +93,7 @@ const joinPost = (id, pw, name, phonenum) => {
 }
 
 async function addressGet(){
-    const data = await fetch(`http://3.35.16.191:3000/place?id=${getCookie("id")}`, {
+    const data = await fetch(`${basic}/place?id=${getCookie("id")}`, {
         "method": "GET",
         "headers": {
             "Content-Type": "application/json",
@@ -110,7 +112,7 @@ async function addressGet(){
     return data
 }
 const addressPut = (address) => {
-    fetch("http://3.35.16.191:3000/place", {
+    fetch(`${basic}/place`, {
         "method": "PUT",
         "headers": {
             "Content-Type": "application/json",
@@ -132,6 +134,54 @@ const addressPut = (address) => {
     })
 }
 
+
+
+async function boardGet(){
+    const data = await fetch(`${basic}/board?offset=0`, {
+        "method": "GET",
+        "headers": {
+            "Content-Type": "application/json",
+            "token": getCookie("access-token")
+        }
+    })
+    .then(response => response.json())
+    .then(result => {
+        if (result.success) {
+            console.log(result.message)
+            console.log(result.data)
+            return result.data
+        }
+        console.log(result.message)
+    })
+    return data
+}
+
+const boardPost = (title, contents, address, joinCount) => {
+    fetch("http://3.35.16.191:3000/board", {
+        "method": "POST",
+        "headers": {
+            "Content-Type": "application/json",
+            "token": getCookie("access-token")
+        },
+        "body": JSON.stringify({
+            "title": title,
+            "contents": contents,
+            "place": address,
+            "id": getCookie("id"),
+            "is_end": 0,
+            "join_count": joinCount,
+        })
+    })
+    .then(response => response.json())
+    .then(result => {
+        if(result.success){
+            console.log(result.message)
+            return
+        }
+        console.log(result.message)
+    })
+}
+
 async function useFetch(url){
     const data = await fetch(url)
     .then(response => response.json())
@@ -142,6 +192,6 @@ async function useFetch(url){
     return data
 }
 
-export { loginPost, profileGet, duplicateIdPost, joinPost, addressPut, addressGet }
+export { loginPost, profileGet, duplicateIdPost, joinPost, addressPut, addressGet, boardGet, boardPost }
 
 export default useFetch

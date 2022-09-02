@@ -2,7 +2,7 @@ import React from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { address, addressSearch, addressDetail, moreView, idCheck, telCheck, dialogClose } from "../../Redux/Action/action"
-import { boardGet, boardUpload, } from "../../Redux/Action/boardAction"
+import { board, boardUpload, } from "../../Redux/Action/boardAction"
 import { reCommentInput, reCommentUpload, commentUpload, } from "../../Redux/Action/commentAction"
 import { idCheckButton, join, } from "../../Redux/Action/joinAction"
 import { login, logout } from "../../Redux/Action/loginAction"
@@ -24,7 +24,7 @@ const Button = (props) => {
                 dispatch(logout())
                 break
             case "boardPage":
-                dispatch(boardGet())
+                dispatch(board())
                 break
             case "profilePage":
                 dispatch(profile())
@@ -49,7 +49,7 @@ const Button = (props) => {
                 dispatch(dialogClose())
                 break
             case "boardUpload":
-                dispatch(boardUpload(props.userId))
+                dispatch(boardUpload())
                 break
             case "commentUpload":
                 dispatch(commentUpload(props.boardNum, props.userName))

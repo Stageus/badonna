@@ -7,9 +7,10 @@ import { Link } from "react-router-dom"
 
 const BoardPage = () => {
 
+    
     const boardListState = useSelector(state => state.board.boardList)
     console.log(boardListState)
-    if(boardListState[0].title === undefined){
+    if(boardListState[0] === undefined){
         return(
             <main id = {style.main}>
                 <div id = {style.boardNav}>
@@ -36,13 +37,13 @@ const BoardPage = () => {
             {
                 boardListState&&boardListState.map((element, index, arr) =>
                     <Board key = {index} 
-                        boardNum = {element.id} 
+                        boardNum = {element.board_num} 
                         boardTitle = {element.title} 
-                        boardContent = {element.body}
-                        boardUser = {element.userId} 
+                        boardContent = {element.contents}
+                        boardUser = {element.id} 
                         boardDate = {element.date}
-                        boardLocation = {element.location}
-                        boardRecruit = {element.recruit}/>
+                        boardLocation = {element.place}
+                        boardRecruit = {element.join_count}/>
                 )
             }
         </main>

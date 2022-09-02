@@ -18,7 +18,6 @@ const Dialog = () => {
     const idCheckState = useSelector(state => state.home.idCheck)
     const telCheckState = useSelector(state => state.home.telCheck)
     const idInputState = useSelector(state => state.join.idInput)
-    console.log(userAddressState)
 
     const dispatch = useDispatch()
 
