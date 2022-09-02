@@ -101,7 +101,8 @@ router.get("/",(req,res)=>{
     let temp_num=parseInt(temp)
     let offset_num=temp_num*10//offset 지정 해주기 위한 변수  0,10,20,30~
    
-    // console.log(temp_num )
+    console.log(temp)
+    console.log(temp_num )
     
     const api_name="board" + req.url
     const req_host=req.headers.req_host
@@ -140,7 +141,14 @@ router.get("/",(req,res)=>{
             
                 db.query(sql,values,(err,row)=>{
                     if(!err){
-                        result.data=row.rows// row가 어떤 것이 반환이 되는 지 확인 하기 
+                        // console.log(row.rows.length)
+                        for(let i=0; i<row.rows.length; i++){
+                            const temp=row.rows[i].date 
+                            // console.log(temp.toISOString().split("T")[0])
+                            row.rows[i].date=temp.toISOString().split("T")[0]
+                        }
+                        
+                        result.data=row.rows
                         result.success=true
                         result.message="성공"
                         
@@ -149,7 +157,7 @@ router.get("/",(req,res)=>{
                     }
         
                     //로깅 남기기
-                    logFuntion(api_name,req_host, req_data, row,api_call_time)
+                    logFuntion(api_name,req_host, req_data, row.rows,api_call_time)
 
                     res.send(result)
                     db.end()
