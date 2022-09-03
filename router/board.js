@@ -61,7 +61,7 @@ router.post("/",(req,res)=>{
                         console.log(err)    
                 })
 
-                const sql="INSERT INTO badonnaproject.board(id,title,contents,address,date,is_end,join_count,now_count) VALUES($1,$2,$3,$4,$5,$6,$7,$8)"
+                const sql="INSERT INTO badonnaproject.board(id,title,contents,place,date,is_end,join_count,now_count) VALUES($1,$2,$3,$4,$5,$6,$7,$8)"
                 const values=[user_id, board_title,board_contents,board_place,board_date,board_is_end,join_member_count, now_member_count]
                 db.query(sql,values,(err,row)=>{
                     if(!err){
@@ -71,7 +71,7 @@ router.post("/",(req,res)=>{
                         console.log(err)
                     }
                     //로깅 남기기
-                    logFuntion(api_name,req_host, req_data, row.rows[0],api_call_time)
+                    logFuntion(api_name,req_host, req_data, row,api_call_time)
                     res.send(result)
                     db.end()
                 })
@@ -100,9 +100,6 @@ router.get("/",(req,res)=>{
     let temp=req.query.offset//fe 에서 넘겨 주는 page 수
     let temp_num=parseInt(temp)
     let offset_num=temp_num*10//offset 지정 해주기 위한 변수  0,10,20,30~
-   
-    console.log(temp)
-    console.log(temp_num )
     
     const api_name="board" + req.url
     const req_host=req.headers.req_host
@@ -141,10 +138,9 @@ router.get("/",(req,res)=>{
             
                 db.query(sql,values,(err,row)=>{
                     if(!err){
-                        // console.log(row.rows.length)
+        
                         for(let i=0; i<row.rows.length; i++){
                             const temp=row.rows[i].date 
-                            // console.log(temp.toISOString().split("T")[0])
                             row.rows[i].date=temp.toISOString().split("T")[0]
                         }
                         
@@ -271,9 +267,6 @@ router.put("/",(req,res)=>{
         }else if(board_place.length == 0 || board_place == null ||board_place >500){
             result.message="옳바르지 않은 주소 입력 입니다."
             res.send(result)
-        }else if(board_date.length !=8 || board_date == null){
-            result.message="옳바르지 않은 날짜 입력 입니다."
-            res.send(result)
         }else{
             if(tokenVerify(token_public)){
 
@@ -284,7 +277,7 @@ router.put("/",(req,res)=>{
                     }  
                 })
 
-                const sql="UPDATE badonnaproject.board SET title=$2,contents=$3,address=$4,date=$5 WHERE board_num=$1 "
+                const sql="UPDATE badonnaproject.board SET title=$2,contents=$3,place=$4,date=$5 WHERE board_num=$1 "
                 const values=[board_number,board_title,board_contents,board_place,board_date]
                 
                 db.query(sql,values,(err,row)=>{
@@ -295,7 +288,7 @@ router.put("/",(req,res)=>{
                     }
                     
                     //로깅 남기기
-                    logFuntion(api_name,req_host, req_data, row.rows,api_call_time)
+                    logFuntion(api_name,req_host, req_data, row,api_call_time)
 
                     res.send(result)
                     db.end()
