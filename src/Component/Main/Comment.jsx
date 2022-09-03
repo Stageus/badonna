@@ -13,7 +13,11 @@ const Comment = (props) => {
 
     if(props.commentNum == null){
         return (
-            <React.Fragment></React.Fragment>
+            <div id = {style.commentBox}>
+                <div id = {style.comment}>
+                    <P text = "댓글이 없습니다. 댓글을 새로 달아주세요!"/>
+                </div>
+            </div>
         )
     }
     return (

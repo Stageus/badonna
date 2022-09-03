@@ -6,8 +6,15 @@ import boardReducer from "../Reducer/boardReducer"
 import commentReducer from "../Reducer/commentReducer"
 import loginReducer from "../Reducer/loginReducer"
 import logger from "redux-logger"
-import testReducer from "../Reducer/testReducer"
 import thunk from "redux-thunk"
+import { persistReducer } from "redux-persist"
+import storage from "redux-persist/lib/storage"
+
+const persistConfig = {
+    key: "root",
+    storage: storage,
+    whitelist: ["board", "comment"]
+}
 
 const rootReducer = combineReducers({
     home: reducer,
@@ -15,11 +22,9 @@ const rootReducer = combineReducers({
     profile: profileReducer,
     board: boardReducer,
     comment: commentReducer,
-    login: loginReducer,
-    test: testReducer
+    login: loginReducer
 })
 
-const store = createStore(rootReducer, applyMiddleware(thunk, logger))
+const store = createStore(persistReducer(persistConfig, rootReducer), applyMiddleware(thunk, logger))
 
-export { rootReducer }
 export default store

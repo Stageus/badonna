@@ -9,8 +9,9 @@ import { useSelector } from "react-redux"
 
 const Login = () => {
 
-    const idCheck = useSelector(state => state.login.idCheck)
-    const pwCheck = useSelector(state => state.login.pwCheck)
+    const idInput = useSelector(state => state.login.idInput)
+    const pwInput = useSelector(state => state.login.pwInput)
+
 
     return (
         <main id = {style.main}>
@@ -19,7 +20,7 @@ const Login = () => {
                     <H1 text = "아이디"/>
                     <Text name = "loginId"/>
                     {
-                        idCheck || idCheck === null ?
+                        idInput.length > 0 ?
                         <P/> :
                         <P text = "아이디를 입력 해주세요."/>
                     }
@@ -28,16 +29,16 @@ const Login = () => {
                     <H1 text = "비밀번호"/>
                     <Text name = "loginPw" password/>
                     {
-                        pwCheck || pwCheck === null ?
+                        pwInput.length > 0 ?
                         <P/> :
                         <P text = "비밀번호를 입력 해주세요."/>
                     }
                 </div>
                 <div id = {style.buttonBox}>
                     {
-                        idCheck && pwCheck ?
+                        idInput.length > 0 && pwInput.length > 0 ?
                         <Link id = {style.loginButton} to = "/">
-                            <Button text = "로그인" name = "login"/>
+                            <Button text = "로그인" name = "login" idInput = {idInput} pwInput = {pwInput}/>
                         </Link> :
                         <a id = {style.loginButton}>
                             <Button text = "로그인" name = "login"/>
@@ -50,4 +51,4 @@ const Login = () => {
     )
 }
 
-export default Login
+export default React.memo(Login)

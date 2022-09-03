@@ -1,8 +1,9 @@
 import { boardPost } from "../../Module/fetch"
-import { BOARD_ADDRESS_TEXT, BOARD_CONTENT_TEXT, BOARD_RECRUIT_TEXT, BOARD_TITLE_TEXT, BOARD_UPLOAD, BOARD } from "../Action/boardAction"
+import { BOARD_ADDRESS_TEXT, BOARD_CONTENT_TEXT, BOARD_RECRUIT_TEXT, BOARD_TITLE_TEXT, BOARD_EDIT, BOARD } from "../Action/boardAction"
 
 const initState = {
     boardInput: {
+        boardNum: null,
         title: "",
         location: "",
         recruit: "",
@@ -15,54 +16,60 @@ const boardReducer = (state = initState, action) => {
     const boardInput = {...state.boardInput}
 
     switch( action.type ){
-        //게시글
-        //입력한 제목
+        case "persist/REHYDRATE":
+            return{
+                ...state,
+                boardList: action.payload.board.boardList
+            }
         case BOARD:
             return{
                 ...state,
-                boardList: action.data
+                boardList: action.data,
+                boardInput: {
+                    boardNum: null,
+                    title: "",
+                    location: "",
+                    recruit: "",
+                    content: "",
+                }
             }
         case BOARD_TITLE_TEXT:
-            boardInput.title = action.text
-            
+            boardInput.title = action.text  
             return{
                 ...state,
                 boardInput: boardInput,
             }
-        //입력한 주소
         case BOARD_ADDRESS_TEXT:
-            boardInput.location = action.text
-            
+            boardInput.location = action.text            
             return{
                 ...state,
                 boardInput: boardInput,
             }
-        //입력한 모집인원
         case BOARD_RECRUIT_TEXT:
-            boardInput.recruit = action.text
-            
+            boardInput.recruit = action.text           
             return{
                 ...state,
                 boardInput: boardInput,
             }
-        //입력한 내용
         case BOARD_CONTENT_TEXT:
             boardInput.content = action.text
-            
             return{
                 ...state,
                 boardInput: boardInput,
             }
-        //게시글 등록 버튼
-        case BOARD_UPLOAD:
-            boardPost(
-                state.boardInput.title,
-                state.boardInput.content,
-                state.boardInput.location,
-                state.boardInput.recruit
-            )
+        case BOARD_EDIT:
+            state.boardList.forEach(element => {
+                if(element.board_num === action.boardNum){
+                    boardInput.boardNum = action.boardNum
+                    boardInput.title = element.title
+                    boardInput.location = element.place
+                    boardInput.recruit = element.join_count
+                    boardInput.content = element.contents
+                }
+            })
             return{
                 ...state,
+                boardInput: boardInput,
             }
         default:
             return{

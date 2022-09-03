@@ -7,9 +7,8 @@ import { Link } from "react-router-dom"
 
 const BoardPage = () => {
 
-    
     const boardListState = useSelector(state => state.board.boardList)
-    console.log(boardListState)
+    
     if(boardListState[0] === undefined){
         return(
             <main id = {style.main}>

@@ -3,8 +3,7 @@ import { setCookie, getCookie } from "./cookie"
 const basic = "http://3.35.16.191:3000"
 
 const loginPost = (id, pw) => {
-
-    fetch(`${basic}/account/login`, {
+    const bool = fetch(`${basic}/account/login`, {
         "method": "POST",
         "headers": {
             "Content-Type": "application/json"
@@ -19,9 +18,14 @@ const loginPost = (id, pw) => {
         if (result.success) {
             console.log(result.message)
             setCookie("access-token", result.token)
+            setCookie("id", id)
+            return true
         }
-            console.log(result.message)
+        console.log(result.message)
+        return false
     })
+    console.log(bool)
+    return bool
 }
 
 async function profileGet(){
@@ -134,8 +138,6 @@ const addressPut = (address) => {
     })
 }
 
-
-
 async function boardGet(){
     const data = await fetch(`${basic}/board?offset=0`, {
         "method": "GET",
@@ -148,7 +150,6 @@ async function boardGet(){
     .then(result => {
         if (result.success) {
             console.log(result.message)
-            console.log(result.data)
             return result.data
         }
         console.log(result.message)
@@ -156,8 +157,8 @@ async function boardGet(){
     return data
 }
 
-const boardPost = (title, contents, address, joinCount) => {
-    fetch("http://3.35.16.191:3000/board", {
+async function boardPost(title, contents, address, joinCount){
+    await fetch(`${basic}/board`, {
         "method": "POST",
         "headers": {
             "Content-Type": "application/json",
@@ -182,16 +183,50 @@ const boardPost = (title, contents, address, joinCount) => {
     })
 }
 
-async function useFetch(url){
-    const data = await fetch(url)
+async function boardDel(boardNum){
+    await fetch(`${basic}/board`, {
+        "method": "DELETE",
+        "headers": {
+            "Content-Type": "application/json",
+            "token": getCookie("access-token")
+        },
+        "body": JSON.stringify({
+            "board_num": boardNum
+        })
+    })
     .then(response => response.json())
     .then(result => {
-        return result
+        if(result.success){
+            console.log(result.message)
+            return
+        }
+        console.log(result.message)
     })
-
-    return data
 }
 
-export { loginPost, profileGet, duplicateIdPost, joinPost, addressPut, addressGet, boardGet, boardPost }
+async function boardEdit(boardNum, title, contents, address){
+    await fetch(`${basic}/board`, {
+        "method": "PUT",
+        "headers": {
+            "Content-Type": "application/json",
+            "token": getCookie("access-token")
+        },
+        "body": JSON.stringify({
+            "board_num": boardNum,
+            "id": getCookie("id"),
+            "title": title,
+            "contents": contents,
+            "place": address 
+        })
+    })
+    .then(response => response.json())
+    .then(result => {
+        if(result.success){
+            console.log(result.message)
+            return
+        }
+        console.log(result.message)
+    })
+}
 
-export default useFetch
+export { loginPost, profileGet, duplicateIdPost, joinPost, addressPut, addressGet, boardGet, boardPost, boardDel, boardEdit }

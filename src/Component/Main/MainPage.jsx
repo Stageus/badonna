@@ -9,7 +9,6 @@ import CommentPage from "./CommentPage"
 import HomePage from "./HomePage"
 import TermsOfService from "./TermsOfService"
 import { Routes, Route, Navigate } from "react-router-dom"
-import Test from "./Test"
 import isLogin from "../../Module/isLogin"
 import { getCookie } from "../../Module/cookie"
 
@@ -25,7 +24,7 @@ const Main = () => {
                 <ProfilePage/> : 
                 <Navigate replace to = "/login"/>}
             />
-            <Route path = {`board:boardNum/comment`} element = {
+            <Route path = "board/comment" element = {
                 isLogin(getCookie("access-token"))?
                 <CommentPage/> :
                 <Navigate replace to = "/login"/>}

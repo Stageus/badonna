@@ -1,13 +1,11 @@
 import React from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { useNavigate } from "react-router-dom"
 import { address, addressSearch, addressDetail, moreView, idCheck, telCheck, dialogClose } from "../../Redux/Action/action"
-import { board, boardUpload, } from "../../Redux/Action/boardAction"
+import { board, boardDelete, boardEditPage, boardUpload, } from "../../Redux/Action/boardAction"
 import { reCommentInput, reCommentUpload, commentUpload, } from "../../Redux/Action/commentAction"
 import { idCheckButton, join, } from "../../Redux/Action/joinAction"
 import { login, logout } from "../../Redux/Action/loginAction"
 import { profile } from "../../Redux/Action/profileAction"
-import { test } from "../../Redux/Action/testAction"
 
 const Button = (props) => {
     
@@ -15,9 +13,6 @@ const Button = (props) => {
 
     const onClickEvent = () => {
         switch(props.name){
-            case "test":
-                dispatch(test())
-                break
             case "loginPage":
                 break
             case "logout":
@@ -30,7 +25,7 @@ const Button = (props) => {
                 dispatch(profile())
                 break
             case "login":
-                dispatch(login())
+                dispatch(login(props.idInput, props.pwInput))
                 break
             case "address":
                 dispatch(address())
@@ -49,7 +44,7 @@ const Button = (props) => {
                 dispatch(dialogClose())
                 break
             case "boardUpload":
-                dispatch(boardUpload())
+                dispatch(boardUpload(props.title, props.address, props.recruit, props.content, props.boardNum))
                 break
             case "commentUpload":
                 dispatch(commentUpload(props.boardNum, props.userName))
@@ -79,8 +74,10 @@ const Button = (props) => {
                 }
                 break
             case "boardEdit":
+                dispatch(boardEditPage(props.boardNum))
                 break
             case "boardDelete":
+                dispatch(boardDelete(props.boardNum))
                 break
             case "commentEdit":
                 break

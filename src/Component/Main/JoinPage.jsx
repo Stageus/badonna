@@ -72,9 +72,12 @@ const JoinPage = () => {
                     </div>
                 </div>
                 {
-                    
+                    isSameId && isSamePw && pwCheck && nameCheck ?
                     <Link to = "/">
                         <Button id = {style.Button} text = "가입" name = "joinButton"/>
+                    </Link> :
+                    <Link to = "/" style = {{pointerEvents : "none"}}>
+                    <Button id = {style.Button} text = "가입" name = "joinButton"/>
                     </Link>
                 }       
             </div>

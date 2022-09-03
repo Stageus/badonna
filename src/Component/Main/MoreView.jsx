@@ -1,6 +1,7 @@
 import React from "react"
 import style from "./SCSS/MoreView.module.scss"
 import Button from "../Common/Button"
+import { Link } from "react-router-dom"
 import { useSelector } from "react-redux"
 
 const MoreView = (props) => {
@@ -14,48 +15,42 @@ const MoreView = (props) => {
         (props.name === moreViewState.name)){
         hiddenButtonStyle.display = "flex"
     }
-
-
-    if(props.name === "board"){
-        return (
-            <React.Fragment>
-                <Button id = {style.moreView} text = ">" name = "moreView" boardNum = {props.boardNum} moreViewName = {props.name}/>
-                <ul id = {style.hiddenButton} style = {hiddenButtonStyle}>
-                    <li>
-                        <Button text = "게시글 수정" name = "boardEdit"/>
-                    </li>
-                    <li>
-                        <Button text = "게시글 삭제" name = "boardDelete"/>
-                    </li>
-                </ul>
-            </React.Fragment>
-        )
-    }else if(props.name === "comment"){
-        return (
-            <React.Fragment>
-                <Button id = {style.moreView} text = ">" name = "moreView" commentNum = {props.commentNum} moreViewName = {props.name}/>
-                <ul id = {style.hiddenButton} style = {hiddenButtonStyle}>
-                    <li>
-                        <Button text = "댓글 수정" name = "commentEdit"/>
-                    </li>
-                    <li>
-                        <Button text = "댓글 삭제" name = "commentDelete"/>
-                    </li>
-                </ul>
-            </React.Fragment>
-        )
-    }
+    
     return (
         <React.Fragment>
             <Button id = {style.moreView} text = ">" name = "moreView" reCommentNum = {props.reCommentNum} moreViewName = {props.name}/>
-            <ul id = {style.hiddenButton} style = {hiddenButtonStyle}>
-                <li>
-                    <Button text = "답글 수정" name = "reCommentEdit"/>
-                </li>
-                <li>
-                    <Button text = "답글 삭제" name = "reCommentDelete"/>
-                </li>
-            </ul>
+                {
+                    props.name === "board" ?
+                    <ul id = {style.hiddenButton} style = {hiddenButtonStyle}>
+                        <li>
+                            <Link to = "/board/boardWrite">
+                                <Button text = "게시글 수정" name = "boardEdit" boardNum = {props.boardNum}/>
+                            </Link>
+                        </li>
+                        <li>
+                            <Button text = "게시글 삭제" name = "boardDelete" boardNum = {props.boardNum}/>
+                        </li>
+                    </ul> :
+                    props.name === "comment" ?
+                    <ul id = {style.hiddenButton} style = {hiddenButtonStyle}>
+                        <li>
+                            <Link to = "/board/boardWrite">
+                                <Button text = "댓글 수정" name = "boardEdit" boardNum = {props.boardNum}/>
+                            </Link>
+                        </li>
+                        <li>
+                            <Button text = "댓글 삭제" name = "boardDelete" boardNum = {props.boardNum}/>
+                        </li>
+                    </ul> :
+                    <ul id = {style.hiddenButton} style = {hiddenButtonStyle}>
+                        <li>
+                            <Button text = "답글 수정" name = "reCommentEdit"/>
+                        </li>
+                        <li>
+                            <Button text = "답글 삭제" name = "reCommentDelete"/>
+                        </li>
+                    </ul>
+                }
         </React.Fragment>
     )
 }

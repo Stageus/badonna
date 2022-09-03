@@ -7,9 +7,9 @@ import { Link } from "react-router-dom"
 import { useSelector } from "react-redux"
 
 const Board = (props) => {
-       
+    
     const commentListState = useSelector(state => state.comment.commentList[0])
-    console.log(commentListState)
+
     return (
         <article className = {style.board}>
             <div className = {style.boardTitleBox}>
@@ -27,7 +27,7 @@ const Board = (props) => {
                     commentListState === undefined ?
                     <div className = {style.commentBox}>
                         <button id = {style.more}>
-                        <Link to = {`/board${props.boardNum}/comment`}>댓글 쓰기</Link>
+                            <Link to = "/board/comment">댓글 쓰기</Link>
                         </button>
                     </div> :
                     <div className = {style.commentBox}>
@@ -36,7 +36,7 @@ const Board = (props) => {
                             <P text = {commentListState.content}/>
                         </div>
                         <button id = {style.more}>
-                            <Link to = {`/board${props.boardNum}/comment`}>댓글 더보기</Link>
+                            <Link to = "/board/comment">댓글 더보기</Link>
                         </button>
                     </div>
                 }

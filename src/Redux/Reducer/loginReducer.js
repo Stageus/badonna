@@ -1,18 +1,12 @@
-import { delCookie, getCookie, setCookie, } from "../../Module/cookie"
-import { loginPost } from "../../Module/fetch"
+import { delCookie } from "../../Module/cookie"
 import { ID_INPUT, PW_INPUT, LOGIN, LOGOUT } from "../Action/loginAction"
-
-let bool = true
-if(getCookie("access-token") === null || getCookie("access-token") === ""){
-    bool = false
-}
 
 const initState = {
     idInput: "",
-    idCheck: null,
     pwInput: "",
-    pwCheck: null,
-    topbar: bool
+    idCheck: false,
+    pwCheck: false,
+    topbar: false
 }
 
 const loginReducer = (state = initState, action) => {
@@ -21,22 +15,21 @@ const loginReducer = (state = initState, action) => {
             return{
                 ...state,
                 idInput: action.text,
-                idCheck: true
+                idCheck: state.idInput.length > 0 ? true : false
             }
         case PW_INPUT:
             return{
                 ...state,
                 pwInput: action.text,
-                pwCheck: true
+                pwCheck: state.pwInput.length > 0 ? true : false
             }
         case LOGIN:
-            if(state.idCheck && state.pwCheck){
-                loginPost(state.idInput, state.pwInput)
-                setCookie("id", state.idInput)
-
-                return{
-                    ...state,
-                    topbar: true
+            if(state.idCheck === true && state.pwCheck === true){
+                if(action.bool){
+                    return{
+                        ...state,
+                        topbar: true
+                    }
                 }
             }
             return{
@@ -49,7 +42,9 @@ const loginReducer = (state = initState, action) => {
             delCookie("id")
             return{
                 ...state,
-                topbar: false
+                topbar: false,
+                idCheck: false,
+                pwCheck: false
             }
         default:
             return{

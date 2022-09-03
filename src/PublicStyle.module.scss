@@ -70,7 +70,7 @@ div{
     }
 }
 
-button, a{
+button{
     cursor: pointer;
     height: fit-content;
     padding-top: 2px;
@@ -82,10 +82,14 @@ button, a{
     background-color: $main-color;
     border: 1px solid transparent;
     border-radius: 4px;
-    text-decoration: none;
     border: none;
 
     &:active{
         background-color: darken($main-color, 10);
     }
+}
+
+a{
+    color: white;
+    text-decoration: none;
 }
