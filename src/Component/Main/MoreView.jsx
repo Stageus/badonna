@@ -14,11 +14,10 @@ const MoreView = (props) => {
         (props.boardNum === moreViewState.num || props.commentNum === moreViewState.num || props.reCommentNum === moreViewState.num) &&
         (props.name === moreViewState.name)){
         hiddenButtonStyle.display = "flex"
-    }
-    
+    }console.log(props.boardNum)
     return (
         <React.Fragment>
-            <Button id = {style.moreView} text = ">" name = "moreView" reCommentNum = {props.reCommentNum} moreViewName = {props.name}/>
+            <Button id = {style.moreView} text = ">" name = "moreView" boardNum = {props.boardNum} commentNum = {props.commentNum} reCommentNum = {props.reCommentNum} moreViewName = {props.name}/>
                 {
                     props.name === "board" ?
                     <ul id = {style.hiddenButton} style = {hiddenButtonStyle}>
@@ -34,12 +33,10 @@ const MoreView = (props) => {
                     props.name === "comment" ?
                     <ul id = {style.hiddenButton} style = {hiddenButtonStyle}>
                         <li>
-                            <Link to = "/board/boardWrite">
-                                <Button text = "댓글 수정" name = "boardEdit" boardNum = {props.boardNum}/>
-                            </Link>
+                            <Button text = "댓글 수정" name = "commentEdit" commentNum = {props.commentNum} boardNum = {props.boardNum}/>
                         </li>
                         <li>
-                            <Button text = "댓글 삭제" name = "boardDelete" boardNum = {props.boardNum}/>
+                            <Button text = "댓글 삭제" name = "commentDelete" commentNum = {props.commentNum} boardNum = {props.boardNum}/>
                         </li>
                     </ul> :
                     <ul id = {style.hiddenButton} style = {hiddenButtonStyle}>

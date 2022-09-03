@@ -10,11 +10,12 @@ const initState = {
         content: "",
     },
     boardList: [],
+    comment: null
 }
 
 const boardReducer = (state = initState, action) => {
     const boardInput = {...state.boardInput}
-
+    
     switch( action.type ){
         case "persist/REHYDRATE":
             return{

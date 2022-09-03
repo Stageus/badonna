@@ -1,4 +1,4 @@
-import { boardGet, boardPost, boardDel, boardEdit } from "../../Module/fetch"
+import { boardGet, boardPost, boardDel, boardEdit, commentGet } from "../../Module/fetch"
 
 export const BOARD_TITLE_TEXT = "BOARD_TITLE_TEXT"
 export const BOARD_ADDRESS_TEXT = "BOARD_ADDRESS_TEXT"
@@ -12,7 +12,7 @@ const board = () => async dispatch => {
     const data = await boardGet()
     return dispatch({
         type: BOARD,
-        data: data
+        data: data,
     })
 }
 

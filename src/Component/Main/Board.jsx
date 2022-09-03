@@ -3,13 +3,14 @@ import style from "./SCSS/Board.module.scss"
 import H2 from "../Common/H2"
 import P from "../Common/P"
 import MoreView from "./MoreView"
+import Button from "../Common/Button"
 import { Link } from "react-router-dom"
-import { useSelector } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
+import { comment } from "../../Redux/Action/commentAction"
 
 const Board = (props) => {
     
-    const commentListState = useSelector(state => state.comment.commentList[0])
-
+    const commentListState = useSelector(state => state.comment.commentList)
     return (
         <article className = {style.board}>
             <div className = {style.boardTitleBox}>
@@ -24,20 +25,22 @@ const Board = (props) => {
             <div className = {style.boardComment}>
                 <H2 text = "댓글"/>
                 {
-                    commentListState === undefined ?
+                    commentListState[0] === undefined || commentListState[0].boardNum !== props.boardnum ?
                     <div className = {style.commentBox}>
-                        <button id = {style.more}>
-                            <Link to = "/board/comment">댓글 쓰기</Link>
-                        </button>
+                        <Link to = "/board/comment">
+                            <Button id = {style.more} text = "댓글 쓰기" name = "commentPage" boardNum = {props.boardNum}/>
+                        </Link>
                     </div> :
                     <div className = {style.commentBox}>
                         <div className = {style.commentText}>
                             <H2 id = {style.name} text = {commentListState.user}/>
                             <P text = {commentListState.content}/>
                         </div>
-                        <button id = {style.more}>
-                            <Link to = "/board/comment">댓글 더보기</Link>
-                        </button>
+                    <div className = {style.commentBox}>
+                        <Link to = "/board/comment">
+                            <Button id = {style.more} text = "댓글 더보기" name = "commentPage" boardNum = {props.boardNum}/>
+                        </Link>
+                    </div>
                     </div>
                 }
             </div>

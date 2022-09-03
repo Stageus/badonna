@@ -18,7 +18,7 @@ const Main = () => {
             <Route path = "/*" element = {<HomePage />}/>
             <Route path = "/login" element = {<LoginPage/>}/>
             <Route path = "/join" element = {<JoinPage />}/>
-            <Route path = "/board" element = {<BoardPage />}/>
+            <Route path = "/board/*" element = {<BoardPage />}/>
             <Route path = "/profile" element = { 
                 isLogin(getCookie("access-token"))?
                 <ProfilePage/> : 

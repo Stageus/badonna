@@ -13,7 +13,7 @@ import storage from "redux-persist/lib/storage"
 const persistConfig = {
     key: "root",
     storage: storage,
-    whitelist: ["board", "comment"]
+    whitelist: ["board", "comment", "profile"]
 }
 
 const rootReducer = combineReducers({

@@ -1,5 +1,3 @@
-import { getCookie } from "../../Module/cookie"
-import { profileGet } from "../../Module/fetch"
 import { PROFILE } from "../Action/profileAction"
 
 const initState = {
@@ -13,6 +11,11 @@ const initState = {
 
 const profileReducer = (state = initState, action) => {
     switch(action.type){
+        case "persist/REHYDRATE":
+            return{
+                ...state,
+                user: action.payload.profile.user
+            }
         case PROFILE:
             return{
                 ...state,

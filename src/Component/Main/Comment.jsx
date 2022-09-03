@@ -10,8 +10,7 @@ import MoreView from "./MoreView"
 const Comment = (props) => {
 
     const reCommentListState = useSelector(state => state.comment.reCommentList[props.commentNum])
-
-    if(props.commentNum == null){
+    if(props.user === undefined){
         return (
             <div id = {style.commentBox}>
                 <div id = {style.comment}>
@@ -20,12 +19,13 @@ const Comment = (props) => {
             </div>
         )
     }
+    console.log(`commentNum: ${props.commentNum}`)
     return (
         <div id = {style.commentBox}>
             <div id = {style.comment}>
                 <H2 text = {props.user}/>
                 <P text = {props.content}/>
-                <MoreView commentNum = {props.commentNum} name = "comment"/>
+                <MoreView boardNum = {props.boardNum} commentNum = {props.commentNum} name = "comment"/>
                 <ReCommentInput commentNum = {props.commentNum}/>
             </div>
             {

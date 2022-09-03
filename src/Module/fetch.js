@@ -139,7 +139,7 @@ const addressPut = (address) => {
 }
 
 async function boardGet(){
-    const data = await fetch(`${basic}/board?offset=0`, {
+    const data = await fetch(`${basic}/board?offset=0&id=${getCookie("id")}`, {
         "method": "GET",
         "headers": {
             "Content-Type": "application/json",
@@ -229,4 +229,70 @@ async function boardEdit(boardNum, title, contents, address){
     })
 }
 
-export { loginPost, profileGet, duplicateIdPost, joinPost, addressPut, addressGet, boardGet, boardPost, boardDel, boardEdit }
+async function commentPost(boardNum, contents){
+    await fetch(`${basic}/comment`, {
+        "method": "POST",
+        "headers": {
+            "Content-Type": "application/json",
+            "token": getCookie("access-token")
+        },
+        "body": JSON.stringify({
+            "board_num": boardNum,
+            "contents": contents,
+            "id": getCookie("id"),
+        })
+    })
+    .then(response => response.json())
+    .then(result => {
+        if(result.success){
+            console.log(result.message)
+            return
+        }
+        console.log(result.message)
+    })
+}
+
+async function commentGet(boardNum){
+    const data = await fetch(`${basic}/comment?board_num=${boardNum}&id=${getCookie("id")}`, {
+        "method": "GET",
+        "headers": {
+            "Content-Type": "application/json",
+            "token": getCookie("access-token")
+        }
+    })
+    .then(response => response.json())
+    .then(result => {
+        if (result.success) {
+            console.log(result.message)
+            return result.data
+        }
+        console.log(result.message)
+    })
+    return data
+}
+
+async function commentDel(commentNum){
+    await fetch(`${basic}/comment`, {
+        "method": "DELETE",
+        "headers": {
+            "Content-Type": "application/json",
+            "token": getCookie("access-token")
+        },
+        "body": JSON.stringify({
+            "comment_num": commentNum
+        })
+    })
+    .then(response => response.json())
+    .then(result => {
+        if(result.success){
+            console.log(result.message)
+            return
+        }
+        console.log(result.message)
+    })
+}
+
+export { loginPost, profileGet, duplicateIdPost, joinPost, 
+         addressPut, addressGet, 
+         boardGet, boardPost, boardDel, boardEdit, 
+         commentPost, commentGet, commentDel }

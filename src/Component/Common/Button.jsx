@@ -2,7 +2,7 @@ import React from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { address, addressSearch, addressDetail, moreView, idCheck, telCheck, dialogClose } from "../../Redux/Action/action"
 import { board, boardDelete, boardEditPage, boardUpload, } from "../../Redux/Action/boardAction"
-import { reCommentInput, reCommentUpload, commentUpload, } from "../../Redux/Action/commentAction"
+import { reCommentInput, reCommentUpload, commentUpload, comment, commentDelete, } from "../../Redux/Action/commentAction"
 import { idCheckButton, join, } from "../../Redux/Action/joinAction"
 import { login, logout } from "../../Redux/Action/loginAction"
 import { profile } from "../../Redux/Action/profileAction"
@@ -10,7 +10,6 @@ import { profile } from "../../Redux/Action/profileAction"
 const Button = (props) => {
     
     const dispatch = useDispatch()
-
     const onClickEvent = () => {
         switch(props.name){
             case "loginPage":
@@ -23,6 +22,9 @@ const Button = (props) => {
                 break
             case "profilePage":
                 dispatch(profile())
+                break
+            case "commentPage":
+                dispatch(comment(props.boardNum))
                 break
             case "login":
                 dispatch(login(props.idInput, props.pwInput))
@@ -47,7 +49,7 @@ const Button = (props) => {
                 dispatch(boardUpload(props.title, props.address, props.recruit, props.content, props.boardNum))
                 break
             case "commentUpload":
-                dispatch(commentUpload(props.boardNum, props.userName))
+                dispatch(commentUpload(props.boardNum, props.contents))
                 break
             case "reCommentInput":
                 dispatch(reCommentInput(props.commentNum, props.reCommentNum))
@@ -62,13 +64,13 @@ const Button = (props) => {
                 dispatch(addressDetail())
                 break
             case "moreView":
-                if(props.commentNum === undefined && props.reCommentNum === undefined){
+                if(props.moreViewName === "board"){
                     dispatch(moreView(props.boardNum, props.moreViewName))
                     break
-                }else if(props.reCommentNum === undefined && props.boardNum === undefined){
+                }else if(props.moreViewName === "comment"){
                     dispatch(moreView(props.commentNum, props.moreViewName))
                     break
-                }else if(props.commentNum === undefined && props.boardNum === undefined){
+                }else if(props.moreViewName === "reComment"){
                     dispatch(moreView(props.reCommentNum, props.moreViewName))
                     break
                 }
@@ -82,6 +84,7 @@ const Button = (props) => {
             case "commentEdit":
                 break
             case "commentDelete":
+                dispatch(commentDelete(props.boardNum, props.commentNum))
                 break
             case "reCommentEdit":
                 break

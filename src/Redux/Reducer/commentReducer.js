@@ -1,6 +1,8 @@
-import { COMMENT_INPUT_TEXT, COMMENT_UPLOAD, RE_COMMENT_INPUT, RE_COMMENT_UPLOAD, RE_COMMENT_INPUT_TEXT } from "../Action/commentAction"
+import { COMMENT_INPUT_TEXT, COMMENT_UPLOAD, RE_COMMENT_INPUT, RE_COMMENT_UPLOAD, RE_COMMENT_INPUT_TEXT, COMMENT } from "../Action/commentAction"
 
 const initState = {
+    boardNum: null,
+
     comment: false,
     commentInputText: null,
     commentList: [],
@@ -12,10 +14,21 @@ const initState = {
 }
 
 const commentReducer = (state = initState, action) => {
-    const commentList = [...state.commentList]
     const reCommentList = [...state.reCommentList]
 
     switch(action.type){
+        case 'persist/REHYDRATE':
+            return{
+                ...state,
+                boardNum: action.payload.comment.boardNum,
+                commentList: action.payload.comment.commentList
+            }
+        case COMMENT:
+            return{
+                ...state,
+                boardNum: action.boardNum,
+                commentList: action.data
+            }
        //입력한 댓글
        case COMMENT_INPUT_TEXT:
         return {
@@ -24,28 +37,9 @@ const commentReducer = (state = initState, action) => {
         }
         //댓글 올리기 버튼 클릭
         case COMMENT_UPLOAD:
-            commentList[action.boardNum] = [...commentList[action.boardNum]]
-            commentList[action.boardNum].push(
-                {
-                    commentNum: commentList.length - 1,
-                    user: action.userName,
-                    content: state.commentInputText
-                }
-            )
-            reCommentList[0] = [...reCommentList[0]]
-            reCommentList.push(
-                [
-                    {
-                        commentNum: commentList[action.boardNum].commentNum,
-                        user:"",
-                        content: "",
-                    }
-                ]
-            )
             return{
                 ...state,
-                commentList: commentList,
-                reCommentList: reCommentList
+                commentList: action.data
             }
         //답글달기 입력
         case RE_COMMENT_INPUT:
