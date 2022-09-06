@@ -13,7 +13,7 @@ router.post("/",(req,res)=>{
     const token_public=req.headers.token 
     const board_member=req.body.board_num 
     const comment_contents=req.body.contents
-    const user_name=req.body.name
+    const user_name=req.body.id
     
     const api_name="comment" + req.url
     const req_host=req.headers.req_host
@@ -80,7 +80,7 @@ router.get("/",(req,res)=>{
     const token_public=req.headers.token 
     const comment_number=req.query.board_num
     const idValue=req.query.id
-
+    
     const api_name="comment" + req.url
     const req_host=req.headers.req_host
     const req_data=[comment_number,idValue]
@@ -94,7 +94,7 @@ router.get("/",(req,res)=>{
 
     try{
         if(comment_number.length ==0 || comment_number == null){
-            result.message="옳바르지 않은 댓글 번호 입니다. "
+            result.message="옳바르지 않은 게시글 번호 입니다. "
             res.send(result)
         }else if(idValue.length == 0 || idValue == null || idValue >=12){
             result.message="옳바르지 않은 아이디 번호 입니다. "
@@ -114,8 +114,8 @@ router.get("/",(req,res)=>{
                         }
                     })
 
-                    const sql="SELECT contents,name FROM badonnaproject.comment WHERE board_num=$1"
-                    const values=[comment_number]
+                    const sql="SELECT comment_num,contents,name FROM badonnaproject.comment WHERE board_num=$1 AND name=$2"
+                    const values=[comment_number,idValue]
 
                     db.query(sql,values,(err,row)=>{
                         if(!err){
@@ -126,11 +126,11 @@ router.get("/",(req,res)=>{
                         }
 
                         //로깅 남기기
-                        logFuntion(api_name,req_host, req_data, row.rows[0],api_call_time)
+                        logFuntion(api_name,req_host, req_data, row.rows,api_call_time)
 
                         res.send(result)
                         db.end()
-                        
+
                     })
                 }else{
                     result.data="댓글을 볼 수없습니다."

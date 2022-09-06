@@ -130,10 +130,7 @@ router.get("/",(req,res)=>{
                     }
                 })
 
-                
-
                 const sql="SELECT * FROM badonnaproject.board ORDER BY date DESC LIMIT $1 OFFSET $2"
-                //const sql="SELECT board.board_num ,title,contents,date,address, member_list FROM badonnaproject.board  INNER JOIN badonnaproject.member ON board.board_num = member.board_num ORDER BY date LIMIT $1 OFFSET $2"
                 const values=[10,offset_num]
             
                 db.query(sql,values,(err,row)=>{

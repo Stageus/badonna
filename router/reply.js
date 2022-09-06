@@ -12,9 +12,9 @@ const tokenVerify=require("../module/verify")
 router.post("/",(req,res)=>{
 
     const token_public=req.headers.token 
-    const coment_number=req.body.coment_num 
+    const coment_number=req.body.comment_num 
     const reply_contents=req.body.contents
-    const user_name=req.body.name
+    const user_name=req.body.id
 
     const api_name="reply" + req.url
     const req_host=req.headers.req_host
@@ -30,7 +30,7 @@ router.post("/",(req,res)=>{
         if(coment_number.length == 0 || coment_number == null ){
             result.message="옳바르지 않은 댓글 번호 입니다."
             res.send(result)
-        }else if(reply_contents.length == 0 || reply_contents == null || reply_contents >200){
+        }else if(reply_contents.length == 0 || reply_contents == null || reply_contents.length > 200){
             result.message="옳바르지 않은 대댓글 내용 입니다."
             res.send(result)
         }else{
@@ -43,7 +43,7 @@ router.post("/",(req,res)=>{
                         console.log(err)
                     }
                 })
-                const sql="INSERT INTO badonnaproject.reply(coment_num,contents,name) VALUES($1,$2,$3)"
+                const sql="INSERT INTO badonnaproject.reply(comment_num,contents,name) VALUES($1,$2,$3)"
                 const values=[coment_number,reply_contents,user_name]
                 
                 db.query(sql,values,(err,row)=>{
@@ -78,7 +78,8 @@ router.post("/",(req,res)=>{
 router.get("/",(req,res)=>{
 
     const token_public=req.headers.token 
-    const reply_number=req.query.reply_num 
+    const reply_number=req.query.comment_num
+    const idValue=req.query.id
 
     const api_name="reply" + req.url
     const req_host=req.headers.req_host
@@ -105,8 +106,8 @@ router.get("/",(req,res)=>{
                         console.log(err)
                     }
                 })
-                const sql="SELECT contents,name FROM  badonnaproject.reply WHERE reply_num=$1"
-                const values=[reply_number]
+                const sql="SELECT * FROM  badonnaproject.reply WHERE comment_num=$1 AND name=$2"
+                const values=[reply_number, idValue]
                 
                 db.query(sql,values,(err,row)=>{
                     if(!err){
@@ -173,7 +174,7 @@ router.put("/",(req,res)=>{
                         console.log(err)
                     }
                 })
-                const sql="UPDATE badonnaproject.reply SET contents=$3 WHERE coment_num=$1 AND reply_num=$2"
+                const sql="UPDATE badonnaproject.reply SET contents=$3 WHERE comment_num=$1 AND reply_num=$2"
                 const values=[coment_number,reply_number,reply_contents]
                 
                 db.query(sql,values,(err,row)=>{

@@ -8,6 +8,71 @@ const moment=require("../module/moment")
 const tokenVerify=require("../module/verify")
 
 
+
+router.post("/",(req,res)=>{
+
+    res.setHeader('Access-Control-Allow-origin', '*')
+    const token_public=req.headers.token 
+    const user_id=req.body.id 
+    const user_place=req.body.place
+
+    const api_name="place" + req.url
+    const req_host=req.headers.req_host
+    const req_data=[user_id,user_place]
+    const api_call_time=moment()
+
+    const result={
+        "success":false,
+        "message":null
+    }
+
+
+    //주소를 기본 값으로 만들어 주기 위해서
+    const sql_place="INSERT INTO badonnaproject.place(id,place) VALUES($1,$2)"
+    const values_place=[user_id,user_place]
+
+    try{
+        if(user_id.length == 0 || user_id == null || user_id.length >12){
+            result.message="옯바르지 않은 아이디 입력 입니다. "
+            res.send(result)
+        }else if(user_place.length == 0 || user_place == null || user_place > 200){
+            result.message="옯바르지 않은 주소 입력 입니다. "
+            res.send(result)
+        }else{
+                if(tokenVerify(token_public)){
+
+                    const db = new Client(pgInit)
+                    db.connect((err)=>{
+                        if(err) {
+                            console.log(err)
+                        }
+                    })
+
+                    db.query(sql_place,values_place,(err,data)=>{
+                        if(!err){
+                            result.success=true
+                        }else{
+                            console.log(err)
+                        }
+
+                        //logging 
+                        logFuntion(api_name,req_host, req_data, data.rows[0],api_call_time)
+                        
+                        res.send(result)
+                        db.end()
+                    })
+                }else{
+                    result.message="잘못된 토큰 입니다."
+                }
+            }
+
+    }catch(e){
+        result.message="에러 입니다."
+        res.send(result)
+    }
+})
+
+
 router.get("/",(req,res)=>{
 
     res.setHeader('Access-Control-Allow-origin', '*')
@@ -45,13 +110,13 @@ router.get("/",(req,res)=>{
                 db.query(sql,values,(err,row)=>{
                     if(!err){
                         result.success=true
-                        result.data=row.rows[0]
+                        result.data=row.rows
                     }else{
                         console.log(err)
                     }
 
                     //로깅 남기기
-                    logFuntion(api_name,req_host, req_data, row.rows[0],api_call_time)
+                    logFuntion(api_name,req_host, req_data, row.rows,api_call_time)
 
                     res.send(result)
                     db.end()
@@ -67,67 +132,6 @@ router.get("/",(req,res)=>{
         res.send(result)
     }
 
-})
-
-router.put("/",(req,res)=>{ //주소 추가 버튼 클릭시 업데이트 하기 
-
-    res.setHeader('Access-Control-Allow-origin', '*')
-    const token_public=req.headers.token 
-    const user_id=req.body.id 
-    const user_place=req.body.place
-
-    const api_name="place" + req.url
-    const req_host=req.headers.req_host
-    const req_data=[user_id,user_place]
-    const api_call_time=moment()
-
-    const result={
-        "success":false,
-        "message":null
-    }
-    
-    try{
-        if(user_id.length == 0 || user_id == null || user_id.length >12){
-            result.message="옯바르지 않은 아이디 입력 입니다. "
-            res.send(result)
-        }else if(user_place.length == 0 || user_place == null || user_place > 200){
-            result.message="옯바르지 않은 주소 입력 입니다. "
-            res.send(result)
-        }else{
-                if(tokenVerify(token_public)){
-
-                    const db = new Client(pgInit)
-                    db.connect((err)=>{
-                        if(err) {
-                            console.log(err)
-                        }
-                    })
-                const sql="UPDATE badonnaproject.place SET place=array_append(place, $2) WHERE id=$1"
-                    const values=[user_id,user_place]
-                    
-                    db.query(sql,values,(err,row)=>{
-                        if(!err){
-                            result.success=true
-                            result.message="성공"
-                        }else{
-                            console.log(err)
-                        }
-
-                        //로깅 남기기
-                        logFuntion(api_name,req_host, req_data, user_place,api_call_time)
-
-                        res.send(result)
-                        db.end()
-                    })
-                }else{
-                    result.message="잘못된 토큰 입니다."
-                }
-            }
-
-    }catch(e){
-        result.message="에러 입니다."
-        res.send(result)
-    }
 })
 
 router.delete("/",(req,res)=>{

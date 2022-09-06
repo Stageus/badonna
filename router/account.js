@@ -151,26 +151,11 @@ router.post("/",(req,res)=>{
                 //logging 
                 logFuntion(api_name,req_host, req_data, data.rows[0],api_call_time)
                 
-                // res.send(result)
-                // db.end()
-            })
-
-            //주소를 기본 값으로 만들어 주기 위해서
-            const sql_place="INSERT INTO badonnaproject.place(id) VALUES($1)"
-            const values_place=[idValue]
-            db.query(sql_place,values_place,(err,data)=>{
-                if(!err){
-                    result.success=true
-                }else{
-                    console.log(err)
-                }
-
-                //logging 
-                logFuntion(api_name,req_host, req_data, data.rows[0],api_call_time)
-                
                 res.send(result)
                 db.end()
             })
+
+            
         }
     }catch(e){
         result.message="에러 입니다."
