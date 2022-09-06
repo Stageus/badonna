@@ -9,7 +9,6 @@ import { useSelector } from "react-redux"
 const CommentPage = () => {
 
     const commentListState = useSelector(state => state.comment.commentList)
-    console.log(commentListState)
     const commentInputTextState = useSelector(state => state.comment.commentInputText)
     const boardNumState = useSelector(state => state.comment.boardNum)
 
@@ -26,7 +25,7 @@ const CommentPage = () => {
                     <Comment key = {index} user = {element.name} content = {element.contents} commentNum = {element.comment_num} boardNum = {boardNumState}/>)
                 }
                 <div id = {style.commentInputBox}>
-                    <Text name = "comment" maxLength = "200" value = {commentInputTextState}/>
+                    <Text name = "comment" maxLength = "200" value = {commentInputTextState || ""}/>
                     <Button text = "댓글 추가" name = "commentUpload" boardNum = {boardNumState} contents = {commentInputTextState}/>
                 </div>
             </div>

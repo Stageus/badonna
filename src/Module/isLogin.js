@@ -1,5 +1,5 @@
 const isLogin = (token) => {
-    if(token === null){
+    if(token === null || token === "" || token === undefined){
         return false
     }
     return true

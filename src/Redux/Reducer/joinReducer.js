@@ -127,7 +127,21 @@ const joinReducer = ( state = initState, action ) => {
                 state.nameInput,
                 `010-${state.telMiddleInput}-${state.telLastInput}`)
             return{
-                ...state
+                ...state,
+                termsOfService: false,
+                idInput: "",
+                idCheck: false,
+                isSameId: false,
+                pwInput: "",
+                pwCheckInput: "",
+                isSamePw: false,
+                pwCheck: false,
+                telMiddleInput: "",
+                telLastInput: "",
+                telCheck: false,
+                nameInput: "",
+                nameCheck: false
+
             }
         default:
             return{

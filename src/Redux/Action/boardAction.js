@@ -7,15 +7,24 @@ export const BOARD_CONTENT_TEXT = "BOARD_CONTENT_TEXT"
 export const BOARD_DELETE = "BOARD_DELETE"
 export const BOARD_EDIT = "BOARD_EDIT"
 export const BOARD = "BOARD"
+export const BOARD_NEW = "BOARD_NEW"
 
 const board = () => async dispatch => {
-    const data = await boardGet()
+    const data = await boardGet(0)
     return dispatch({
         type: BOARD,
         data: data,
     })
 }
-
+const boardNew = (offset) => async dispatch => {
+    offset += 1
+    const data = await boardGet(offset)
+    return dispatch({
+        type: BOARD_NEW,
+        data: data,
+        offset: offset
+    })
+}
 const boardTitleText = (text) => {
     return{
         type: BOARD_TITLE_TEXT,
@@ -41,7 +50,6 @@ const boardContentText = (text) => {
     }
 }
 const boardUpload = (title, address, recruit, content, boardNum = null) => async dispatch => {
-    console.log(boardNum)
     if(boardNum === null){
         await boardPost(title, content, address, recruit)
     }
@@ -69,4 +77,6 @@ const boardEditPage = (boardNum) => {
     }
 }
 
-export { boardTitleText, boardAddressText, boardContentText, boardRecruitText, boardUpload, board, boardDelete, boardEditPage }
+export { boardTitleText, boardAddressText, boardContentText,
+         boardRecruitText, boardUpload, board, 
+         boardDelete, boardEditPage, boardNew }

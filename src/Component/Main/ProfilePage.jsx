@@ -41,8 +41,8 @@ const Profile = () => {
                 <div id = {style.address}>
                     <P text = "즐겨찾기된 지역"/>
                     {
-                        user === undefined ?
-                        <P text = "등록 주소 없음"/> :
+                        user === undefined || user.place === null ?
+                        <P id = {style.data} text = "등록 주소 없음"/> :
                         <P id = {style.data} text = {user.place[0]}/>
                     }
                     <Button text = "변경" name = "address"/>

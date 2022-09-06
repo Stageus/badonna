@@ -11,6 +11,16 @@ const initState = {
 
 const loginReducer = (state = initState, action) => {
     switch(action.type){
+        case 'persist/REHYDRATE':
+            if(action.payload?.login.topbar !== undefined){
+                return{
+                    ...state,
+                    topbar: action.payload.login.topbar
+                }
+            }
+            return{
+                ...state
+            }
         case ID_INPUT:
             return{
                 ...state,
@@ -28,7 +38,8 @@ const loginReducer = (state = initState, action) => {
                 if(action.bool){
                     return{
                         ...state,
-                        topbar: true
+                        topbar: true,
+                        pwInput: ""
                     }
                 }
             }

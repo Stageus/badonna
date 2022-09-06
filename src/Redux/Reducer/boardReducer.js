@@ -1,7 +1,7 @@
-import { boardPost } from "../../Module/fetch"
-import { BOARD_ADDRESS_TEXT, BOARD_CONTENT_TEXT, BOARD_RECRUIT_TEXT, BOARD_TITLE_TEXT, BOARD_EDIT, BOARD } from "../Action/boardAction"
+import { BOARD_ADDRESS_TEXT, BOARD_CONTENT_TEXT, BOARD_RECRUIT_TEXT, BOARD_TITLE_TEXT, BOARD_EDIT, BOARD, BOARD_NEW } from "../Action/boardAction"
 
 const initState = {
+    scrollOffset: 0,
     boardInput: {
         boardNum: null,
         title: "",
@@ -18,9 +18,14 @@ const boardReducer = (state = initState, action) => {
     
     switch( action.type ){
         case "persist/REHYDRATE":
+            if(action.payload?.board.boardList !== undefined){
+                return{
+                    ...state,
+                    boardList: action.payload.board.boardList
+                }
+            }
             return{
                 ...state,
-                boardList: action.payload.board.boardList
             }
         case BOARD:
             return{
@@ -32,7 +37,24 @@ const boardReducer = (state = initState, action) => {
                     location: "",
                     recruit: "",
                     content: "",
+                },
+                scrollOffset: 0
+            }
+        case BOARD_NEW:
+            if(action.data.length === 0 || action.offset === state.scrollOffset){
+                return{
+                    ...state
                 }
+            }
+
+            const boardList = [...state.boardList]
+            action.data.forEach(element => {
+                boardList.push(element)
+            })
+            return{
+                ...state,
+                boardList: boardList,
+                scrollOffset: action.offset
             }
         case BOARD_TITLE_TEXT:
             boardInput.title = action.text  

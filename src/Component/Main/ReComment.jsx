@@ -19,7 +19,7 @@ const ReComment = (props) => {
         <div id = {style.reComment}>
             <H2 text = {props.user}/>
             <P text = {props.content}/>
-            <MoreView name = "reComment" reCommentNum = {props.reCommentNum}/>
+            <MoreView user = {props.user} name = "reComment" reCommentNum = {props.reCommentNum}/>
             <ReCommentInput commentNum = {props.commentNum} reCommentNum = {props.reCommentNum} userName = {userNameState}/>
         </div>
     )

@@ -1,6 +1,6 @@
 import React from "react"
 import { useDispatch } from "react-redux"
-import { commentInputText, reCommentInputText } from "../../Redux/Action/commentAction"
+import { commentEditText, commentInputText, reCommentInputText } from "../../Redux/Action/commentAction"
 import { idInput, pwInput, pwCheckInput,telMiddleInput, telLastInput, nameInput } from "../../Redux/Action/joinAction"
 import { boardAddressText, boardRecruitText, boardTitleText, } from "../../Redux/Action/boardAction"
 import { loginId, loginPw } from "../../Redux/Action/loginAction"
@@ -37,6 +37,9 @@ const Text = (props) => {
                 break
             case "comment":
                 dispatch(commentInputText(event.target.value))
+                break
+            case "commentEdit":
+                dispatch(commentEditText(event.target.value))
                 break
             case "reComment":
                 dispatch(reCommentInputText(event.target.value))

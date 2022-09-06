@@ -1,18 +1,20 @@
-import { TERMS_OF_SERVICE, SCROLL, ADDRESS, ADDRESS_SEARCH, ADDRESS_DETAIL, DIALOG_CLOSE,  
-         MORE_VIEW, ID_CHECK, TEL_CHECK } from "../Action/action"
+import { TERMS_OF_SERVICE, SCROLL, ADDRESS, ADDRESS_SEARCH, ADDRESS_DELETE, DIALOG_CLOSE,  
+         MORE_VIEW, ID_CHECK, TEL_CHECK, ADDRESS_DELETE_LIST } from "../Action/action"
 import swal from "sweetalert2"
-import { addressPut } from "../../Module/fetch"
 
 const initState = {
+    topbar: false,
     scroll: 0,
 
     address: false,
+    addressClick: false,
     addressSearch: false,
     addressDetail: false,
+    addressCheckBox: false,
     addressList: [],
+    addressDelList: [],
     idCheck: false,
     telCheck: false,
-
 
     moreView: {
         isOpen: false,
@@ -37,6 +39,8 @@ const reducer = ( state = initState, action ) => {
             return{
                 ...state,
             }
+
+
         case TERMS_OF_SERVICE:
             if(action.cancel){
                 return{
@@ -48,6 +52,7 @@ const reducer = ( state = initState, action ) => {
                 ...state,
                 termsOfService: true,
             }
+
 
         case ID_CHECK:
             return{
@@ -61,22 +66,12 @@ const reducer = ( state = initState, action ) => {
             }
         //주소 즐겨찾기
         case ADDRESS:
-            if(state.address){
-                state.address = false
-                state.addressSearch = false
-                state.addressDetail = false
-                state.idCheck = false
-                state.telCheck = false
-            }else{
-                state.address = true
-                state.addressSearch = false
-                state.addressDetail = false
-                state.idCheck = false
-                state.telCheck = false
-            }
             return{
                 ...state,
-                addressList: action.addressList
+                address: true,
+                addressSearch: false,
+                addressList: action.addressList,
+                addressClick: action.click
             }
         //2번째 주소 즐찾창
         case ADDRESS_SEARCH:
@@ -91,10 +86,39 @@ const reducer = ( state = initState, action ) => {
             return{
                 ...state,
             }
+        case ADDRESS_DELETE_LIST:
+            const addressDelList = [...state.addressDelList]
+            if(action.checked){
+                addressDelList.push(action.addressNum)
+                return{
+                    ...state,
+                    addressDelList: addressDelList
+                }
+            }
+            if(addressDelList.length > 0){
+                addressDelList.splice(addressDelList.indexOf(action.addressNum), 1)
+                return{
+                    ...state,
+                    addressDelList: addressDelList
+                }
+            }
+            return{
+                ...state,
+            }
+        case ADDRESS_DELETE:
+            if(action.addressNumList === undefined){
+                return{
+                    ...state,
+                    addressCheckBox: !state.addressCheckBox
+                }
+            }
+            return{
+                ...state
+            }
         //주소 즐찾닫기
         case DIALOG_CLOSE:
+            let data = state.addressList
             if(action.sort === "address"){
-                console.log(addressPut(action.text))
                 swal.fire({
                     width: "500px",
                     title: "성공",
@@ -103,6 +127,7 @@ const reducer = ( state = initState, action ) => {
                     confirmButtonColor: "#ff7396",
                     html: "주소 즐겨찾기 등록 완료.<style>.swal2-html-container{margin: 0; height: fit-content;}</style>"
                 })
+                data = action.data
             }
             return{
                 ...state,
@@ -111,8 +136,10 @@ const reducer = ( state = initState, action ) => {
                 addressDetail: false,
                 idCheck: false,
                 telCheck: false,
-            }
-           
+                addressCheckBox: false,
+                addressDelList: [],
+                addressList: data
+            } 
 
 
         //더보기 버튼
@@ -120,7 +147,7 @@ const reducer = ( state = initState, action ) => {
             return {
                 ...state,
                 moreView: {
-                    isOpen: !(state.moreView.isOpen),
+                    isOpen: !state.moreView.isOpen,
                     name: action.text,
                     num: action.num
                 }

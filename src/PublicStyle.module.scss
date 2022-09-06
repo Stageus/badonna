@@ -29,7 +29,7 @@ main{
         width: 10px;
     }
     &::-webkit-scrollbar-thumb{
-        background-color: #e2e2e2;
+        background-color: #d3d3d3;
         border-radius: 10px;
     }
 }
@@ -45,9 +45,9 @@ h1,h2,p{
 
 input{
     padding: 4px;
-    border: 1px solid #e2e2e2;
+    border: 1px solid #d3d3d3;
     &::placeholder{
-        color: #e2e2e2;
+        color: #d3d3d3;
     }
 }
 
@@ -65,7 +65,7 @@ div{
         width: 10px;
     }
     &::-webkit-scrollbar-thumb{
-        background-color: #e2e2e2;
+        background-color: #d3d3d3;
         border-radius: 10px;
     }
 }

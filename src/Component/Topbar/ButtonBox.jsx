@@ -8,29 +8,30 @@ import isLogin from "../../Module/isLogin"
 
 const ButtonBox = () => {
 
+    const topbar = useSelector(state => state.login.topbar)
     return(
         <div id = {style.buttonBox}>
             {
-                !isLogin(getCookie("access-token")) && 
+                !topbar && 
                 <Link to = "/login">
                     <Button text = "로그인" name = "loginPage"/>
                 </Link>
             }
             {
-                isLogin(getCookie("access-token")) && 
+                topbar && 
                 <Link to = "/">
                     <Button text = "로그아웃" name = "logout"/>
                 </Link>
             }
             {
-                isLogin(getCookie("access-token")) && 
+                topbar && 
                 <Button text = "주소 즐겨찾기" name = "address"/>
             }
             <Link to = "/board">
                 <Button text = "게시글" name = "boardPage"/>
             </Link>
             {
-                isLogin(getCookie("access-token")) && 
+                topbar && 
                 <Link to = "/profile">
                 <Button text = "회원정보" name = "profilePage"/>
                 </Link>

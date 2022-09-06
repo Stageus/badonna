@@ -11,6 +11,9 @@ const JoinPage = () => {
 
     const isSameId = useSelector(state => state.join.isSameId)
     const id = useSelector(state => state.join.idInput)
+    const pw = useSelector(state => state.join.pwInput)
+    const pwCheckInput = useSelector(state => state.join.pwCheckInput)
+    const name = useSelector(state => state.join.nameInput)
     const pwCheck = useSelector(state => state.join.pwCheck)
     const isSamePw = useSelector(state => state.join.isSamePw)
     const nameCheck = useSelector(state => state.join.nameCheck)
@@ -35,7 +38,7 @@ const JoinPage = () => {
                     </div>
                     <div id = {style.pw}>
                         <H2 text = "비밀번호"/>
-                        <Text name = "pwInput" maxLength = "16" password/>
+                        <Text name = "pwInput" maxLength = "16" value = {pw} password/>
                         {
                             pwCheck ?
                             <P/> :
@@ -44,7 +47,7 @@ const JoinPage = () => {
                     </div>
                     <div id = {style.pwCheck}>
                         <H2 text = "비밀번호 확인"/>
-                        <Text name = "pwCheckInput" maxLength = "16" password/>
+                        <Text name = "pwCheckInput" maxLength = "16" value = {pwCheckInput} password/>
                         {
                             isSamePw ?
                             <P/>:
@@ -63,7 +66,7 @@ const JoinPage = () => {
                     </div>
                     <div id = {style.name}>
                         <H2 text = "이름"/>
-                        <Text name = "nameInput" maxLength = "4"/>
+                        <Text name = "nameInput" value = {name} maxLength = "4"/>
                         {
                             nameCheck?
                             <P/>:
@@ -76,8 +79,8 @@ const JoinPage = () => {
                     <Link to = "/">
                         <Button id = {style.Button} text = "가입" name = "joinButton"/>
                     </Link> :
-                    <Link to = "/" style = {{pointerEvents : "none"}}>
-                    <Button id = {style.Button} text = "가입" name = "joinButton"/>
+                    <Link to = "/" disabled>
+                        <Button id = {style.Button} text = "가입" name = "joinButton"/>
                     </Link>
                 }       
             </div>

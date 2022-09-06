@@ -1,8 +1,8 @@
 import React from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { address, addressSearch, addressDetail, moreView, idCheck, telCheck, dialogClose } from "../../Redux/Action/action"
-import { board, boardDelete, boardEditPage, boardUpload, } from "../../Redux/Action/boardAction"
-import { reCommentInput, reCommentUpload, commentUpload, comment, commentDelete, } from "../../Redux/Action/commentAction"
+import { address, addressSearch, addressDelete, moreView, idCheck, telCheck, dialogClose } from "../../Redux/Action/action"
+import { board, boardAddressText, boardDelete, boardEditPage, boardUpload, } from "../../Redux/Action/boardAction"
+import { reCommentInput, reCommentUpload, commentUpload, comment, commentDelete, commentInput, commentEdit, reComment, } from "../../Redux/Action/commentAction"
 import { idCheckButton, join, } from "../../Redux/Action/joinAction"
 import { login, logout } from "../../Redux/Action/loginAction"
 import { profile } from "../../Redux/Action/profileAction"
@@ -25,12 +25,23 @@ const Button = (props) => {
                 break
             case "commentPage":
                 dispatch(comment(props.boardNum))
+                dispatch(reComment(props.comments))
                 break
             case "login":
                 dispatch(login(props.idInput, props.pwInput))
                 break
             case "address":
                 dispatch(address())
+                break
+            case "addressSimple":
+                dispatch(address(true))
+                break
+            case "userRegAddress":
+                dispatch(boardAddressText(props.text))
+                dispatch(dialogClose())
+                break
+            case "addressDelete":
+                dispatch(addressDelete())
                 break
             case "idCheckDialog":
                 dispatch(idCheck())
@@ -55,13 +66,12 @@ const Button = (props) => {
                 dispatch(reCommentInput(props.commentNum, props.reCommentNum))
                 break
             case "reCommentUpload":
-                dispatch(reCommentUpload(props.cancel, props.commentNum, props.userName))
+                dispatch(reCommentUpload(props.commentNum, props.content))
+                break
+            case "addressReg":
                 break
             case "addressSearch":
                 dispatch(addressSearch())
-                break
-            case "addressDetail":
-                dispatch(addressDetail())
                 break
             case "moreView":
                 if(props.moreViewName === "board"){
@@ -82,9 +92,13 @@ const Button = (props) => {
                 dispatch(boardDelete(props.boardNum))
                 break
             case "commentEdit":
+                dispatch(commentEdit(props.boardNum, props.commentNum, props.contents))
                 break
             case "commentDelete":
                 dispatch(commentDelete(props.boardNum, props.commentNum))
+                break
+            case "commentInput":
+                dispatch(commentInput(props.commentNum))
                 break
             case "reCommentEdit":
                 break
@@ -99,7 +113,7 @@ const Button = (props) => {
     }
 
     return (
-        <button id = {props.id} onClick = {onClickEvent}>
+        <button id = {props.id} onClick = {onClickEvent} disabled = {props.disabled}>
             {props.text}
         </button>
     )

@@ -2,8 +2,8 @@ import { setCookie, getCookie } from "./cookie"
 
 const basic = "http://3.35.16.191:3000"
 
-const loginPost = (id, pw) => {
-    const bool = fetch(`${basic}/account/login`, {
+async function loginPost(id, pw){
+    const bool = await fetch(`${basic}/account/login`, {
         "method": "POST",
         "headers": {
             "Content-Type": "application/json"
@@ -24,7 +24,6 @@ const loginPost = (id, pw) => {
         console.log(result.message)
         return false
     })
-    console.log(bool)
     return bool
 }
 
@@ -115,8 +114,8 @@ async function addressGet(){
     })
     return data
 }
-const addressPut = (address) => {
-    fetch(`${basic}/place`, {
+async function addressPut(address) {
+    await fetch(`${basic}/place`, {
         "method": "PUT",
         "headers": {
             "Content-Type": "application/json",
@@ -138,8 +137,8 @@ const addressPut = (address) => {
     })
 }
 
-async function boardGet(){
-    const data = await fetch(`${basic}/board?offset=0&id=${getCookie("id")}`, {
+async function boardGet(offset){
+    const data = await fetch(`${basic}/board?offset=${offset}&id=${getCookie("id")}`, {
         "method": "GET",
         "headers": {
             "Content-Type": "application/json",
@@ -292,7 +291,72 @@ async function commentDel(commentNum){
     })
 }
 
+async function commentPut(commentNum, contents){
+    await fetch(`${basic}/comment`, {
+        "method": "PUT",
+        "headers": {
+            "Content-Type": "application/json",
+            "token": getCookie("access-token")
+        },
+        "body": JSON.stringify({
+            "comment_num": commentNum,
+            "contents": contents
+        })
+    })
+    .then(response => response.json())
+    .then(result => {
+        if(result.success){
+            console.log(result.message)
+            return
+        }
+        console.log(result.message)
+    })
+}
+
+async function reCommentPost(commentNum, contents){
+    await fetch(`${basic}/reply`, {
+        "method": "POST",
+        "headers": {
+            "Content-Type": "application/json",
+            "token": getCookie("access-token")
+        },
+        "body": JSON.stringify({
+            "comment_num": commentNum,
+            "contents": contents,
+            "id": getCookie("id"),
+        })
+    })
+    .then(response => response.json())
+    .then(result => {
+        if(result.success){
+            console.log(result.message)
+            return
+        }
+        console.log(result.message)
+    })
+}
+
+async function reCommentGet(commentNum){
+    const data = await fetch(`${basic}/reply?comment_num=${commentNum}&id=${getCookie("id")}`, {
+        "method": "GET",
+        "headers": {
+            "Content-Type": "application/json",
+            "token": getCookie("access-token")
+        }
+    })
+    .then(response => response.json())
+    .then(result => {
+        if (result.success) {
+            console.log(result.message)
+            return result.data
+        }
+        console.log(result.message)
+    })
+    return data
+}
+
 export { loginPost, profileGet, duplicateIdPost, joinPost, 
          addressPut, addressGet, 
          boardGet, boardPost, boardDel, boardEdit, 
-         commentPost, commentGet, commentDel }
+         commentPost, commentGet, commentDel, commentPut,
+         reCommentPost, reCommentGet }

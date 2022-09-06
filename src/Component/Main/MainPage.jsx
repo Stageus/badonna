@@ -18,18 +18,18 @@ const Main = () => {
             <Route path = "/*" element = {<HomePage />}/>
             <Route path = "/login" element = {<LoginPage/>}/>
             <Route path = "/join" element = {<JoinPage />}/>
-            <Route path = "/board/*" element = {<BoardPage />}/>
+            <Route path = "/board" element = {<BoardPage />}/>
             <Route path = "/profile" element = { 
                 isLogin(getCookie("access-token"))?
                 <ProfilePage/> : 
                 <Navigate replace to = "/login"/>}
             />
-            <Route path = "board/comment" element = {
+            <Route path = "/comment" element = {
                 isLogin(getCookie("access-token"))?
                 <CommentPage/> :
                 <Navigate replace to = "/login"/>}
             />
-            <Route path = "/board/boardWrite" element = {
+            <Route path = "/boardWrite" element = {
                 isLogin(getCookie("access-token"))?
                 <BoardWritePage/> :
                 <Navigate replace to = "/login"/>}

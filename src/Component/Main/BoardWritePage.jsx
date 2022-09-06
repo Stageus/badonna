@@ -27,7 +27,7 @@ const BoardWritePage = () => {
                     <Text placeholder = "제목" name = "boardTitle" maxLength = "20" value = {titleState}/>
                     <div id = {style.addressBox}>
                         <Text id = {style.addressInput} placeholder = "주소 직접 입력" name = "boardAddress" maxLength = "20" value = {addressState}/>
-                        <Button text = "주소 즐겨찾기" name = "address"/>
+                        <Button text = "주소 즐겨찾기" name = "addressSimple"/>
                     </div>
                     <div id = {style.recruitBox}>
                         <Text id = {style.recruit} placeholder = "모집인원" name = "boardRecruit" maxLength = "2" value = {recruitState}/>

@@ -12,9 +12,14 @@ const initState = {
 const profileReducer = (state = initState, action) => {
     switch(action.type){
         case "persist/REHYDRATE":
+            if(action.payload?.profile.user !== undefined){
+                return{
+                    ...state,
+                    user: action.payload.profile.user
+                }
+            }
             return{
                 ...state,
-                user: action.payload.profile.user
             }
         case PROFILE:
             return{
