@@ -42,7 +42,7 @@ router.post("/",(req,res)=>{
                     }
                 })
 
-                const sql="INSERT INTO badonnaproject.comment(board_num,contents,name) VALUES($1,$2,$3)"
+                const sql="INSERT INTO badonnaproject.comment(board_num,comment_contents,comment_id) VALUES($1,$2,$3)"
                 const values=[board_member,comment_contents,user_name]
                 
                 db.query(sql,values,(err,row)=>{
@@ -114,8 +114,8 @@ router.get("/",(req,res)=>{
                         }
                     })
 
-                    const sql="SELECT comment_num,contents,name FROM badonnaproject.comment WHERE board_num=$1 AND name=$2"
-                    const values=[comment_number,idValue]
+                    const sql="SELECT * FROM badonnaproject.comment JOIN badonnaproject.reply ON badonnaproject.comment.board_num = badonnaproject.reply.board_num  AND  badonnaproject.comment.comment_num = badonnaproject.reply.comment_num  WHERE badonnaproject.comment.comment_id =$1"
+                    const values=[idValue]
 
                     db.query(sql,values,(err,row)=>{
                         if(!err){
@@ -187,7 +187,7 @@ router.put("/",(req,res)=>{
                     }
                 })
 
-                const sql="UPDATE badonnaproject.comment SET contents=$2 WHERE comment_num=$1 "
+                const sql="UPDATE badonnaproject.comment SET comment_contents=$2 WHERE comment_num=$1 "
                 const values=[comment_number,comment_contents]
                 
                 db.query(sql,values,(err,row)=>{

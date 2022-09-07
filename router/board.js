@@ -121,45 +121,40 @@ router.get("/",(req,res)=>{
             res.send(result)
         }else{
 
-            if(tokenVerify(token_public)){
+            const db=new Client(pgInit)
+            db.connect((err)=>{
+                if(err) {
+                    console.log(err)
+                }
+            })
 
-                const db=new Client(pgInit)
-                db.connect((err)=>{
-                    if(err) {
-                        console.log(err)
-                    }
-                })
-
-                const sql="SELECT * FROM badonnaproject.board ORDER BY date DESC LIMIT $1 OFFSET $2"
-                const values=[10,offset_num]
-            
-                db.query(sql,values,(err,row)=>{
-                    if(!err){
+            const sql="SELECT * FROM badonnaproject.board ORDER BY date DESC LIMIT $1 OFFSET $2"
+            const values=[10,offset_num]
         
-                        for(let i=0; i<row.rows.length; i++){
-                            const temp=row.rows[i].date 
-                            row.rows[i].date=temp.toISOString().split("T")[0]
-                        }
-                        
-                        result.data=row.rows
-                        result.success=true
-                        result.message="성공"
-                        
-                    }else{
-                        console.log(err)
+            db.query(sql,values,(err,row)=>{
+                if(!err){
+    
+                    for(let i=0; i<row.rows.length; i++){
+                        const temp=row.rows[i].date 
+                        row.rows[i].date=temp.toISOString().split("T")[0]
                     }
-        
-                    //로깅 남기기
-                    logFuntion(api_name,req_host, req_data, row.rows,api_call_time)
-
-                    res.send(result)
-                    db.end()
                     
-                })
-            }else{
-                result.message="잘 못된 token!"
+                    result.data=row.rows
+                    result.success=true
+                    result.message="성공"
+                    
+                }else{
+                    console.log(err)
+                }
+    
+                //로깅 남기기
+                logFuntion(api_name,req_host, req_data, row.rows,api_call_time)
+
                 res.send(result)
-            }
+                db.end()
+                
+            })
+        
         }
 
     }catch(e){

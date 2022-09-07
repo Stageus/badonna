@@ -12,6 +12,7 @@ const tokenVerify=require("../module/verify")
 router.post("/",(req,res)=>{
 
     const token_public=req.headers.token 
+    const board_member=req.body.board_num
     const coment_number=req.body.comment_num 
     const reply_contents=req.body.contents
     const user_name=req.body.id
@@ -43,8 +44,8 @@ router.post("/",(req,res)=>{
                         console.log(err)
                     }
                 })
-                const sql="INSERT INTO badonnaproject.reply(comment_num,contents,name) VALUES($1,$2,$3)"
-                const values=[coment_number,reply_contents,user_name]
+                const sql="INSERT INTO badonnaproject.reply(comment_num,board_num,reply_contents,reply_id) VALUES($1,$2,$3,$4)"
+                const values=[coment_number,board_member,reply_contents,user_name]
                 
                 db.query(sql,values,(err,row)=>{
                     if(!err){
@@ -174,7 +175,7 @@ router.put("/",(req,res)=>{
                         console.log(err)
                     }
                 })
-                const sql="UPDATE badonnaproject.reply SET contents=$3 WHERE comment_num=$1 AND reply_num=$2"
+                const sql="UPDATE badonnaproject.reply SET reply_contents=$3 WHERE comment_num=$1 AND reply_num=$2"
                 const values=[coment_number,reply_number,reply_contents]
                 
                 db.query(sql,values,(err,row)=>{

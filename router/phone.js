@@ -38,14 +38,14 @@ router.post("/",(req,res)=>{
             // 신청자의 전화번호_사용자 전화 번호
                 { to: `${phone_num}`, },],
         },
-    }).then(res => {
+    }).then(res1 => {
         console.log(res.data)
         
-        if(res.data.statusCode == '202'){
+        if(res1.data.statusCode == '202'){
             result.success=true
             res.send(result)
         }else{
-            result.message=res.data.statusCode
+            result.message=res1.data.statusCode
             res.send(result)
         }
     })
