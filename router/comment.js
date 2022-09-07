@@ -88,7 +88,8 @@ router.get("/",(req,res)=>{
 
     const result={
         "success":false,
-        "data":null,
+        "comment_data":null,
+        "comment_and_reply_data":null,
         "message":null
     }
 
@@ -114,8 +115,9 @@ router.get("/",(req,res)=>{
                         }
                     })
 
-                    const sql="SELECT * FROM badonnaproject.comment JOIN badonnaproject.reply ON badonnaproject.comment.board_num = badonnaproject.reply.board_num  AND  badonnaproject.comment.comment_num = badonnaproject.reply.comment_num  WHERE badonnaproject.comment.comment_id =$1"
-                    const values=[idValue]
+                   // const sql="SELECT * FROM badonnaproject.comment JOIN badonnaproject.reply ON badonnaproject.comment.board_num = badonnaproject.reply.board_num  AND  badonnaproject.comment.comment_num = badonnaproject.reply.comment_num  WHERE badonnaproject.comment.comment_id =$1"
+                   const sql="SELECT * FROM  badonnaproject.comment WHERE board_num=$1 AND comment_id=$2"
+                   const values=[comment_number,idValue]
 
                     db.query(sql,values,(err,row)=>{
                         if(!err){

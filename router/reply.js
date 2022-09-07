@@ -34,6 +34,9 @@ router.post("/",(req,res)=>{
         }else if(reply_contents.length == 0 || reply_contents == null || reply_contents.length > 200){
             result.message="옳바르지 않은 대댓글 내용 입니다."
             res.send(result)
+        }else if(board_member.length == 0 || board_member == null || board_member.length > 200){
+            result.message="옳바르지 않은 게시글 번호 입니다."
+            res.send(result)
         }else{
 
             if(tokenVerify(token_public)){
@@ -79,7 +82,7 @@ router.post("/",(req,res)=>{
 router.get("/",(req,res)=>{
 
     const token_public=req.headers.token 
-    const reply_number=req.query.comment_num
+    const reply_number=req.query.board_num
     const idValue=req.query.id
 
     const api_name="reply" + req.url
@@ -107,19 +110,19 @@ router.get("/",(req,res)=>{
                         console.log(err)
                     }
                 })
-                const sql="SELECT * FROM  badonnaproject.reply WHERE comment_num=$1 AND name=$2"
+                const sql="SELECT * FROM  badonnaproject.reply WHERE board_num=$1 AND reply_id=$2"
                 const values=[reply_number, idValue]
                 
                 db.query(sql,values,(err,row)=>{
                     if(!err){
                         result.success=true
-                        result.data=row.rows[0]
+                        result.data=row.rows
                     }else{
                         console.log(err)
                     }
 
                     //로깅 남기기
-                    logFuntion(api_name,req_host, req_data, row.rows[0],api_call_time)
+                    logFuntion(api_name,req_host, req_data, row.rows,api_call_time)
 
                     res.send(result)
                     db.end()

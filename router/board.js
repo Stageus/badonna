@@ -235,6 +235,8 @@ router.put("/",(req,res)=>{
     const board_place=req.body.place
     const board_date=moment()
 
+    console.log(board_number,board_title,board_contents,board_place)
+    
     const api_name="board" + req.url
     const req_host=req.headers.req_host
     const req_data=[board_number,board_title,board_contents,board_place,board_date]
