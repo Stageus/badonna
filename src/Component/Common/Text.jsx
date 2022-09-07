@@ -41,7 +41,7 @@ const Text = (props) => {
             case "commentEdit":
                 dispatch(commentEditText(event.target.value))
                 break
-            case "reComment":
+            case "reCommentUpload":
                 dispatch(reCommentInputText(event.target.value))
                 break
             case "boardTitle":

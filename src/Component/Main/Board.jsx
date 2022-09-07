@@ -25,24 +25,29 @@ const Board = (props) => {
             <div className = {style.boardComment}>
                 <H2 text = "댓글"/>
                 {
-                    commentListState[0] === undefined || commentListState[0].boardNum !== props.boardnum ?
-                    <div className = {style.commentBox}>
-                        <Link to = "/comment">
-                            <Button id = {style.more} text = "댓글 쓰기" name = "commentPage" boardNum = {props.boardNum} comments = {commentListState}/>
-                        </Link>
-                    </div> :
-                    <div className = {style.commentBox}>
-                        <div className = {style.commentText}>
-                            <H2 id = {style.name} text = {commentListState.user}/>
-                            <P text = {commentListState.content}/>
-                        </div>
-                        <div className = {style.commentBox}>
-                            <Link to = "/comment">
-                                <Button id = {style.more} text = "댓글 더보기" name = "commentPage" boardNum = {props.boardNum} comments = {commentListState}/>
-                            </Link>
-                        </div>
-                    </div>
+                    // commentListState[0] === undefined || commentListState[0].boardNum !== props.boardnum ?
+                    // <div className = {style.commentBox}>
+                    //     <Link to = "/comment">
+                    //         <Button id = {style.more} text = "댓글 쓰기" name = "commentPage" boardNum = {props.boardNum} comments = {commentListState}/>
+                    //     </Link>
+                    // </div> :
+                    // <div className = {style.commentBox}>
+                    //     <div className = {style.commentText}>
+                    //         <H2 id = {style.name} text = {commentListState.user}/>
+                    //         <P text = {commentListState.content}/>
+                    //     </div>
+                    //     <div className = {style.commentBox}>
+                    //         <Link to = "/comment">
+                    //             <Button id = {style.more} text = "댓글 더보기" name = "commentPage" boardNum = {props.boardNum} comments = {commentListState}/>
+                    //         </Link>
+                    //     </div>
+                    // </div>
                 }
+                <div className = {style.commentBox}>
+                    <Link to = "/comment">
+                         <Button id = {style.more} text = "댓글 쓰기" name = "commentPage" boardNum = {props.boardNum} comments = {commentListState}/>
+                     </Link>
+                </div>
             </div>
         </article>
     )

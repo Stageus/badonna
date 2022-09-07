@@ -107,16 +107,15 @@ async function addressGet(){
     .then(result => {
         if (result.success) {
             console.log(result.message)
-            console.log(result.data)
             return result.data
         }
         console.log(result.message)
     })
     return data
 }
-async function addressPut(address) {
+async function addressPost(address) {
     await fetch(`${basic}/place`, {
-        "method": "PUT",
+        "method": "POST",
         "headers": {
             "Content-Type": "application/json",
             "token": getCookie("access-token")
@@ -136,7 +135,26 @@ async function addressPut(address) {
         return false
     })
 }
-
+async function addressDel(addressNum){
+    await fetch(`${basic}/place`, {
+        "method": "DELETE",
+        "headers": {
+            "Content-Type": "application/json",
+            "token": getCookie("access-token")
+        },
+        "body": JSON.stringify({
+            "place_num": addressNum
+        })
+    })
+    .then(response => response.json())
+    .then(result => {
+        if(result.sccess){
+            console.log(result.message)
+            return
+        }
+        console.log(result.message)
+    })
+}
 async function boardGet(offset){
     const data = await fetch(`${basic}/board?offset=${offset}&id=${getCookie("id")}`, {
         "method": "GET",
@@ -204,6 +222,10 @@ async function boardDel(boardNum){
 }
 
 async function boardEdit(boardNum, title, contents, address){
+    console.log(boardNum)
+    console.log(title)
+    console.log(contents)
+    console.log(address)
     await fetch(`${basic}/board`, {
         "method": "PUT",
         "headers": {
@@ -356,7 +378,7 @@ async function reCommentGet(commentNum){
 }
 
 export { loginPost, profileGet, duplicateIdPost, joinPost, 
-         addressPut, addressGet, 
+         addressPost, addressGet, addressDel,
          boardGet, boardPost, boardDel, boardEdit, 
          commentPost, commentGet, commentDel, commentPut,
          reCommentPost, reCommentGet }

@@ -31,7 +31,7 @@ const BoardPage = () => {
                 </button>
             </div>
             {
-                boardListState[0] === undefined &&
+                boardListState === undefined || boardListState.length === 0 &&
                 <div>
                     게시글이 없습니다 작성해 주세요.
                 </div>

@@ -67,13 +67,14 @@ const commentInput = (commentNum) => {
 
 
 
-const reComment = (commentNum) => async dispatch => {
+const reComment = (commentNumList) => async dispatch => {
     let data = []
 
-    if(commentNum !== null){
-        await commentNum.forEach(element => {
-            data.push(reCommentGet(element.comment_num))
-        })
+    if(commentNumList !== null){
+        for(const element of commentNumList){
+            const d = await reCommentGet(element.comment_num)
+            data.push(d)
+        }
     }
     dispatch({
         type: RECOMMENT,
@@ -90,6 +91,7 @@ const reCommentInput = (commentNum = undefined, reCommentNum = undefined) => {
 const reCommentUpload = (commentNum, content) => async dispatch => {
     await reCommentPost(commentNum, content)
     const data = await reCommentGet(commentNum)
+    
     dispatch({
         type: RE_COMMENT_UPLOAD,
         data: data
@@ -98,9 +100,17 @@ const reCommentUpload = (commentNum, content) => async dispatch => {
 const reCommentInputText = (text) => {
     return {
         type: RE_COMMENT_INPUT_TEXT,
-        text: text
+        text: text,
+        isEdit: false
+    }
+}
+const reCommentEditText = (text) => {
+    return {
+        type: RE_COMMENT_INPUT_TEXT,
+        text: text,
+        isEdit: true
     }
 }
 
 export { comment, commentInput, commentInputText, commentEditText, commentUpload, commentDelete, commentEdit,
-         reCommentInput, reCommentUpload, reCommentInputText, reComment }
+         reCommentInput, reCommentUpload, reCommentInputText, reComment, reCommentEditText }

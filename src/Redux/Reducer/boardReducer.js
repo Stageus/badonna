@@ -18,7 +18,7 @@ const boardReducer = (state = initState, action) => {
     
     switch( action.type ){
         case "persist/REHYDRATE":
-            if(action.payload?.board.boardList !== undefined){
+            if(action.payload !== undefined){
                 return{
                     ...state,
                     boardList: action.payload.board.boardList

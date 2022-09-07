@@ -2,7 +2,6 @@ import React from "react"
 import style from "./SCSS/Comment.module.scss"
 import H2 from "../Common/H2"
 import P from "../Common/P"
-import Text from "../Common/Text"
 import ReCommentInput from "./ReCommentInput"
 import ReComment from "./ReComment"
 import { useSelector } from "react-redux"
@@ -10,10 +9,10 @@ import MoreView from "./MoreView"
 
 const Comment = (props) => {
 
-    const reCommentListState = useSelector(state => state.comment.reCommentList[props.commentNum])
+    const reCommentListState = useSelector(state => state.comment.reCommentList)
     const commentInputState = useSelector(state => state.comment.commentInput)
     const commentNumState = useSelector(state => state.comment.commentNum)
-
+    
     if(props.user === undefined){
         return (
             <div id = {style.commentBox}>
@@ -37,7 +36,10 @@ const Comment = (props) => {
             </div>
             {
                 reCommentListState&&reCommentListState.map((element, index) => 
-                <ReComment key = {index} reCommentNum = {element.reCommentNum} commentNum = {props.commentNum} user = {element.user} content = {element.content}/>)
+                    element.comment_num === props.commentNum ?
+                    <ReComment key = {index} reCommentNum = {element.reply_num} commentNum = {props.commentNum} user = {element.name} contents = {element.contents}/>:
+                    <div key = {index}></div>
+                )
             }
         </div>
     )

@@ -47,7 +47,7 @@ const MoreView = (props) => {
                     </ul> :
                     <ul id = {style.hiddenButton} style = {hiddenButtonStyle}>
                         <li>
-                            <Button text = "답글 수정" name = "reCommentEdit"/>
+                            <Button text = "답글 수정" name = "reCommentInput" commentNum = {props.commentNum} reCommentNum = {props.reCommentNum}/>
                         </li>
                         <li>
                             <Button text = "답글 삭제" name = "reCommentDelete"/>

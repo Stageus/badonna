@@ -41,7 +41,7 @@ const Button = (props) => {
                 dispatch(dialogClose())
                 break
             case "addressDelete":
-                dispatch(addressDelete())
+                dispatch(addressDelete(props.addressDel))
                 break
             case "idCheckDialog":
                 dispatch(idCheck())
@@ -58,15 +58,6 @@ const Button = (props) => {
                 break
             case "boardUpload":
                 dispatch(boardUpload(props.title, props.address, props.recruit, props.content, props.boardNum))
-                break
-            case "commentUpload":
-                dispatch(commentUpload(props.boardNum, props.contents))
-                break
-            case "reCommentInput":
-                dispatch(reCommentInput(props.commentNum, props.reCommentNum))
-                break
-            case "reCommentUpload":
-                dispatch(reCommentUpload(props.commentNum, props.content))
                 break
             case "addressReg":
                 break
@@ -90,6 +81,15 @@ const Button = (props) => {
                 break
             case "boardDelete":
                 dispatch(boardDelete(props.boardNum))
+                break
+            case "commentUpload":
+                dispatch(commentUpload(props.boardNum, props.contents))
+                break
+            case "reCommentInput":
+                dispatch(reCommentInput(props.commentNum, props.reCommentNum))
+                break
+            case "reCommentUpload":
+                dispatch(reCommentUpload(props.commentNum, props.content))
                 break
             case "commentEdit":
                 dispatch(commentEdit(props.boardNum, props.commentNum, props.contents))

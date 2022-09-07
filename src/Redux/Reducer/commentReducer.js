@@ -13,6 +13,7 @@ const initState = {
     reComment: null,
     reCommentInput: false,
     reCommentInputText: null,
+    reCommentEditText: null,
     reCommentList: [],
 }
 
@@ -93,7 +94,6 @@ const commentReducer = (state = initState, action) => {
 
         
         case RECOMMENT:
-            console.log(action.data)
             return{
                 ...state,
                 reCommentList: action.data
@@ -114,9 +114,16 @@ const commentReducer = (state = initState, action) => {
                 ...state,
                 reCommentInput: false,
                 reCommentInputText: null,
+                reCommentList: action.data
             }
         //입력한 답글
         case RE_COMMENT_INPUT_TEXT:
+            if(action.isEdit){
+                return{
+                    ...state,
+                    reCommentEditText: action.text
+                }
+            }
             return {
                 ...state,
                 reCommentInputText: action.text,

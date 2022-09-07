@@ -1,4 +1,4 @@
-import { addressGet, addressPut, profileGet } from "../../Module/fetch"
+import { addressGet, addressPost, profileGet, addressDel } from "../../Module/fetch"
 
 export const SCROLL = "SCROLL"
 export const ADDRESS = "ADDRESS"
@@ -8,7 +8,8 @@ export const TEL_CHECK = "TEL_CHECK"
 
 export const ADDRESS_SEARCH = "ADDRESS_SEARCH"
 export const ADDRESS_DELETE = "ADDRESS_DELETE"
-export const ADDRESS_DELETE_LIST = "ADDRESS_DELETE_LIST"
+export const ADDRESS_DELETE_CHANGE = "ADDRESS_DELETE_CHANGE"
+export const ADDRESS_DELETE_NUM = "ADDRESS_DELETE_NUM"
 export const DIALOG_CLOSE = "DIALOG_CLOSE"
 
 export const MORE_VIEW = "MORE_VIEW"
@@ -36,10 +37,10 @@ const changeScroll = (scroll) => {
     }
 }
 const address = (click = false) => async dispatch => {
-    const addressList = await addressGet()
+    const data = await addressGet()
     dispatch({
         type: ADDRESS,
-        addressList: addressList,
+        data: data,
         click: click
     })
 }
@@ -48,24 +49,33 @@ const addressSearch = () => {
         type: ADDRESS_SEARCH
     }
 }
-const addressDelList = (checked, addressNum) => {
+const addressDelCheck = (checked, addressNum) => {
     return{
-        type: ADDRESS_DELETE_LIST,
+        type: ADDRESS_DELETE_NUM,
         checked: checked,
-        addressNum: addressNum
+        data: addressNum
     }
 }
-const addressDelete = (addressNumList) => {
-    return{
-        type: ADDRESS_DELETE,
-        addressNumList: addressNumList
+const addressDelete = (addressNum) => async dispatch => {
+    if(addressNum === undefined || addressNum === null){
+        dispatch({
+            type: ADDRESS_DELETE,
+            data: addressNum
+        })
+        return
     }
+    await addressDel(addressNum)
+    const data = await addressGet()
+    dispatch({
+        type: ADDRESS_DELETE,
+        data: data
+    })
 }
 const dialogClose = (sort = "", text = "") => async dispatch => {
     let data = null
 
     if(sort === "address"){
-        await addressPut(text)
+        await addressPost(text)
         data = await profileGet()
     }
     dispatch({
@@ -84,9 +94,8 @@ const moreView = (num, text) => {
 }
 
 
-
 export { termsOfService, changeScroll, 
-         address, addressSearch, addressDelete, addressDelList, 
+         address, addressSearch, addressDelete, addressDelCheck, 
          idCheck, telCheck,
          dialogClose,  
          moreView, }

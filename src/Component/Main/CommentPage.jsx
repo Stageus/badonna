@@ -19,7 +19,7 @@ const CommentPage = () => {
             </div>
             <div id = {style.commentMain}>
                 {
-                    commentListState[0] === undefined ?
+                    commentListState === undefined ?
                     <Comment/> :
                     commentListState.map((element, index) =>  
                     <Comment key = {index} user = {element.name} content = {element.contents} commentNum = {element.comment_num} boardNum = {boardNumState}/>)

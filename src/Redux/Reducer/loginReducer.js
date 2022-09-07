@@ -12,14 +12,11 @@ const initState = {
 const loginReducer = (state = initState, action) => {
     switch(action.type){
         case 'persist/REHYDRATE':
-            if(action.payload?.login.topbar !== undefined){
+            if(action.payload !== undefined){
                 return{
                     ...state,
                     topbar: action.payload.login.topbar
                 }
-            }
-            return{
-                ...state
             }
         case ID_INPUT:
             return{
@@ -46,7 +43,8 @@ const loginReducer = (state = initState, action) => {
             return{
                 ...state,
                 idCheck: false,
-                pwCheck: false
+                pwCheck: false,
+                topbar: true
             }
         case LOGOUT:
             delCookie("access-token")

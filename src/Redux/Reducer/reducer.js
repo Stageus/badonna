@@ -1,5 +1,5 @@
 import { TERMS_OF_SERVICE, SCROLL, ADDRESS, ADDRESS_SEARCH, ADDRESS_DELETE, DIALOG_CLOSE,  
-         MORE_VIEW, ID_CHECK, TEL_CHECK, ADDRESS_DELETE_LIST } from "../Action/action"
+         MORE_VIEW, ID_CHECK, TEL_CHECK, ADDRESS_DELETE_NUM } from "../Action/action"
 import swal from "sweetalert2"
 
 const initState = {
@@ -12,7 +12,8 @@ const initState = {
     addressDetail: false,
     addressCheckBox: false,
     addressList: [],
-    addressDelList: [],
+    addressDel: null,
+    addressCheckStatus: false,
     idCheck: false,
     telCheck: false,
 
@@ -70,7 +71,7 @@ const reducer = ( state = initState, action ) => {
                 ...state,
                 address: true,
                 addressSearch: false,
-                addressList: action.addressList,
+                addressList: action.data,
                 addressClick: action.click
             }
         //2번째 주소 즐찾창
@@ -86,34 +87,47 @@ const reducer = ( state = initState, action ) => {
             return{
                 ...state,
             }
-        case ADDRESS_DELETE_LIST:
-            const addressDelList = [...state.addressDelList]
+        case ADDRESS_DELETE_NUM:
+            // const addressDelList = [...state.addressDelList]
+            // if(action.checked){
+            //     addressDelList.push(action.addressNum)
+            //     return{
+            //         ...state,
+            //         addressDelList: addressDelList
+            //     }
+            // }
+            // if(addressDelList.length > 0){
+            //     addressDelList.splice(addressDelList.indexOf(action.addressNum), 1)
+            //     return{
+            //         ...state,
+            //         addressDelList: addressDelList
+            //     }
+            // }
             if(action.checked){
-                addressDelList.push(action.addressNum)
                 return{
                     ...state,
-                    addressDelList: addressDelList
-                }
-            }
-            if(addressDelList.length > 0){
-                addressDelList.splice(addressDelList.indexOf(action.addressNum), 1)
-                return{
-                    ...state,
-                    addressDelList: addressDelList
+                    addressDel: action.data,
+                    addressCheckStatus: action.checked
                 }
             }
             return{
                 ...state,
+                addressDel: null,
+                addressCheckStatus: false
             }
         case ADDRESS_DELETE:
-            if(action.addressNumList === undefined){
+            if(action.data === null || action.data === undefined){
                 return{
                     ...state,
-                    addressCheckBox: !state.addressCheckBox
+                    addressCheckBox: !state.addressCheckBox,
+                    addressDel: null
                 }
             }
             return{
-                ...state
+                ...state,
+                addressCheckBox: !state.addressCheckBox,
+                addressDel: null,
+                addressList: action.data 
             }
         //주소 즐찾닫기
         case DIALOG_CLOSE:

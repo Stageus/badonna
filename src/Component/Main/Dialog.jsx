@@ -1,6 +1,6 @@
 import React from "react"
 import { useSelector, useDispatch } from "react-redux"
-import { addressDelList, dialogClose } from "../../Redux/Action/action"
+import { addressDelCheck, dialogClose } from "../../Redux/Action/action"
 import style from "./SCSS/Dialog.module.scss"
 import H1 from "../Common/H1"
 import H2 from "../Common/H2"
@@ -12,24 +12,29 @@ import { idInput } from "../../Redux/Action/joinAction"
 
 const Dialog = () => {
 
-    const userAddressState = useSelector(state => state.home.addressList.place)
+    const userAddressState = useSelector(state => state.home.addressList)
     const addressState = useSelector(state => state.home.address)
     const addressCheckBoxState = useSelector(state => state.home.addressCheckBox)
     const addressClickState = useSelector(state => state.home.addressClick)
     const addressSearchState = useSelector(state => state.home.addressSearch)
+    const addressCheckStatusState = useSelector(state => state.home.addressCheckStatus)
     const idCheckState = useSelector(state => state.home.idCheck)
     const telCheckState = useSelector(state => state.home.telCheck)
     const idInputState = useSelector(state => state.join.idInput)
-    const addressDelListState = useSelector(state => state.home.addressDelList)
-
+    const addressDelState = useSelector(state => state.home.addressDel)
     const dispatch = useDispatch()
 
     const overlayClickEvent = () => {
         dispatch(dialogClose())
         dispatch(idInput(""))
     }
-    const checkBoxEvent = (event) => {
-        dispatch(addressDelList(event.target.checked, event.target.value))
+    const checkEvent = (event) => {
+        if(addressCheckStatusState && addressDelState === event.target.id){
+            dispatch(addressDelCheck(false, event.target.value))
+            document.getElementById(event.target.id).checked = false
+            return
+        }
+        dispatch(addressDelCheck(true, event.target.value))
     }
     const oncomplete = (data) => {
         dispatch(dialogClose("address", data.address))
@@ -61,16 +66,19 @@ const Dialog = () => {
                                     addressClickState ?
                                     userAddressState.map((element, index) => 
                                         <div key = {index} id = {style.addressButtonBox}>
-                                            <Button key = {index} text = {element} name = "userRegAddress"/>
+                                            <Button key = {index} text = {element.place} name = "userRegAddress"/>
                                         </div>
                                     ) :
-                                    userAddressState.map((element, index) => 
-                                        <div key = {index} id = {style.addressButtonBox}>
-                                            {
-                                                addressCheckBoxState && <input type="checkBox" value = {element} onChange = {checkBoxEvent}/>
-                                            }
-                                            <Button text = {element} disabled/>
-                                        </div>
+                                    userAddressState.map((element, index) => {
+                                        return(
+                                            <div key = {index} id = {style.addressButtonBox}>
+                                                {
+                                                    addressCheckBoxState && <input type="radio" id = {element.place_num} name = "addressList" value = {element.place_num} onClick = {checkEvent}/>
+                                                }
+                                                <Button text = {element.place} disabled/>
+                                            </div>
+                                            )
+                                        }
                                     )
                                 }
                             </div>
@@ -78,9 +86,9 @@ const Dialog = () => {
                                 addressClickState === true ?
                                 <></>:
                                 addressCheckBoxState === true ?
-                                addressDelListState.length === 0 ?
+                                addressDelState === null || addressDelState === undefined ?
                                 <Button id = {style.addressDelete} text = "취소" name = "addressDelete"/> :
-                                <Button id = {style.addressDelete} text = "삭제" name = "addressDelete" addressDelList = {addressDelListState}/> :
+                                <Button id = {style.addressDelete} text = "삭제" name = "addressDelete" addressDel = {addressDelState}/> :
                                 <Button id = {style.addressDelete} text = "주소 삭제" name = "addressDelete"/>
                             }
                         </div>

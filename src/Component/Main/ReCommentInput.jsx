@@ -29,7 +29,7 @@ const ReCommentInput = (props) => {
                 commentNumState === props.commentNum && 
                 reCommentNumState === props.reCommentNum ?
                 <React.Fragment>
-                    <Text placeholder = "답글 달기" name = "reComment" maxLength = "200" value = {reCommentInputTextState || ""}/>
+                    <Text placeholder = "답글 달기" name = "reCommentUpload" maxLength = "200" value = {reCommentInputTextState || ""}/>
                     <Button id = {style.reCommentButton} text = "확인" name = "reCommentUpload" commentNum = {props.commentNum} content = {reCommentInputTextState}/>
                     <Button id = {style.reCommentButton} text = "취소" name = "reCommentInput"/>
                 </React.Fragment> :

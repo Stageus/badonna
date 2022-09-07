@@ -15,7 +15,6 @@ const BoardWritePage = () => {
     const recruitState = useSelector(state => state.board.boardInput.recruit)
     const contentState = useSelector(state => state.board.boardInput.content)
     const boardNumState = useSelector(state => state.board.boardInput.boardNum)
-
     const inputEvent = (event) => {
         dispatch(boardContentText(event.target.value))
     }
@@ -41,7 +40,7 @@ const BoardWritePage = () => {
                 {
                     boardNumState === null ?
                     <Link to = "/board">
-                        <Button text = "게시글 등록" name = "boardUpload" title = {titleState} address = {addressState} recruit = {recruitState} content = {contentState}/>
+                        <Button text = "게시글 등록" name = "boardUpload" title = {titleState} address = {addressState} recruit = {recruitState} content = {contentState} boardNum = {boardNumState}/>
                     </Link> :
                     <Link to = "/board">
                         <Button text = "게시글 수정" name = "boardUpload" title = {titleState} address = {addressState} recruit = {recruitState} content = {contentState} boardNum = {boardNumState}/>

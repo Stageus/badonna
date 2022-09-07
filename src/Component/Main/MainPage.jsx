@@ -11,8 +11,12 @@ import TermsOfService from "./TermsOfService"
 import { Routes, Route, Navigate } from "react-router-dom"
 import isLogin from "../../Module/isLogin"
 import { getCookie } from "../../Module/cookie"
+import { useSelector } from "react-redux"
 
 const Main = () => {
+
+    const topbarState = useSelector(state => state.login.topbar)
+
     return (
         <Routes>
             <Route path = "/*" element = {<HomePage />}/>
@@ -20,17 +24,17 @@ const Main = () => {
             <Route path = "/join" element = {<JoinPage />}/>
             <Route path = "/board" element = {<BoardPage />}/>
             <Route path = "/profile" element = { 
-                isLogin(getCookie("access-token"))?
+                topbarState === true?
                 <ProfilePage/> : 
                 <Navigate replace to = "/login"/>}
             />
             <Route path = "/comment" element = {
-                isLogin(getCookie("access-token"))?
+                topbarState === true?
                 <CommentPage/> :
                 <Navigate replace to = "/login"/>}
             />
             <Route path = "/boardWrite" element = {
-                isLogin(getCookie("access-token"))?
+                topbarState === true?
                 <BoardWritePage/> :
                 <Navigate replace to = "/login"/>}
             />

@@ -8,19 +8,17 @@ import { useSelector } from "react-redux"
 
 const ReComment = (props) => {
 
-    const userNameState = useSelector(state => state.profile.user.name)
-
-    if(props.user == ""){
+    if(props.user === "" || props.user === undefined){
         return(
-            <React.Fragment></React.Fragment>
+            <div></div>
         )
     }
     return (
         <div id = {style.reComment}>
             <H2 text = {props.user}/>
-            <P text = {props.content}/>
+            <P text = {props.contents}/>
             <MoreView user = {props.user} name = "reComment" reCommentNum = {props.reCommentNum}/>
-            <ReCommentInput commentNum = {props.commentNum} reCommentNum = {props.reCommentNum} userName = {userNameState}/>
+            <ReCommentInput commentNum = {props.commentNum} reCommentNum = {props.reCommentNum}/>
         </div>
     )
 }
