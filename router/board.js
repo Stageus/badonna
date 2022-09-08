@@ -373,10 +373,9 @@ router.put("/is_end",(req,res)=>{
 router.post("/permission",(req,res)=>{//승인 버튼을 누를 때 마다 조인 하려고 하는 사람의 
     // id가 member table에 추가 된다.
     const token_public=req.headers.token 
-
     const board_member=req.body.board_num 
     const member_id=req.body.id
-    const member_count=req.body.now_count 
+    let member_count=req.body.now_count 
    // const member_total_count=req.body.join_count 
     
     const api_name="board" + req.url
@@ -408,7 +407,30 @@ router.post("/permission",(req,res)=>{//승인 버튼을 누를 때 마다 조�
                     }
                 })
 
-                const sql="UPDATE badonnaproject.board SET now_count=$2 member_list=$3 WHERE board_num=$1"
+                let now_count_num=0;
+                const temp_sql="SELECT now_count FROM badonnaproject.board WHERE board_num=$1"
+                const temp_values=[board_member]
+                
+                db.query(temp_sql,temp_values,(err,row)=>{
+
+                    if(!err){
+                        result.success=true
+                        //now_count_num=row.rows
+                        console.log(row.rows[0].now_count)
+                        member_count=member_count + row.rows[0].now_count
+                        console.log(member_count)
+                    }else{
+                        console.log(err)
+                    }
+                    //로깅 남기기
+                    logFuntion(api_name,req_host, req_data, row.rows,api_call_time)
+                    
+                })
+
+
+               
+                const sql="UPDATE badonnaproject.board SET member_list=array_append(member_list,$3),now_count=$2 WHERE board_num=$1"
+                
                 const values=[board_member,member_count,member_id]
                 
                 db.query(sql,values,(err,row)=>{

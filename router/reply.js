@@ -85,6 +85,8 @@ router.get("/",(req,res)=>{
     const reply_number=req.query.board_num
     const idValue=req.query.id
 
+    console.log(reply_number,idValue)
+
     const api_name="reply" + req.url
     const req_host=req.headers.req_host
     const req_data=[reply_number]
@@ -110,7 +112,7 @@ router.get("/",(req,res)=>{
                         console.log(err)
                     }
                 })
-                const sql="SELECT * FROM  badonnaproject.reply WHERE board_num=$1 AND reply_id=$2"
+                const sql="SELECT * FROM  badonnaproject.reply WHERE board_num=$1 AND reply_id=$2 ORDER BY reply_num DESC"
                 const values=[reply_number, idValue]
                 
                 db.query(sql,values,(err,row)=>{
@@ -144,13 +146,12 @@ router.get("/",(req,res)=>{
 router.put("/",(req,res)=>{
 
     const token_public=req.headers.token 
-    const coment_number=req.body.coment_num 
     const reply_number=req.body.reply_num 
     const reply_contents=req.body.contents
 
     const api_name="reply" + req.url
     const req_host=req.headers.req_host
-    const req_data=[coment_number,reply_number,reply_contents]
+    const req_data=[reply_number,reply_contents]
     const api_call_time=moment()
 
     const result={
@@ -160,10 +161,7 @@ router.put("/",(req,res)=>{
 
     try{
 
-        if(coment_number.length == 0 || coment_number == null){
-            result.message="옳바르지 않은 댓글 번호 입니다."
-            res.send(result)
-        }else if(reply_number.length == 0 || reply_number == null){
+       if(reply_number.length == 0 || reply_number == null){
             result.message="옳바르지 않은 대댓글 번호 입니다."
             res.send(result)
         }else if(reply_contents.length == 0 || reply_contents == null || reply_contents.length >200){
@@ -178,8 +176,8 @@ router.put("/",(req,res)=>{
                         console.log(err)
                     }
                 })
-                const sql="UPDATE badonnaproject.reply SET reply_contents=$3 WHERE comment_num=$1 AND reply_num=$2"
-                const values=[coment_number,reply_number,reply_contents]
+                const sql="UPDATE badonnaproject.reply SET reply_contents=$2 WHERE reply_num=$1"
+                const values=[reply_number,reply_contents]
                 
                 db.query(sql,values,(err,row)=>{
                     if(!err){

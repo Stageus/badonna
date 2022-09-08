@@ -33,60 +33,62 @@ router.post("/login",(req,res)=>{
     //db 연결
     try{
 
-        if(idValue !=null || idValue.length !=0 || pwValue!=null || pwValue.length !=0) {
-            if(idValue.length >12 || pwValue.length >16){
-                throw (err)
-            }else{
-
-                const db=new Client(pgInit)
-                db.connect((err)=>{
-                    if(err) {
-                        console.log(err)
-                    }
-                })
-        
-                const sql="SELECT * FROM  badonnaproject.account WHERE id=$1 and pw=$2"
-                const values=[idValue,pwValue]
-                // console.log(values)
-                db.query(sql,values,(err,data)=>{
-                    if(!err){
-            
-                        const row=data.rows;
-                        if(row.length == 0){
-                            throw (err)
-                        }else{
-                            const jwtToken=jwt.sign(
-                                {
-                                    "id":idValue,//로그인 한 사람의 아이디
-                                    "pw":pwValue
-                                },
-                                secretKey,
-                                {
-                                    "issuer": "kelly",// 발급자 메모용
-                                    "expiresIn":"24h" //토큰 완료 시간
-                                }
-                            )
-                            console.log("token",jwtToken)
-                            result.token=jwtToken
-                            result.success=true
-                            
-                        }
-            
-                        //loggin 
-                        logFuntion(api_name,req_host, req_data, data.rows[0],api_call_time)
-                    }
-                   
-                    res.send(result)
-                    db.end()
-            
-                })
-
-            }
+        if(idValue ==null || idValue.length ==0 || pwValue==null || pwValue.length ==0) {
+            result.message="아이디 비밀번호를 확인해주세요"
+            res.send(result)
+        }
+        else if(idValue.length >12 || pwValue.length >16){
+            result.message="아이디 비밀번호를 확인해주세요"
+            res.send(result)
         }else{
-            throw (err)
-        }    
+
+            const db=new Client(pgInit)
+            db.connect((err)=>{
+                if(err) {
+                    console.log(err)
+                }
+            })
+    
+            const sql="SELECT * FROM  badonnaproject.account WHERE id=$1 and pw=$2"
+            const values=[idValue,pwValue]
+            // console.log(values)
+            db.query(sql,values,(err,data)=>{
+                if(!err){
+        
+                    const row=data.rows;
+                    if(row.length == 0){
+                        result.message="아이디 비밀번호를 확인해주세요"
+                    }else{
+                        const jwtToken=jwt.sign(
+                            {
+                                "id":idValue,//로그인 한 사람의 아이디
+                                "pw":pwValue
+                            },
+                            secretKey,
+                            {
+                                "issuer": "kelly",// 발급자 메모용
+                                "expiresIn":"24h" //토큰 완료 시간
+                            }
+                        )
+                        console.log("token",jwtToken)
+                        result.token=jwtToken
+                        result.success=true
+                        
+                    }
+        
+                    //loggin 
+                    logFuntion(api_name,req_host, req_data, data.rows[0],api_call_time)
+                }
+                
+                res.send(result)
+                db.end()
+        
+            })
+
+        }
+        
             
-    }catch(err){
+    }catch(e){
         result.message="아이디 비밀번호를 확인해주세요"
         res.send(result)
     }

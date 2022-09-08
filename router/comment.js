@@ -88,8 +88,8 @@ router.get("/",(req,res)=>{
 
     const result={
         "success":false,
-        "comment_data":null,
-        "comment_and_reply_data":null,
+        "data":null,
+        "secret_data":null,
         "message":null
     }
 
@@ -101,21 +101,20 @@ router.get("/",(req,res)=>{
             result.message="옳바르지 않은 아이디 번호 입니다. "
             res.send(result)
         }else{
+            
+            const db=new Client(pgInit)
+            db.connect((err)=>{
+                if(err) {
+                    console.log(err)
+                }
+            })
 
             if(tokenVerify(token_public)){
 
                 const token_id=tokenId(token_public)
-
                 if(token_id == idValue){//token id 와 게시글 작성 한 사람이 같은 경우
-
-                    const db=new Client(pgInit)
-                    db.connect((err)=>{
-                        if(err) {
-                            console.log(err)
-                        }
-                    })
-
                    // const sql="SELECT * FROM badonnaproject.comment JOIN badonnaproject.reply ON badonnaproject.comment.board_num = badonnaproject.reply.board_num  AND  badonnaproject.comment.comment_num = badonnaproject.reply.comment_num  WHERE badonnaproject.comment.comment_id =$1"
+                   
                    const sql="SELECT * FROM  badonnaproject.comment WHERE board_num=$1 AND comment_id=$2"
                    const values=[comment_number,idValue]
 
@@ -130,14 +129,35 @@ router.get("/",(req,res)=>{
                         //로깅 남기기
                         logFuntion(api_name,req_host, req_data, row.rows,api_call_time)
 
-                        res.send(result)
-                        db.end()
+                        //res.send(result)
+                        //db.end()
 
                     })
-                }else{
-                    result.data="댓글을 볼 수없습니다."
-                    res.send(result)
                 }
+                
+                const sql2="SELECT * FROM  badonnaproject.comment WHERE comment_id != $2 AND board_num=$1"
+                const values2=[comment_number,idValue]
+
+                db.query(sql2,values2,(err,row)=>{
+                    if(!err){
+                        const temp_data=row.rows// row가 어떤 것이 반환이 되는 지 확인 하기 
+                        for(let i=0; i<row.rows.length; i++){
+                            temp_data[i].comment_contents="비밀 댓글"
+                        }
+                        result.secret_data=temp_data
+                    }else{
+                        console.log(err)
+                    }
+
+                    //로깅 남기기
+                    logFuntion(api_name,req_host, req_data, row.rows,api_call_time)
+                    
+                    res.send(result)
+                    db.end()
+                
+
+                })
+                
             }else{
                 result.message="잘 못된 token!"
                 res.send(result)
